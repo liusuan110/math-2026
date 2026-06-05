@@ -42,6 +42,9 @@ def topsis(X, weights=None, benefit_cols=None) -> dict:
 
 
 if __name__ == "__main__":
+    import os
+    import sys
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # 保证能找到同级模块
     from entropy_weight import entropy_weight
 
     # 4 个方案，3 个效益型指标

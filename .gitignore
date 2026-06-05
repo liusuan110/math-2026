@@ -44,7 +44,9 @@ env/
 Thumbs.db
 
 # ===== 演示/临时产物 =====
-figures/_demo_*
+_demo_*
+# 误生成在子目录的演示 figures（绘图 demo 以 cwd 为基准）
+code/**/figures/
 
 # ===== 编辑器 =====
 .vscode/

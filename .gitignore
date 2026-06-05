@@ -1,0 +1,54 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+.python-version
+
+# ===== Jupyter =====
+*.nbconvert.ipynb
+
+# ===== LaTeX 中间产物 =====
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.xdv
+
+# ===== Typst =====
+# 编译产物（保留 .typ 源文件）
+# *.pdf  # 如需忽略生成的 PDF 取消注释
+
+# ===== 数据缓存 / 大文件 =====
+*.tmp
+*.cache
+.DS_Store
+Thumbs.db
+
+# ===== 编辑器 =====
+.vscode/
+.idea/
+*.swp
+
+# ===== 模型/中间结果（按需调整）=====
+*.pkl
+*.h5
+*.ckpt

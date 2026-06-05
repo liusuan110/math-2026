@@ -1,0 +1,12 @@
+# 数模国赛 Python 备赛环境
+# 安装：python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+numpy
+pandas
+scipy
+matplotlib
+seaborn
+scikit-learn
+statsmodels
+networkx
+# pulp  # 可选；Apple Silicon 上其自带 CBC 求解器有架构问题，本仓库规划模板改用 scipy
+openpyxl   # pandas 读写 xlsx

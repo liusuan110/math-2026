@@ -43,6 +43,9 @@ env/
 .DS_Store
 Thumbs.db
 
+# ===== 演示/临时产物 =====
+figures/_demo_*
+
 # ===== 编辑器 =====
 .vscode/
 .idea/

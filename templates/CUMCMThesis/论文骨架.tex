@@ -1,0 +1,216 @@
+%==============================================================
+%  CUMCM 2026 论文骨架（半成品）—— 赛时直接在此填空
+%  用法：复制本文件为 main.tex，改 \title 等队伍信息，逐节填内容。
+%  编译：latexmk -xelatex 论文骨架     （或 xelatex 论文骨架，编 2~3 次）
+%
+%  ★ 2026 规范已核对（官方格式规范2026修订稿）：
+%    - 正文 ≤ 30 页；摘要 ≤ 1 页、含关键词、无需英文
+%    - 不要目录（下方 \tableofcontents 已注释，勿启用）
+%    - 页码从摘要页起、阿拉伯数字、页脚居中（本模板已自动处理）
+%    - 电子版：第一页必须是摘要 → 提交电子版时改用下面第 2 行的 withoutpreface
+%==============================================================
+\documentclass{cumcmthesis}
+% \documentclass[withoutpreface,bwprint]{cumcmthesis}  % ← 电子版提交时启用本行、注释上一行（去承诺书+编号页）
+
+\usepackage{url}
+
+%--- 队伍信息（开赛后第一件事，先填这里）-----------------------
+\title{【在此填论文标题】}
+\tihao{C}              % 题号 A/B/C/D/E
+\baominghao{【12位队号】}
+\schoolname{【学校全称，不含院系】}
+\membera{【队员一】}
+\memberb{【队员二】}
+\memberc{【队员三】}
+\supervisor{【指导教师，可留空】}
+\yearinput{2026}
+\monthinput{9}
+\dayinput{10}
+
+%--- 代码附录的排版风格（Python）------------------------------
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=fullflexible,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{teal},
+  numbers=left, numberstyle=\tiny\color{gray},
+  frame=single, framesep=3pt,
+}
+
+\begin{document}
+
+\maketitle
+
+%==============================================================
+%  摘要（评委第一眼，权重最高；务必 ≤1 页、每问有量化结论）
+%  填空套路：背景一句 → 针对问题N用了什么模型/方法 → 关键结果(带数字) → 结论/亮点
+%==============================================================
+\begin{abstract}
+针对【问题背景一句话概括】，本文【总体思路：建立了…模型 / 采用了…方法】，解决了【N】个问题。
+
+\textbf{针对问题一}，【方法/模型】，【求解手段】，得到【关键结果，务必带具体数字与单位】。
+
+\textbf{针对问题二}，【方法/模型】，【求解手段】，得到【关键结果，带数字】。
+
+\textbf{针对问题三}，【方法/模型】，【求解手段】，得到【关键结果，带数字】。
+
+最后，本文对模型进行了【灵敏度分析/稳健性检验】，结果表明【模型对关键参数的敏感程度结论】。本文模型的亮点在于【创新点/优势一句话】。
+
+\keywords{关键词1\quad 关键词2\quad 关键词3\quad 关键词4}
+\end{abstract}
+
+%目录：2026 规范明确「不要目录」，保持注释状态
+%\tableofcontents
+%\newpage
+
+%==============================================================
+\section{问题重述}
+\subsection{问题背景}
+【用自己的话复述背景，不要照抄题目，2~3 句即可。】
+
+\subsection{问题提出}
+本文需要解决以下问题：
+\begin{itemize}
+    \item \textbf{问题一：}【一句话概括】
+    \item \textbf{问题二：}【一句话概括】
+    \item \textbf{问题三：}【一句话概括】
+\end{itemize}
+
+%==============================================================
+\section{问题分析}
+【总体分析：数据/对象的特点，整体采用什么思路；可放一张总体技术路线流程图。】
+
+\subsection{问题一的分析}
+【这一问属于 评价/优化/预测/机理 哪一类，为什么选这个模型，思路链条。】
+
+\subsection{问题二的分析}
+【同上。】
+
+\subsection{问题三的分析}
+【同上。】
+
+%==============================================================
+\section{模型假设}
+\begin{enumerate}
+    \item 假设题目所给数据真实可靠，不考虑统计与测量误差对结论的根本性影响；
+    \item 假设【研究对象】在研究时段内不受突发外部事件（如政策、灾害）影响；
+    \item 假设【关键变量】的变化是连续/平稳的，可用【对应数学工具】刻画；
+    \item 【按题目补充 1~3 条与本题强相关的假设，每条都要后面用得上】。
+\end{enumerate}
+
+%==============================================================
+\section{符号说明}
+\begin{center}
+\begin{tabular}{cc}
+    \hline
+    \makebox[0.3\textwidth][c]{符号} & \makebox[0.5\textwidth][c]{意义} \\ \hline
+    $x_i$   & 【第 $i$ 个决策变量 / 含义】 \\ \hline
+    $w_j$   & 【第 $j$ 个指标的权重】 \\ \hline
+    $\hat{y}_t$ & 【$t$ 时刻的预测值】 \\ \hline
+    $\varepsilon$ & 【误差项 / 容差】 \\ \hline
+\end{tabular}
+\end{center}
+\par\noindent\small 注：其余符号在首次出现处说明。
+
+%==============================================================
+\section{问题一模型的建立与求解}
+\subsection{模型建立}
+【数据预处理（缺失/异常/归一化）→ 建立模型，写清目标函数、约束、公式（带编号）。】
+\begin{equation}
+    \max\ Z = \sum_{i=1}^{n} c_i x_i
+    \label{eq:q1-obj}
+\end{equation}
+约束条件如式\cref{eq:q1-con}：
+\begin{equation}
+    \text{s.t.}\quad \sum_{i=1}^{n} a_{ij} x_i \le b_j,\quad j=1,2,\dots,m
+    \label{eq:q1-con}
+\end{equation}
+
+\subsection{模型求解}
+【说明用什么算法/工具求解（对应 code/ 里的模块），给出求解流程。】
+
+\subsection{结果分析}
+【把结果用图表呈现并解读，给出明确的量化结论。图见\cref{fig:q1}。】
+\begin{figure}[!htbp]
+    \centering
+    % \includegraphics[width=.7\textwidth]{figures/q1_result.png}
+    \caption{问题一结果示意}
+    \label{fig:q1}
+\end{figure}
+
+%==============================================================
+\section{问题二模型的建立与求解}
+\subsection{模型建立}
+【同问题一结构。】
+\subsection{模型求解}
+【同上。】
+\subsection{结果分析}
+【同上，结论带数字。】
+
+%==============================================================
+\section{问题三模型的建立与求解}
+\subsection{模型建立}
+【复制问题二结构填写。】
+\subsection{模型求解}
+\subsection{结果分析}
+
+%==============================================================
+\section{模型的检验与灵敏度分析}
+【对关键参数做扰动，观察结果变化（对应 code/common/sensitivity.py）。】
+【结论模板：当参数 X 在 ±10\% 范围变化时，最优解/预测值变化不超过 Y\%，说明模型具有较好的稳健性。】
+\begin{table}[!htbp]
+    \caption{关键参数灵敏度分析}\label{tab:sens}\centering
+    \begin{tabular}{ccc}
+        \toprule[1.5pt]
+        参数变化 & 输出值 & 变化率 \\
+        \midrule[1pt]
+        $-10\%$ & 【】 & 【】 \\
+        基准     & 【】 & $0$ \\
+        $+10\%$ & 【】 & 【】 \\
+        \bottomrule[1.5pt]
+    \end{tabular}
+\end{table}
+
+%==============================================================
+\section{模型的评价、改进与推广}
+\subsection{模型的优点}
+\begin{enumerate}
+    \item 【模型贴合实际，考虑了……（针对性优点）】；
+    \item 【方法成熟可靠，结果可解释/可复现】；
+    \item 【对数据规模/噪声有较好适应性】。
+\end{enumerate}
+\subsection{模型的缺点}
+\begin{enumerate}
+    \item 【做了……简化假设，可能与实际有偏差】；
+    \item 【对……参数较敏感 / 计算复杂度较高】。
+\end{enumerate}
+\subsection{模型的改进与推广}
+【如何放松假设/换更强的方法；本模型还能用于哪些类似场景。】
+
+%==============================================================
+%参考文献
+\begin{thebibliography}{9}
+    \bibitem{ref1} 作者. 文献标题[J]. 期刊/出版社, 年份.
+    \bibitem{ref2} 全国大学生数学建模竞赛论文格式规范(2026 年修订).
+\end{thebibliography}
+
+\newpage
+%==============================================================
+%附录：完整代码（页数不限，务必能与正文结果对上）
+\begin{appendices}
+\section{问题一求解代码（Python）}
+\begin{lstlisting}[language=python]
+# 在此粘贴问题一的完整 Python 代码
+import numpy as np
+print("hello, CUMCM 2026")
+\end{lstlisting}
+
+\section{问题二求解代码（Python）}
+\begin{lstlisting}[language=python]
+# 在此粘贴问题二的完整 Python 代码
+\end{lstlisting}
+\end{appendices}
+
+\end{document}

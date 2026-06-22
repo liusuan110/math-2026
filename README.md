@@ -14,11 +14,12 @@
 ├── data/            # 原始数据与中间数据
 ├── figures/         # 生成的图表
 ├── docs/            # 文档、笔记、论文草稿
-│   ├── 备赛指南.md     # 赛事规则 + 题型 + 模型 + 时间管理（核验版）
-│   └── 资源汇总.md     # 历年真题 + 优秀开源项目索引
-├── templates/       # 论文模板（LaTeX / Typst）
-│   ├── CUMCMThesis/    # 国赛 LaTeX 模板
-│   └── cumcm-typst/    # 国赛 Typst 模板
+│   ├── 备赛指南.md       # 赛事规则 + 题型 + 模型 + 时间管理（核验版）
+│   ├── 论文写作模板.md   # 摘要填空模板 + 可复用句式 + 2026 合规结论
+│   └── 资源汇总.md       # 历年真题 + 优秀开源项目索引
+├── templates/       # 论文模板（LaTeX / Typst，均已编译验证）
+│   ├── CUMCMThesis/    # 国赛 LaTeX 模板 + 论文骨架.tex（半成品，赛时填空）
+│   └── cumcm-typst/    # 国赛 Typst 模板 + 论文骨架.typ（半成品）
 ├── past-problems/   # 历年真题与获奖实例（2013–2024）
 ├── mock-contests/   # 全真模拟赛（复盘模板 + 提交 checklist）
 ├── tools/           # verify_env.py 环境自检

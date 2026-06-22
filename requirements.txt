@@ -1,12 +1,29 @@
 # 数模国赛 Python 备赛环境
-# 安装：python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+# 安装（Windows）：python -m venv .venv && .venv\Scripts\pip install -r requirements.txt
+# 安装（macOS/Linux）：python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+
+# --- 数值与数据底座 ---
 numpy
 pandas
 scipy
+sympy            # 符号运算、解析解微分方程（机理建模 ode_models 用）
+openpyxl         # pandas 读写 xlsx
+
+# --- 统计 / 机器学习 ---
+statsmodels      # 回归、ARIMA、统计检验
+scikit-learn     # 分类/聚类/回归/PCA
+xgboost          # 梯度提升（C 题大数据预测增强；未装会自动回退到 sklearn GBDT）
+
+# --- 优化建模 ---
+networkx         # 图论：最短路/最小生成树/最大流/TSP
+pulp             # 线性/整数规划建模（Windows 上自带 CBC 可正常用）
+# cvxpy          # 可选：凸优化建模，按需 pip install cvxpy
+# 注：规划模板亦可直接用 scipy.optimize.linprog/milp，无需外部求解器
+
+# --- 可视化 ---
 matplotlib
 seaborn
-scikit-learn
-statsmodels
-networkx
-# pulp  # 可选；Apple Silicon 上其自带 CBC 求解器有架构问题，本仓库规划模板改用 scipy
-openpyxl   # pandas 读写 xlsx
+
+# --- 交互式探索（数据探索 notebook 用）---
+jupyterlab
+ipykernel

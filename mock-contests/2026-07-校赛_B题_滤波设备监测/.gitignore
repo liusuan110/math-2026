@@ -1,0 +1,15 @@
+# 原始赛题和附件仅保留在本机，避免误提交大文件或题目原件。
+data/raw/*
+!data/raw/README.md
+
+# 下列内容均可由代码重新生成。
+data/processed/*
+!data/processed/README.md
+data/results/*
+!data/results/README.md
+figures/generated/*
+!figures/generated/README.md
+
+# 字体可由仓库模板中的 fonts.zip 重建；PDF 由 Typst 源文件生成。
+paper/fonts/
+paper/main.pdf

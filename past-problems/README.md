@@ -4,6 +4,13 @@
 
 ## 已收录
 
+### `2020-2025-B-C题汇总/`
+
+2020—2025 年官方 B、C 题与完整附件，共 6 年、12 道题，并附题型、任务链、推荐建模路线、难点和六年趋势总结。
+
+- 阅读入口：[`2020-2025-B-C题汇总/README.md`](./2020-2025-B-C题汇总/README.md)
+- 来源：[全国大学生数学建模竞赛组委会历年赛题](https://www.mcm.edu.cn/html_cn/block/8579f5fce999cdc896f78bca5d4f8237.html)
+
 ### `solutions-2013-2019/`
 2013–2019 年的赛题说明、附件数据与作者获奖解答（论文 + 代码）。
 来源：[Amoiensis/Mathmatic_Modeling_CUMCM](https://github.com/Amoiensis/Mathmatic_Modeling_CUMCM)（省一等奖团队）。
@@ -17,12 +24,8 @@
 | `2021-C题_上海二等奖/` | 2021 C（PCA + 整数规划/Gurobi） | [Feng-Yz/CUMCM-2021](https://github.com/Feng-Yz/CUMCM-2021) |
 | `2020-A题/` | 2020 A（Python 求解 + 附件） | [Solus-sano/2020_cumcm_A](https://github.com/Solus-sano/2020_cumcm_A) |
 
-## 待补充：官方原版题目 PDF（2020–2024）
+### `external-projects/` 外部完整工程
 
-官网（mcm.edu.cn）在当前网络环境不可达，未能自动抓取。你可在校园网/国内网络从以下渠道补全官方原版题目：
+保留为独立 Git 仓库的公开完整工程，仅供本地学习，不纳入主仓库的大文件历史。
 
-- **官网**：https://www.mcm.edu.cn/ → 竞赛通知 / 历年赛题
-- **数模知识库（含附件数据）**：https://www.shumo.com/wiki/ → 各年份页面
-- **赛氪（含解析评阅）**：https://edu.saikr.com/course/1218/tasks
-
-下载后建议按 `past-problems/官方题目/<年份>/` 归档。
+- 阅读入口：[`external-projects/README.md`](./external-projects/README.md)

@@ -40,6 +40,7 @@ env/
 # ===== 数据缓存 / 大文件 =====
 *.tmp
 *.cache
+.matplotlib-cache/
 .DS_Store
 Thumbs.db
 
@@ -49,7 +50,8 @@ _demo_*
 code/**/figures/
 
 # ===== 编辑器 =====
-.vscode/
+.vscode/*
+!.vscode/settings.json
 .idea/
 *.swp
 

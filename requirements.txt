@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # 数模国赛 Python 备赛环境
 # 安装（Windows）：python -m venv .venv && .venv\Scripts\pip install -r requirements.txt
 # 安装（macOS/Linux）：python3 -m venv .venv && .venv/bin/pip install -r requirements.txt

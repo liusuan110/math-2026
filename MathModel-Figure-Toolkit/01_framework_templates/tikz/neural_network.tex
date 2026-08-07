@@ -1,0 +1,19 @@
+\documentclass[tikz,border=6pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning}
+\begin{document}
+\begin{tikzpicture}[
+  layer/.style={draw, rectangle, minimum width=34mm, minimum height=9mm, align=center, font=\small},
+  arrow/.style={-Latex, line width=0.7pt},
+  node distance=10mm
+]
+\node[layer] (input) {Input};
+\node[layer, right=of input] (feature) {Feature Extractor};
+\node[layer, right=of feature] (embed) {Embedding};
+\node[layer, right=of embed] (head) {Prediction Head};
+\node[layer, right=of head] (output) {Output};
+\draw[arrow] (input) -- (feature);
+\draw[arrow] (feature) -- (embed);
+\draw[arrow] (embed) -- (head);
+\draw[arrow] (head) -- (output);
+\end{tikzpicture}
+\end{document}

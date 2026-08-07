@@ -1,0 +1,19 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="General Model Pipeline">
+    <mxGraphModel dx="900" dy="600" grid="1" gridSize="10" page="1" pageWidth="850" pageHeight="1100">
+      <root><mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="p1" value="Problem" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#222222;fillColor=#ffffff;fontFamily=Times New Roman;fontSize=14;" vertex="1" parent="1"><mxGeometry x="320" y="80" width="180" height="48" as="geometry"/></mxCell>
+        <mxCell id="p2" value="Data" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#222222;fillColor=#ffffff;fontFamily=Times New Roman;fontSize=14;" vertex="1" parent="1"><mxGeometry x="320" y="160" width="180" height="48" as="geometry"/></mxCell>
+        <mxCell id="p3" value="Model" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#222222;fillColor=#ffffff;fontFamily=Times New Roman;fontSize=14;" vertex="1" parent="1"><mxGeometry x="320" y="240" width="180" height="48" as="geometry"/></mxCell>
+        <mxCell id="p4" value="Algorithm" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#222222;fillColor=#ffffff;fontFamily=Times New Roman;fontSize=14;" vertex="1" parent="1"><mxGeometry x="320" y="320" width="180" height="48" as="geometry"/></mxCell>
+        <mxCell id="p5" value="Evaluation" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#222222;fillColor=#ffffff;fontFamily=Times New Roman;fontSize=14;" vertex="1" parent="1"><mxGeometry x="320" y="400" width="180" height="48" as="geometry"/></mxCell>
+        <mxCell id="p6" value="Solution" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#222222;fillColor=#ffffff;fontFamily=Times New Roman;fontSize=14;" vertex="1" parent="1"><mxGeometry x="320" y="480" width="180" height="48" as="geometry"/></mxCell>
+        <mxCell id="e1" style="endArrow=block;html=1;strokeColor=#222222;" edge="1" parent="1" source="p1" target="p2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="endArrow=block;html=1;strokeColor=#222222;" edge="1" parent="1" source="p2" target="p3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="endArrow=block;html=1;strokeColor=#222222;" edge="1" parent="1" source="p3" target="p4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="endArrow=block;html=1;strokeColor=#222222;" edge="1" parent="1" source="p4" target="p5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" style="endArrow=block;html=1;strokeColor=#222222;" edge="1" parent="1" source="p5" target="p6"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

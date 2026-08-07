@@ -71,6 +71,39 @@
 
 未下载项：GitHub Topic 中出现的 `aprlost/2024-CUMCM-C` 在克隆时返回仓库不存在或不可访问，因此未纳入本地。当前工作区已有 `past-problems/recent-examples/2024-C题_农作物种植_广东二等奖/`，可作为 2024 C 题参考。
 
+### 2026-08-07 非 GitHub 来源新增材料
+
+9. `gitee-2024-B-cumcm-cherzing/`
+   - 来源：https://gitee.com/Cherzing/2024_CUMCM_B
+   - 题目：2024 年 B 题
+   - 内容：论文 PDF 与 24 个 Python 源码文件。
+   - 先看：`README.md` -> `B题题目.pdf` -> 代码文件。
+   - 注意：原仓库 README 中奖项位置留空，因此只按“完整工程样例”使用。
+
+10. `gitee-cumcm-past-questions/`
+   - 来源：https://gitee.com/jiufafeng/cumcm-past-questions
+   - 定位：CUMCM 历年赛题与优秀论文合集。
+   - 内容：`全国大学生数学建模竞赛(CUMCM)优秀论文/` 覆盖 2012-2021 年；`全国大学生数学建模竞赛(CUMCM)历年赛题/` 覆盖 2001-2022 年，含 PDF、Word、Excel、图片和压缩附件。
+   - 先看：`全国大学生数学建模竞赛(CUMCM)优秀论文/2021/`、`全国大学生数学建模竞赛(CUMCM)优秀论文/2020/`，再按 A/B/C 题挑近似题型。
+   - 学习重点：老题的“摘要写法、模型假设、符号表、结果表组织、灵敏度/误差分析”。
+
+11. `gitee-official-paper-crawler/`
+   - 来源：https://gitee.com/CUITsxjm/China-University-Students-Online-Website-National-Competition-Outstanding-Papers-Crawling
+   - 定位：中国大学生在线优秀论文展示页整理工具。
+   - 内容：Python 脚本、示例图片和说明文档。
+   - 先看：`README.md` -> `国赛优秀论文爬取.py`。
+   - 注意：中国大学生在线论文展示页标注“未经全国大学生数学建模竞赛组委会书面许可，请勿转载”。因此当前仓库只保存工具和链接，不批量镜像官方论文展示图片。
+
+### 官方优秀论文展示链接
+
+这些页面适合赛前精读结构，但不建议下载后提交到公开仓库。
+
+- 2023 官方论文展示总入口：https://dxs.moe.gov.cn/zx/hd/sxjm/sxjmlw/2023qgdxssxjmjslwzs/2023gjsbqgdxssxjmjslwzs.shtml
+- 2023 A 题展示：A0165、A0127、A092
+- 2023 B 题展示：B477、B311、B226
+- 2023 C 题展示：C228、C126、C050
+- 2023 C 题官方讲评：https://dxs.moe.gov.cn/zx/a/hd_sxjm_sxjmstjp_2023sxjmstjp/231207/1869893.shtml
+
 ## 已做检查
 
 - 三个工程均已完整下载，并保留来源地址。
@@ -81,5 +114,7 @@
 - 尚未宣称“一键复现”：三个仓库都缺少完整、锁定版本的环境说明，其中 2020 B 和 2023 C 还需要当前环境没有的依赖。
 - 2026-08-07 新增的五个工程均已作为普通文件下载；嵌套 `.git` 目录已移除。
 - `2023-B-multibeam-national-second/支撑材料.zip` 已展开，展开后包含 10 个 MATLAB 脚本和 4 个 Excel 文件。
+- 非 GitHub 来源新增的三个 Gitee 仓库均已下载，并移除嵌套 `.git` 目录。
+- `gitee-cumcm-past-questions/` 当前含 1208 个文件，其中包括 63 个 PDF、111 个 Word 文档、86 个 Excel 文件和若干图片/压缩附件。
 
 检查日期：2026-08-07

@@ -1,8 +1,15 @@
 # 外部完整工程索引
 
-这些项目来自公开 GitHub 仓库，现已作为普通文件纳入本仓库，便于在 Windows 和 Mac 两端同步查看。原项目来源仍保留在下方索引中；使用时请尊重各项目许可与署名要求，不应直接复制到参赛论文中。
+这些项目来自公开 GitHub/Gitee 仓库，现已作为普通文件纳入本仓库，便于在 Windows 和 Mac 两端同步查看。原项目来源仍保留在下方索引中；使用时请尊重各项目许可与署名要求，不应直接复制到参赛论文中。
 
 ## 建议阅读顺序
+
+资料按用途分为四类：
+
+- 主读工程：优先完整研读，学习建模主线、论文结构和代码复现方式。
+- 同题对照：同一题目的不同解法，用于比较模型取舍。
+- 资料库：题目和优秀论文合集，按需检索，不建议全部通读。
+- 链接备查：不在仓库内保存全文或工具，仅保留来源入口。
 
 ### 已深读/已纳入的完整工程
 
@@ -76,9 +83,9 @@
 9. `gitee-2024-B-cumcm-cherzing/`
    - 来源：https://gitee.com/Cherzing/2024_CUMCM_B
    - 题目：2024 年 B 题
-   - 内容：论文 PDF 与 24 个 Python 源码文件。
-   - 先看：`README.md` -> `B题题目.pdf` -> 代码文件。
-   - 注意：原仓库 README 中奖项位置留空，因此只按“完整工程样例”使用。
+   - 内容：24 个 Python 源码文件，覆盖抽样检验、遗传算法、MILP 和敏感性分析。
+   - 先看：`README.md` -> `代码/Question1/` -> `代码/Question2/` -> `代码/Question3/`。
+   - 注意：原仓库 README 中奖项位置留空，因此只按“代码对照样例”使用；本目录原有题目 PDF 与 `2024-B-complete-paper-code/question/B题.pdf` 完全重复，已删除副本。
 
 10. `gitee-cumcm-past-questions/`
    - 来源：https://gitee.com/jiufafeng/cumcm-past-questions
@@ -86,13 +93,6 @@
    - 内容：`全国大学生数学建模竞赛(CUMCM)优秀论文/` 覆盖 2012-2021 年；`全国大学生数学建模竞赛(CUMCM)历年赛题/` 覆盖 2001-2022 年，含 PDF、Word、Excel、图片和压缩附件。
    - 先看：`全国大学生数学建模竞赛(CUMCM)优秀论文/2021/`、`全国大学生数学建模竞赛(CUMCM)优秀论文/2020/`，再按 A/B/C 题挑近似题型。
    - 学习重点：老题的“摘要写法、模型假设、符号表、结果表组织、灵敏度/误差分析”。
-
-11. `gitee-official-paper-crawler/`
-   - 来源：https://gitee.com/CUITsxjm/China-University-Students-Online-Website-National-Competition-Outstanding-Papers-Crawling
-   - 定位：中国大学生在线优秀论文展示页整理工具。
-   - 内容：Python 脚本、示例图片和说明文档。
-   - 先看：`README.md` -> `国赛优秀论文爬取.py`。
-   - 注意：中国大学生在线论文展示页标注“未经全国大学生数学建模竞赛组委会书面许可，请勿转载”。因此当前仓库只保存工具和链接，不批量镜像官方论文展示图片。
 
 ### 官方优秀论文展示链接
 
@@ -103,6 +103,7 @@
 - 2023 B 题展示：B477、B311、B226
 - 2023 C 题展示：C228、C126、C050
 - 2023 C 题官方讲评：https://dxs.moe.gov.cn/zx/a/hd_sxjm_sxjmstjp_2023sxjmstjp/231207/1869893.shtml
+- 中国大学生在线优秀论文展示页整理工具：https://gitee.com/CUITsxjm/China-University-Students-Online-Website-National-Competition-Outstanding-Papers-Crawling
 
 ## 已做检查
 
@@ -114,7 +115,8 @@
 - 尚未宣称“一键复现”：三个仓库都缺少完整、锁定版本的环境说明，其中 2020 B 和 2023 C 还需要当前环境没有的依赖。
 - 2026-08-07 新增的五个工程均已作为普通文件下载；嵌套 `.git` 目录已移除。
 - `2023-B-multibeam-national-second/支撑材料.zip` 已展开，展开后包含 10 个 MATLAB 脚本和 4 个 Excel 文件。
-- 非 GitHub 来源新增的三个 Gitee 仓库均已下载，并移除嵌套 `.git` 目录。
+- 非 GitHub 来源保留了两个 Gitee 资料目录，并移除嵌套 `.git` 目录。
 - `gitee-cumcm-past-questions/` 当前含 1208 个文件，其中包括 63 个 PDF、111 个 Word 文档、86 个 Excel 文件和若干图片/压缩附件。
+- 2026-08-07 进行了去重整理：删除 `2020-B-desert-game-national-first/paper/沙漠游戏.pdf`，保留根目录 `沙漠游戏.pdf`；删除 `gitee-2024-B-cumcm-cherzing/B题题目.pdf`，保留 `2024-B-complete-paper-code/question/B题.pdf`；删除 `gitee-cumcm-past-questions/全国大学生数学建模竞赛(CUMCM)历年赛题/2014/全国大学生数学建模竞赛参赛规则.pdf`，保留 2013 年同哈希副本；删除非工程类 `gitee-official-paper-crawler/` 目录，仅保留来源链接。
 
 检查日期：2026-08-07

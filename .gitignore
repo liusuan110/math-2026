@@ -60,10 +60,5 @@ code/**/figures/
 *.h5
 *.ckpt
 
-# ===== 外部参考工程（各自保留独立 Git 仓库，仅供本地学习）=====
-past-problems/external-projects/2020-B-desert-game-national-first/
-past-problems/external-projects/2023-B-multibeam-survey/
-past-problems/external-projects/2023-C-vegetable-pricing/
-
 # 官方赛题超大附件：本地保留，避免超过 GitHub 单文件限制
 past-problems/2020-2025-A-B-C-E题汇总/2024/E题/附件2.csv

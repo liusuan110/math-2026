@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+dist/
+build/
+*.egg-info/
+
+# Node
+node_modules/
+package-lock.json
+
+# Environment
+.env
+
+# Runtime outputs
+runs/
+runsdemo_run9/
+analysis_pdf/
+uv.lock
+
+# Corpus (user-provided papers)
+corpus/papers/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Tooling / temp files
+.superpowers/
+.zcode/
+tmp/
+tmp-tectonic-*/
+nul
+*preview_diff*
+*.log
+test.png
+*.err.log
+*.out.log

@@ -1,0 +1,404 @@
+% 国赛要求，页面布局上下左右都要留出至少 2.5cm
+\usepackage[margin=2.5cm]{geometry}
+
+% 编译检查，必须使用 XeLaTeX 编译
+\usepackage{iftex}
+\ifXeTeX
+    \typeout{=> Compiler Check: XeLaTeX detected. Proceeding.}
+\else
+    \errmessage{COMPILER ERROR: This document MUST be compiled with XeLaTeX.}
+\fi
+
+% 中文支持
+\usepackage[fontset=none]{ctex}
+\usepackage{xeCJK}
+\setcounter{secnumdepth}{5} % 为 \subsubsection 增加编号
+
+% 字体设置
+\usepackage{anyfontsize}
+\usepackage{fontspec}
+\setmainfont{Times New Roman} % 英文使用 Times New Roman
+\setmonofont{JetBrains Mono}
+\setCJKmonofont{KaiTi}
+
+% 使用基础宋体
+\setCJKmainfont{SimSun}[
+    % BoldFont = SimHei, % 中文粗体使用黑体
+    BoldFont = {思源宋体 CN SemiBold},
+    ItalicFont = KaiTi, % 中文斜体使用楷体
+    BoldItalicFont = KaiTi
+]
+
+% 该定义用于附录仿宋字体
+\newCJKfontfamily{\fangsong}{FangSong}
+
+% 章节标题
+\usepackage{titlesec}
+\renewcommand{\thesection}{\chinese{section}}
+\titleformat{\section}
+{\Large\bfseries\centering}
+{\thesection、}
+{0em}
+{}
+
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\titleformat{\subsection}
+{\large\bfseries}
+{\thesubsection}
+{1em}
+{}
+
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\titleformat{\subsubsection}
+{\normalsize\bfseries}
+{\thesubsubsection}
+{1em}
+{}
+
+% 标题间距调整
+\titlespacing{\section}{0pt}{0.2\baselineskip}{0.2\baselineskip}
+\titlespacing{\subsection}{0pt}{0.2\baselineskip}{0.2\baselineskip}
+\titlespacing{\subsubsection}{0pt}{0.2\baselineskip}{0.2\baselineskip}
+
+% Drawing 绘图板块包
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{tikz-qtree}
+\usepackage{circuitikz}
+\usepackage{tikz-3dplot}
+\usepackage[svgnames]{xcolor}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, angles, quotes, intersections, tikzmark, backgrounds, shadows, fit}
+
+% 代码块设置
+\usepackage{mdframed}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\usepackage{algorithm,algorithmic}
+
+\definecolor{lstcolorComment}{rgb}{0,0.6,0}
+\definecolor{lstcolorNumber}{HTML}{E6E6E6}
+\definecolor{lstcolorString}{rgb}{1,0.5,0}
+
+\lstset{
+    backgroundcolor=\color{white},           % 背景色
+    basicstyle=\footnotesize\ttfamily,       % 等宽字体和大小
+    breakatwhitespace=false,                 % 是否只在空白处断行
+    breaklines=true,                         % 自动断行
+    keepspaces=true,                         % 保留代码中的空格，对齐代码
+    tabsize=2,                               % Tab 长度为 2 个空格
+    frame=single,                            % 单线边框
+    rulecolor=\color{black},                 % 边框颜色
+    captionpos=bl,                           % 标题位置 (bottom-left)
+    numbers=left,                            % 行号在左侧
+    numbersep=5pt,                           % 行号与代码的距离
+    numberstyle=\tiny\color{lstcolorNumber}, % 行号样式
+    stepnumber=1,                            % 行号步长
+    commentstyle=\color{lstcolorComment},    % 注释样式
+    keywordstyle=\color{blue},               % 关键字样式
+    stringstyle=\color{lstcolorString},      % 字符串样式
+    showspaces=false,                        % 不显示空格
+    showstringspaces=false,                  % 不显示字符串中的空格
+    showtabs=false,                          % 不显示 Tab
+    escapeinside={\%*}{*},                   % 允许在代码中插入 LaTeX 命令
+    extendedchars=true                       % 支持非 ASCII 字符 (对旧编码有效)
+}
+
+% Matlab 代码块
+\usepackage{matlab-prettifier}
+\lstdefinestyle{matlab}{
+    style=Matlab-Pyglike,         % 基础样式，提供精确的 MATLAB 关键字高亮
+    mlshowsectionrules=true,      % 特色功能：高亮 %% 分节符
+    backgroundcolor=\color{white},
+    basicstyle=\footnotesize\ttfamily,
+    numberstyle=\scriptsize\color{mygray}, % 统一使用 mygray 颜色
+    frame=single,
+    rulecolor=\color{black},
+    captionpos=bl,
+    breaklines=true,
+    keepspaces=true,
+    numbers=left,
+    numbersep=8pt,
+    showstringspaces=false,
+    tabsize=2,
+    keywordstyle=\color{deepblue}\bfseries, % 关键字：深蓝、粗体
+    commentstyle=\itshape\color{black!35!white}, % 注释：斜体、浅灰
+    stringstyle=\color{orange},          % 字符串：橙色
+    identifierstyle=\color{myidentifier},  % 标识符(变量/函数名)：深青色
+}
+
+% Python 代码块
+\usepackage{color}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{brightgreen}{RGB}{0, 135, 0}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{lightblue}{RGB}{91, 192, 255}
+\definecolor{orange}{rgb}{1,0.5,0}
+\definecolor{myidentifier}{rgb}{0.2,0.4,0.6} % 为标识符高亮深青色
+\lstdefinestyle{python}{
+    language=Python,
+    backgroundcolor=\color{white},          % 背景色
+    basicstyle=\footnotesize\ttfamily,      % 代码字体：小号、等宽
+    numberstyle=\scriptsize\color{mygray},  % 行号字体：更小号、灰色
+    identifierstyle=\color{myidentifier},   % 标识符字体：深蓝
+    frame=single,                           % 单线边框
+    rulecolor=\color{lightblue},               % 边框颜色
+    captionpos=bl,                           % 标题位置：左下角
+    keywordstyle=\color{orange}\bfseries, % 关键字：深蓝、粗体
+    commentstyle=\itshape\color{black!35!white}, % 设置注释样式，斜体，浅灰
+    stringstyle=\color{brightgreen},             % 字符串：橙色
+    morekeywords={self},                    % 额外关键字
+    emph={MyClass,__init__, GCN, GAT, self},      % 强调词列表
+    emphstyle=\color{deepred}\bfseries,     % 强调词样式：深红、粗体
+    breaklines=true,                        % 自动断行
+    keepspaces=true,                        % 保留空格，用于对齐
+    numbers=left,                           % 行号在左
+    numbersep=8pt,                          % 行号与代码间距
+    showstringspaces=false,                 % 不显示字符串中的空格
+    tabsize=2                               % Tab 长度
+}
+
+% Darcula Theme
+\definecolor{Darcula-bg}{RGB}{43, 43, 43}        % 背景色 (深灰)
+\definecolor{Darcula-fg}{RGB}{169, 183, 198}      % 前景色/普通文本 (亮灰)
+\definecolor{Darcula-comment}{RGB}{128, 128, 128}   % 注释 (灰色)
+\definecolor{Darcula-keyword}{RGB}{204, 120, 50}    % 关键字 (橙色)
+\definecolor{Darcula-function}{RGB}{255, 203, 107}  % 函数名 (黄色)
+\definecolor{Darcula-string}{RGB}{106, 135, 89}     % 字符串 (绿色)
+\definecolor{Darcula-variable}{RGB}{152, 118, 170} % 变量与参数 (淡紫色)
+\definecolor{Darcula-number}{RGB}{104, 151, 187}   % 数字 (蓝色)
+
+\lstdefinestyle{darcula}{
+    language=Python,
+    backgroundcolor=\color{white},
+    basicstyle=\small\ttfamily\color{Darcula-fg},
+    frame=single,
+    rulecolor=\color{Darcula-keyword},
+    captionpos=b,
+    keywordstyle=\color{Darcula-keyword},
+    stringstyle=\color{Darcula-string},
+    commentstyle=\itshape\color{Darcula-comment},
+    numberstyle=\tiny\color{Darcula-number}, % 行号也用数字的蓝色
+    identifierstyle=\color{Darcula-variable},
+    emph={read_csv, merge, rename},
+    emphstyle=\color{Darcula-function},
+    morekeywords=[2]{True, False, None},
+    keywordstyle=[2]\color{Darcula-keyword},
+    breaklines=true,
+    keepspaces=true,
+    numbers=left,
+    numbersep=10pt,
+    showstringspaces=false,
+    tabsize=4,
+}
+
+% TColorbox
+\usepackage[many]{tcolorbox}
+\usepackage{fontawesome5}
+
+\definecolor{warningRed}{RGB}{217, 83, 79}
+\definecolor{warningRedBack}{RGB}{242, 222, 222}
+
+\newtcolorbox{warning}{
+    enhanced,
+    shadow={0.8mm}{-0.8mm}{0mm}{black!20!white},
+    breakable, % 允许内容跨页
+    colback=warningRedBack, % 背景颜色
+    colframe=warningRed,    % 边框颜色
+    boxrule=0.5pt,          % 边框线宽
+    leftrule=2pt,           % 左侧竖线的宽度 (比边框粗，更明显)
+    top=2pt,
+    bottom=1.8pt,
+    right=5em,
+    fontupper=\fontsize{9.5pt}{13pt}\selectfont\kaishu,
+    fonttitle=\small\bfseries,
+    title={
+            \faExclamationTriangle[solid]
+            \hspace{1.5pt}
+            \textbf{Warning}
+        },
+    coltitle=white,
+    attach boxed title to top right={xshift=0pt, yshift=-18.3pt},
+    boxed title style={
+            colback=warningRed,
+            boxrule=0.3pt,
+        }
+}
+
+\definecolor{tipBlue}{RGB}{91, 192, 222}
+\definecolor{tipBlueBack}{RGB}{217, 237, 247}
+
+\newfontfamily{\kaishu}{KaiTi}
+\newtcolorbox{tips}{
+    enhanced,
+    shadow={0.8mm}{-0.8mm}{0mm}{black!20!white},
+    breakable,
+    colback=tipBlueBack,    % 背景颜色
+    colframe=tipBlue,       % 边框颜色
+    boxrule=0.5pt,          % 边框线宽
+    leftrule=2pt,           % 左侧竖线的宽度
+    top=2pt,
+    bottom=1.8pt,
+    right=5em,
+    fontupper=\fontsize{9.5pt}{13pt}\selectfont\kaishu, % 内容字体: {大小}{衬线}
+    fonttitle=\small\bfseries,
+    title={
+            \faLightbulb[solid]
+            \hspace{1.5pt}
+            \textbf{Tips}
+        },
+    coltitle=white,
+    attach boxed title to top right={xshift=0pt, yshift=-18.3pt},
+    % attach boxed title to top left={xshift=10pt, yshift=-10pt},
+    boxed title style={
+            colback=tipBlue,
+            boxrule=0.3pt,
+        }
+}
+
+% 行距、缩进
+\usepackage{setspace}
+\usepackage{indentfirst,comment}
+\renewcommand{\baselinestretch}{1.3}
+\setlength\parindent{2\ccwd} % 中文两字符缩进
+
+% 颜色支持
+\usepackage[table]{xcolor}
+\definecolor{structurecolor}{RGB}{60,113,183}
+\definecolor{main}{RGB}{0,166,82}
+\definecolor{second}{RGB}{255,134,24}
+\definecolor{third}{RGB}{0,174,247}
+\definecolor{winered}{rgb}{0.5,0,0}
+\definecolor{bule}{RGB}{18,29,57}
+\colorlet{coverlinecolor}{second}
+
+% Math:
+\usepackage{array}
+\usepackage{sansmath}
+\usepackage{amsmath,mathrsfs,amsfonts,amssymb}
+\usepackage{esint}
+\usepackage{cases}
+\usepackage{bm} % 粗体数学符号
+\let\Bbbk\relax % 兼容性处理
+
+% 特殊符号
+\usepackage{pifont,manfnt,bbding}
+\usepackage{adforn}
+\usepackage{csquotes} % 引号
+
+% 脚注
+\usepackage[flushmargin,stable]{footmisc}
+\setlength{\footnotesep}{12pt}
+
+% 图表
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multicol,multirow}
+\usepackage{makecell}
+\usepackage{graphicx}
+\usepackage{siunitx}    % 提供 S 列类型，用于对齐数字
+\usepackage[hypcap=false, labelfont={bf,color=structurecolor}]{caption}
+\usepackage{float}
+\usepackage{subcaption}
+\captionsetup[table]{skip=0.6\baselineskip, aboveskip=0.6\baselineskip}
+\captionsetup[figure]{skip=0.6\baselineskip, aboveskip=0.6\baselineskip}
+\captionsetup{
+    font=bf,
+    labelfont=bf,
+    labelsep=quad,
+    justification=centering,
+    singlelinecheck=true,
+    skip=1em
+}
+\newcommand\figref[1]{\textbf{图}~\ref{#1}}
+\newcommand\tabref[1]{\textbf{表}~\ref{#1}}
+
+% 列表，设置了 Itemize 和 Enumerate 不缩进
+\usepackage{enumitem}
+
+\setlist[itemize]{
+    parsep=\parskip,
+    topsep=6pt,
+    itemsep=1pt,
+    leftmargin=*
+}
+
+\setlist[enumerate,1]{
+    parsep=\parskip,
+    topsep=6pt,
+    label=\arabic*., % 标签格式为 1., 2., ...
+    leftmargin=* % 标签对齐
+}
+
+\setlist[enumerate,2]{
+    label=(\alph*),  % 标签格式为 (a), (b), ...
+    leftmargin=*,
+    topsep=1pt,
+    itemsep=0pt
+}
+
+% 参考文献
+\usepackage[
+    backend=biber,          % 指定后端为 biber
+    style=gb7714-2015,      % 使用国标 GBT7714-2015 样式
+    citestyle=numeric-comp  % 引用为数字压缩格式，如 [1-3]
+]{biblatex}
+\addbibresource[location=local]{references.bib} % 指定你的 .bib 文件
+
+% \usepackage[numbers,sort&compress]{gbt7714} % 存在多篇引文时自动压缩引号
+% \bibliographystyle{gbt7714-numerical}
+% \setcitestyle{super=false}
+% \renewcommand{\citenumfont}[1]{\textbf{#1}}
+
+% 附录
+\usepackage[header]{appendix}
+\usepackage{titlesec}
+
+% 只在第一次调用 \addappendix 时执行
+\newcommand{\addappendix}[1]{
+    \appendix
+
+    \titleformat{\section}
+    {\large\bfseries\centering}
+    {附录~\thesection}
+    {1em}
+    {}
+
+    \titlespacing*{\section}{0pt}{2em}{1em}
+
+    % 将 \addappendix 命令重定义为一个简单的 \section 命令
+    % 后续再调用 \addappendix 时，就不会重复执行上面的设置了
+    % 这里用 ##1 是因为在 \newcommand 的定义中)
+    \renewcommand{\addappendix}[1]{\section{##1}}
+    \refstepcounter{section}
+    \section*{附录~\thesection\hspace{1em}#1}
+}
+% 此处让 \addappendix 命令暂时处于不进入目录的状态
+
+% 超链接
+\usepackage{hyperref}
+\hypersetup{
+    breaklinks,
+    unicode,
+    linktoc=all,
+    bookmarksnumbered=true,
+    bookmarksopen=true,
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue,
+    plainpages=false,
+    pdfstartview=FitH,
+    pdfborder={0 0 0},
+    linktocpage
+}
+
+\newcommand{\h}{\hspace}
+\renewcommand{\v}{\vspace}
+
+\AtBeginDocument{
+    \setlength{\abovedisplayskip}{0.45em}
+    \setlength{\belowdisplayskip}{0.6em}
+}

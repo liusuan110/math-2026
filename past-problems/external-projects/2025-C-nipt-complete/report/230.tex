@@ -1,0 +1,355 @@
+\documentclass[a4paper, oneside, 12pt]{article}
+\input{additional.tex}
+\usepackage{ragged2e}
+\usepackage{tabularx}
+
+\begin{document}
+
+\section*{基于混合模型的 NIPT 检测时点选择与胎儿异常判定}
+
+\v{0.2em}
+
+\begin{center}
+    \large\bfseries
+    摘要
+\end{center}
+
+\v{-0.5em}
+
+\textbf{针对问题一}，本文首先通过\textbf{方差膨胀因子（VIF）}分析消除了身高、体重的多重共线性，并结合统计检验与文献研究排除了孕妇年龄与生产次数的显著影响。考虑到数据为\textbf{重复测量数据}，其观测值不满足独立性假设，本文计算了\textbf{组内相关系数（ICC）}为 $0.5984$，证明了采用混合效应模型的必要性。最终，通过\textbf{AIC/BIC}准则在多个候选模型中进行择优，建立了一个\textbf{非线性混合效应模型}：$Y = 0.218290 - 0.011993 w + 0.000326 w^2 - 0.002045 \text{BMI} + 0.012028 c$。该模型中所有变量的$p$值均远小于$0.05$，具有高度统计显著性，且模型的\textbf{条件 $R^2$ 值达到 $0.7664$}，表现出强大的解释能力。
+
+\textbf{针对问题二}，为给BMI体型的孕妇提供个性化的NIPT时点建议，本文构建了一个\textbf{带约束的多目标优化模型}。模型旨在\textbf{最小化潜在风险}，同时\textbf{最大化检测成功率}。本文采用 \textbf{K-Means聚类分析} 验证了将孕妇\textbf{分为 $4$ 组}的合理性。随后建立了随孕周递增的\textbf{分段式风险函数}，并通过\textbf{加权和法}将多目标转化为单目标。为确保方案的临床可行性，模型引入了\textbf{两周的检测窗口}，并对窗口施加了\textbf{上下限约束}。最终，使用\textbf{SLSQP求解器}成功捕获了\textbf{四个最优的BMI分组区间}及最佳NIPT检测窗口。通过\textbf{组内对比}分析与精美的\textbf{可视化验证}，证明该方案可在风险与成功率之间做出智能权衡。
+
+\textbf{针对问题三}，本文在\textbf{问题一、二的基础上}，综合考虑\textbf{检测误差}与\textbf{样本达标率}，构建了一个包含\textbf{核心、硬性及逻辑等多重约束的优化模型}。该模型核心要求推荐检测时点的预测Y染色体浓度\textbf{不低于$6\%$}，并利用\textbf{差分进化算法}求解最佳 BMI 分组方案与对应的检测窗口。为不同孕妇提供了最佳 NIPT 时点建议，模型显示：对于\textbf{高BMI孕妇}，模型推荐的较晚孕周窗口能将检测成功率\textbf{提升近$15\%$}；而对于\textbf{中低BMI孕妇}，模型则在保障高成功率的同时，兼顾了早期检测的临床效益。
+
+\textbf{针对问题四}，本文提出了一种基于\textbf{优化XGBoost模型}的女胎染色体异常综合判定方法。为解决数据中异常样本稀疏导致的类别严重不平衡问题，本文采用\textbf{SMOTETomek混合采样技术}对训练集进行预处理，有效生成了少数类样本。随后结合网格搜索与交叉验证进行超参数寻优。考虑到临床诊断中\textbf{“漏诊”的严重性远高于“误诊”}，优化过程以召回率为核心评估指标，旨在最大化对异常胎儿的检出能力。为将模型的\textbf{概率预测转化为科学的二元判定}，本文通过遍历所有可能的决策阈值，找到了使\textbf{F1分数达到最大值的最优决策点}。该最优阈值代表了模型在低误诊与低漏诊之间的最佳平衡。由此，本文确立了最终判定方法：当模型输出的\textbf{异常概率大于最优阈值 0.8128 时，即判定女胎为“异常”}。该方法综合了多维生理指标，并通过科学的阈值选择，为临床辅助诊断提供了可靠、量化的决策依据。
+
+\v{1em}
+
+\noindent
+\textbf{关键词}：无创产前检测 \quad 非线性混合效应 \quad 约束优化 \quad XGBoost
+
+\newpage
+
+% \tableofcontents
+
+% \begin{warning}
+%     国赛要求提交时必须删除目录，这是写作便于组织结构的！
+% \end{warning}
+
+% \newpage
+
+\section{引言}
+
+\subsection{问题背景}
+
+产前检测，即通过孕妇的早期检测来确定胎儿的健康状况的方法，近年来得到了广泛的关注和应用。无创产前检测(NIPT)作为一种简单且低风险的筛查检测，已展现出良好的前景。世界各国政府和私人组织也开始投入大量资源，目的是将其纳入国家医疗保健计划\cite{jayashankar2023non}。
+
+NIPT的具体机制是分析母体血浆中的胎儿游离DNA来进行染色体非整倍体筛查，其核心优势在于准确性高且对孕妇和胎儿无创伤风险。然而，它的性能高度依赖于母体血浆中胎儿游离DNA的占比，即胎儿分数。胎儿分数跟孕妇的体重或身体质量指数（BMI）、孕周数和孕情等都具有可能的相关性，不同孕妇群体的最适检测时间也各不相同。此外，NIPT的准确性并非完美。即便是检测成功，结果也可能与最终的临床诊断不符。
+
+因此如何根据孕妇的个体特征来确定最佳的检测时点，从而平衡检测成功率与时效性，是本文需要解决的核心问题。
+
+\subsection{问题重述}
+
+本文需要在附件中利用的NIPT实际检测数据，建立一系列数学模型，以解决NIPT在临床应用中的时点选择与异常判定问题。同时，注意到问题一至三均聚焦于男性胎儿，问题四则聚焦于女性胎儿。
+
+针对问题一：需要探索并量化男性胎儿Y染色体浓度与孕妇孕周、BMI等关键生理指标之间的数学关系，并对模型的显著性进行检验。
+
+针对问题二：由于孕妇的BMI对男性胎儿的NIPT结果准确性有重要影响，因此需要对孕妇进行合理的BMI分组，并为每组确定一个最佳NIPT检测时点。该时点的选择需要使孕妇因检测时机不当而可能面临的潜在综合风险最小化，同时分析检测误差对结果的影响。
+
+针对问题三：基于问题二的结果，不仅需要对BMI进行考虑，还要综合考虑孕妇的身高、体重、年龄等更多因素，以及检测误差和男性胎儿的 Y 染色体浓度达标比例进行分组。该时点的选择同样需要使得孕妇潜在综合风险最小化，同时分析检测误差对结果的影响。
+
+针对问题四：由于女性胎儿无Y染色体，因此需要利用女胎 21、18、13 号和X染色体的 Z 值、GC 含量、测序读段数及孕妇 BMI 等一系列特征，构建一个高效准确的分类模型，用于判定女性胎儿是否存在染色体非整倍体异常。
+
+\section{问题分析}
+
+\subsection{问题一的分析}
+
+针对问题一，为了避免多重共线性问题对模型稳定性的影响，本文采用方差膨胀因子进行检验。此外，通过数据分析和文献支撑，本文排除了孕妇年龄和生产次数这两个在本次数据集中不具备显著影响的因素。在模型选择阶段，注意到数据集中存在对同一孕妇进行多次检测的特征，属于重复测量数据，因此本文决定采用非线性混合效应模型。对于模型构建与显著性检验，本文设定了多个包含孕周、BMI以及检测次数的非线性候选模型，并利用赤池信息准则（AIC）和贝叶斯信息准则（BIC）进行择优。择优完成后对最优模型进行拟合，而后通过沃尔德检验验证变量的系数的统计显著性。
+
+\subsection{问题二的分析}
+针对问题二，目标是构建一个能平衡临床风险与检测成功率的优化决策模型。采用K-Means聚类，根据数据自身特性将孕妇客观地划分为4个BMI组，为后续优化提供分组基础。而后建立多目标优化模型，其核心是“最小化潜在风险”与“最大化检测成功率”之间寻求最佳平衡。通过加权和法将此多目标问题转化为单目标，并以BMI分组边界为决策变量，在窗口内样本量、检测窗口宽度等严格约束下进行求解。最终得到的优化方案不仅给出了各BMI组的最佳NIPT时点，且经过组内对比分析验证，该方案能显著规避因Y染色体浓度不足导致的检测失败和结果不准确等误差，有效降低了孕妇的总体潜在风险。
+
+\subsection{问题三的分析}
+针对问题三，目标是对第二问的模型进行深化与增强，以获得一个更稳健的NIPT时点推荐方案，核心改进源于对“检测误差”的深入分析。基于此，本文在原有的“平衡风险与成功率”优化模型基础上，引入了一系列更严格的约束条件。其中关键约束包括：要求推荐时点的理论预测Y染色体浓度不低于6\%，且窗口内实际浓度高于6\%的样本必须占多数。由于模型约束的增强导致求解难度增大，本文选用了更强大的差分进化全局优化算法。模型给出的新方案，经组内对比分析验证能更有效地规避检测误差，尤其显著提升了高BMI这一高风险孕妇群体的检测成功率。
+
+\subsection{问题四的分析}
+针对问题四，需要建立一个综合多项指标、能够准确判定女胎是否异常的分类方法。本文选择使用机器学习方法，核心挑战在于数据存在严重的类别不平衡问题，即异常样本远少于正常样本。为解决此问题，采用SMOTE-Tomek混合采样技术对训练集进行处理。模型方面，选用能捕捉复杂非线性关系的XGBoost算法，考虑到临床上“漏诊”的后果远重于“误诊”，因此需要确保模型优先识别出所有潜在的异常胎儿。最终，将训练好的模型与一个最优决策阈值相结合，最优决策阈值是通过在测试集上遍历并寻找使F1分数最大的点来确定，从而构成完整的判定方法。
+
+\newpage
+
+\section{数据预处理}
+
+\subsection{符号说明}
+
+\begin{center}
+    \begin{tabularx}{0.7\textwidth}{c@{\hspace{1pc}}|@{\hspace{2pc}}>{\centering\arraybackslash}X}
+        \Xhline{0.08em}
+        符号      & 符号说明              \\
+        \Xhline{0.05em}
+        $a_i$   & 第 $i$ 个样本的年龄      \\
+        $d_i$   & 第 $i$ 个样本检测时的孕天数  \\
+        $w_i$   & 第 $i$ 个样本检测时的孕周数  \\
+        $BMI_i$ & 第 $i$ 个样本 BMI 指标值 \\
+        \Xhline{0.08em}
+    \end{tabularx}
+\end{center}
+
+\subsection{数据清洗}
+
+\input{chapters/数据预处理/数据清洗.tex}
+
+\section{问题一的模型建立与求解}
+
+\input{chapters/Q1/问题一的模型建立与求解.tex}
+
+\section{问题二的模型建立与求解}
+
+\input{chapters/Q2/问题二的模型建立与求解.tex}
+
+\section{问题三的模型建立与求解}
+
+\input{chapters/Q3/问题三的模型建立与求解.tex}
+
+\section{问题四的模型建立与求解}
+
+\input{chapters/Q4/问题四的模型建立与求解.tex}
+
+\section{优缺点分析}
+
+\subsection{优点分析}
+\begin{enumerate}
+    \item \textbf{数据处理的科学性与严谨性}：在问题一中，通过计算ICC识别并采用混合效应模型处理重复测量数据，避免了传统回归的统计谬误。在问题四中，本文敏锐地捕捉到严重的类别不平衡问题，并选用了先进的SMOTE-Tomek混合采样技术，有效避免了模型偏向多数类，为后续精准分类奠定基础。
+
+    \item \textbf{建模思路的递进性与关联性}：四个问题并非孤立解决，而是形成了一个有机的整体。问题一建立的Y染色体浓度预测模型 $Y = f(w, \text{BMI}, c)$，在问题三中被巧妙地用作核心约束条件，确保了推荐时点的理论可靠性。这种模型之间的调用与联动，体现了本文系统性解决问题的能力。
+
+    \item \textbf{优化目标的临床实际导向}：在问题二和问题三的优化模型中，本文没有仅仅追求单一目标，而是构建了平衡“降低潜在风险”与“提升检测成功率”的多目标优化框架。特别是在权重设置和超参数寻优时，本文始终将临床后果（如漏诊风险大于误诊）作为优先考量，使得模型决策更贴近实际需求。
+    \item \textbf{算法选择的先进性与匹配度}：本文根据不同问题的特性，选用了最合适的算法。例如，面对问题三中形态复杂、存在多个局部最优解的目标函数，本文采用鲁棒性更强的差分进化全局优化算法。在问题四中，选用了性能卓越的XGBoost分类器，并结合交叉验证与网格搜索进行精细调优，确保了模型的性能上限。
+\end{enumerate}
+
+\subsection{缺点分析}
+
+\begin{enumerate}
+
+    \item \textbf{对异常样本的依赖性}：在问题四的分类模型中，尽管本文使用了SMOTE-Tomek技术来扩充和清洗样本，但模型的训练效果本质上仍高度依赖于原始数据中有限的异常样本特征。如果原始异常样本的代表性不足或存在某种偏差，合成出的新样本也可能继承这些偏差，从而影响模型的泛化能力。
+
+    \item \textbf{模型解释性的权衡}：本文选用的XGBoost 和差分进化 等算法虽然性能强大，但其内在决策逻辑比线性模型等传统方法更为复杂，属于“黑箱”或“灰箱”模型。虽然本文通过特征重要性等方法进行了事后分析，但在向临床医生解释“为何模型会做出如此具体的判断”时，其直观性和透明度相对较低。
+
+    \item \textbf{检测窗口推荐的复杂性}：在问题二中，虽然 BMI 最高的组$[33.95, 46.87)$确实推荐了最晚的检测窗口（$23 \sim 24$周），但 BMI 在 $[31.88, 33.95)$ 区间的孕妇，其最优窗口（$13 \sim 14$周）反而早于前一区间。这表明，简单的趋势外推不足以确定最优检测时点，必须综合考虑特定 BMI 区间内样本的实际分布、检测成功率和潜在风险。
+
+\end{enumerate}
+
+\newpage
+
+\printbibliography[heading=bibliography,title=参考文献]
+% \bibliography{references}
+
+\newpage
+
+\begin{center}
+    \Large\bfseries
+    附录
+\end{center}
+
+\addappendix{支撑材料文件列表}
+
+% Notice: 注意，支撑文件的文字请使用仿宋字体 \fangsong
+
+% Q1 文件夹
+\section*{Q1 文件夹文件列表}
+\begin{table}[H]
+    \centering
+    \fangsong
+    \begin{tabularx}{\textwidth}{>{\RaggedRight}X >{\RaggedRight}X}
+        \toprule
+        \textbf{文件名}          & \textbf{简介}      \\
+        \midrule
+        AIC和BIC检验.py          & AIC和BIC检验代码      \\
+        Y染色体浓度与有关系的变量的散点图.pdf & Y染色体浓度与相关变量散点图   \\
+        Y染色体浓度与自身变量散点图.py     & Y染色体浓度与自身变量散点图代码 \\
+        四个自变量的散点图.pdf         & 四个自变量散点图         \\
+        四个自变量的散点图.py          & 四个自变量散点图代码       \\
+        多重共线性检测.py            & 多重共线性检测代码        \\
+        非线性混合模型.py            & 非线性混合模型代码        \\
+        预测值与真实值.pdf           & 预测值与真实值对比图       \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+% Q2 文件夹 - BMI分组
+\section*{Q2 文件夹文件列表}
+\subsection*{BMI分组}
+\begin{table}[H]
+    \centering
+    \fangsong
+    \begin{tabularx}{\textwidth}{>{\RaggedRight}X >{\RaggedRight}X}
+        \toprule
+        \textbf{文件名}   & \textbf{简介} \\
+        \midrule
+        BMI分组.py       & BMI分组代码     \\
+        孕妇BMI的四分位点.pdf & 孕妇BMI四分位点分析 \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+% Q2 文件夹 - KMeans与加权和
+\subsection*{KMeans与加权和}
+\begin{table}[H]
+    \centering
+    \fangsong
+    \begin{tabularx}{\textwidth}{>{\RaggedRight}X >{\RaggedRight}X}
+        \toprule
+        \textbf{文件名}       & \textbf{简介}       \\
+        \midrule
+        BMI分组和最佳NIPT时点.pdf & BMI分组与最佳NIPT时点关系图 \\
+        BMI聚类分析结果.pdf      & BMI聚类分析结果图表       \\
+        K-Means手法.pdf      & K-Means聚类方法介绍     \\
+        KMeans对BMI聚类.py    & K-Means对BMI聚类代码   \\
+        加权和法.py            & 加权和算法代码           \\
+        加权和法与二周窗口优化.py     & 加权和法两周窗口优化代码      \\
+        组内检测成功率对比分析.pdf    & 组内检测成功率对比图        \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+% Q2 文件夹 - 数据预处理
+\subsection*{数据预处理}
+\begin{table}[H]
+    \centering
+    \fangsong
+    \begin{tabularx}{\textwidth}{>{\RaggedRight}X >{\RaggedRight}X}
+        \toprule
+        \textbf{文件名}            & \textbf{简介}        \\
+        \midrule
+        BMI与孕周散点图.pdf           & BMI与孕周关系散点图        \\
+        BMI与孕周散点图.py            & BMI与孕周关系散点图代码      \\
+        优化模型.py                 & 模型优化代码             \\
+        剔除Y小于4的散点图.py           & 剔除Y值小于4的散点图代码      \\
+        剔除Y小于4的散点图 (标注不正确点).pdf & 剔除Y值小于4并标注不正确点的散点图 \\
+        标注全部不准确散点图.pdf          & 标注所有不准确点的散点图       \\
+        标注全部不准确散点图.py           & 标注所有不准确点散点图代码      \\
+        添加结果检验结果列.py            & 添加结果检验列代码          \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+% 数据预处理文件夹 (第二张图片)
+\subsection*{数据预处理 (续)}
+\begin{table}[H]
+    \centering
+    \fangsong
+    \begin{tabularx}{\textwidth}{>{\RaggedRight}X >{\RaggedRight}X}
+        \toprule
+        \textbf{文件名}   & \textbf{简介}   \\
+        \midrule
+        GC值小提琴图.pdf    & GC值分布小提琴图     \\
+        GC值小提琴图.py     & GC值小提琴图代码     \\
+        孕天数是否正确.py     & 检查孕天数代码       \\
+        孕妇检测次数直方图.py   & 孕妇检测次数直方图代码   \\
+        年龄均值差异分析.py    & 年龄均值差异分析代码    \\
+        检测BMI异常值.py    & 检测BMI异常值代码    \\
+        检测孕周转为孕天.py    & 孕周转孕天代码       \\
+        检测次数.pdf       & 检测次数图表        \\
+        检测表格空值.py      & 检测表格空值代码      \\
+        清洗女胎数据.py      & 清洗女胎数据代码      \\
+        统一表格时间.py      & 统一表格时间格式代码    \\
+        统计非大龄Y染色体均值.py & 统计非大龄Y染色体均值代码 \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+% Q3 文件夹
+\section*{Q3 文件夹文件列表}
+\begin{table}[H]
+    \centering
+    \fangsong
+    \begin{tabularx}{\textwidth}{>{\RaggedRight}X >{\RaggedRight}X}
+        \toprule
+        \textbf{文件名}       & \textbf{简介}       \\
+        \midrule
+        BMI分组和最佳NIPT时点.pdf & BMI分组与最佳NIPT时点关系图 \\
+        Y染色体浓度与预测准确的关系.pdf & Y染色体浓度与预测准确性关系图   \\
+        Y染色体浓度与预测准确的关系.py  & Y染色体浓度与预测准确性关系图代码 \\
+        差分算法.py            & 差分算法代码            \\
+        组内检测成功率对比分析.pdf    & 组内检测成功率对比图        \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+% Q4 文件夹
+\section*{Q4 文件夹文件列表}
+\subsection*{GBDT}
+\begin{table}[H]
+    \centering
+    \fangsong
+    \begin{tabularx}{\textwidth}{>{\RaggedRight}X >{\RaggedRight}X}
+        \toprule
+        \textbf{文件名} & \textbf{简介} \\
+        \midrule
+        Q4\_solve.py & Q4问题求解代码    \\
+        核心可视化总览.pdf  & 核心可视化总览图表   \\
+        特征重要性.pdf    & 特征重要性分析图    \\
+        阈值选择可视化.pdf  & 阈值选择可视化图    \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+% Q4 文件夹 - 数据分析
+\subsection*{数据分析}
+\begin{table}[H]
+    \centering
+    \fangsong
+    \begin{tabularx}{\textwidth}{>{\RaggedRight}X >{\RaggedRight}X}
+        \toprule
+        \textbf{文件名}             & \textbf{简介}         \\
+        \midrule
+        不同特征在检验正确或错误样本中的分布对比.pdf & 不同特征在正确/错误样本中的分布对比图 \\
+        其他指标对比图.pdf              & 其他指标对比图             \\
+        异常样本分布.py                & 异常样本分布分析代码          \\
+        数据分布分析.py                & 数据分布分析代码            \\
+        样本均值差异.py                & 样本均值差异分析代码          \\
+        核心指标对比图.pdf              & 核心指标对比图             \\
+        非整倍体扇形图.pdf              & 非整倍体扇形图             \\
+        非整倍体扇形图.py               & 非整倍体扇形图代码           \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\addappendix{非核心指标核密度图}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{chapters/Q4/images/其他指标对比图.pdf}
+    \caption{其他指标对比图}
+    \label{fig:其他指标对比图}
+\end{figure}
+
+\addappendix{多重共线性检测}
+
+\lstinputlisting[style=python]{codes/python/Q1/多重共线性检测.py}
+
+\addappendix{非线性混合模型}
+
+\lstinputlisting[style=python]{codes/python/Q1/非线性混合模型.py}
+
+\addappendix{AIC和BIC检验}
+
+\lstinputlisting[style=python]{codes/python/Q1/AIC和BIC检验.py}
+
+\addappendix{KMeans对BMI聚类}
+
+\lstinputlisting[style=python]{codes/python/Q2/KMeans对BMI聚类.py}
+
+\addappendix{加权和法与二周窗口优化}
+
+\lstinputlisting[style=python]{codes/python/Q2/加权和法与二周窗口优化.py}
+
+\addappendix{差分算法}
+
+\lstinputlisting[style=python]{codes/python/Q3/差分算法.py}
+
+\addappendix{GBDT算法}
+
+\lstinputlisting[style=python]{codes/python/Q4/GBDT算法.py}
+\end{document}
+

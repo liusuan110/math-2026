@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>烟幕干扰弹投放策略 · 3D 可视化仿真</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 顶部栏 -->
+    <header id="topbar">
+        <div class="brand">🛡 烟幕干扰弹投放策略 · 3D 仿真</div>
+        <div class="top-right">
+            <div id="optProgressWrap" class="opt-progress" style="display:none">
+                <div class="opt-bar"><div id="optProgressBar" class="opt-bar-fill"></div></div>
+                <span id="optProgressText">…</span>
+            </div>
+            <button id="optBtn" class="btn btn-primary">⚡ 自动优化</button>
+            <button id="fitBtn" class="btn">📐 适配视角</button>
+        </div>
+    </header>
+
+    <div id="main">
+        <!-- 左侧参数面板 -->
+        <aside id="leftPanel"></aside>
+        <!-- 3D 画布 -->
+        <div id="canvasWrap"></div>
+        <!-- 右侧遮蔽看板 -->
+        <aside id="dashboard"></aside>
+    </div>
+
+    <!-- 底部时间轴 -->
+    <footer id="timeline">
+        <button id="playBtn" class="btn btn-play">▶ 播放</button>
+        <span id="timeText">t = 0.00 s</span>
+        <input id="timeSlider" type="range" min="0" max="70" step="0.05" value="0">
+        <select id="speedSel" title="播放速度">
+            <option value="0.25">0.25×</option>
+            <option value="0.5">0.5×</option>
+            <option value="1" selected>1×</option>
+            <option value="2">2×</option>
+            <option value="4">4×</option>
+        </select>
+        <div class="cam-group">
+            <button class="btn cam-btn cam-drone">🚁 无人机视角</button>
+            <button class="btn cam-btn cam-missile">🎯 导弹视角</button>
+            <button class="btn cam-btn cam-smoke">☁ 烟幕视角</button>
+        </div>
+    </footer>
+
+    <!-- 依赖（本地 vendor，无需联网） -->
+    <script src="vendor/three.min.js"></script>
+    <script src="vendor/OrbitControls.js"></script>
+    <script src="vendor/CSS2DRenderer.js"></script>
+    <!-- 业务脚本 -->
+    <script src="js/physics.js"></script>
+    <script src="js/scenario.js"></script>
+    <script src="js/optimizer.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        (function () {
+            // 默认加载"问题1"场景
+            SimState.applyPreset('q1');
+            const state = SimState.getState();
+            const app = SimApp.create(document.getElementById('canvasWrap'));
+            SimApp.setState(state);
+
+            SimUI.init(state, {
+                onChange: function () { app.rebuild(); },
+                onSeek: function () {},
+                onPlayPause: function () {},
+                onSpeed: function () {},
+                onCamera: function (mode, idx) { app.setCameraMode(mode, idx); },
+                onFit: function () { app.fitView(); },
+            }, {
+                panel: document.getElementById('leftPanel'),
+                dashboard: document.getElementById('dashboard'),
+                timeSlider: document.getElementById('timeSlider'),
+                timeText: document.getElementById('timeText'),
+                playBtn: document.getElementById('playBtn'),
+                speedSel: document.getElementById('speedSel'),
+                camDrone: document.querySelector('.cam-drone'),
+                camMissile: document.querySelector('.cam-missile'),
+                camSmoke: document.querySelector('.cam-smoke'),
+                fitBtn: document.getElementById('fitBtn'),
+                optBtn: document.getElementById('optBtn'),
+                optProgressWrap: document.getElementById('optProgressWrap'),
+                optProgressBar: document.getElementById('optProgressBar'),
+                optProgressText: document.getElementById('optProgressText'),
+            });
+
+            app.start();
+            SimUI.setCam('free');
+        })();
+    </script>
+</body>
+</html>

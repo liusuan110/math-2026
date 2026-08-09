@@ -52,6 +52,7 @@ code/**/figures/
 # ===== 编辑器 =====
 .vscode/*
 !.vscode/settings.json
+!.vscode/extensions.json
 .idea/
 *.swp
 

@@ -7,5 +7,85 @@
     "PYTHONUTF8": "1",
     "MPLBACKEND": "Agg",
     "MPLCONFIGDIR": "${workspaceFolder}\\.matplotlib-cache"
-  }
+  },
+  "latex-workshop.latex.autoBuild.run": "onFileChange",
+  "latex-workshop.latex.env": {
+    "PATH": "/Library/TeX/texbin:${env:PATH}"
+  },
+  "latex-workshop.latex.outDir": "%DIR%",
+  "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (xelatex)",
+      "tools": [
+        "latexmk-xelatex"
+      ]
+    },
+    {
+      "name": "xelatex -> biber -> xelatex*2",
+      "tools": [
+        "xelatex",
+        "biber",
+        "xelatex",
+        "xelatex"
+      ]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk-xelatex",
+      "command": "/Library/TeX/texbin/latexmk",
+      "args": [
+        "-g",
+        "-e",
+        "$bibtex = q{/Library/TeX/texbin/bibtex %O %B};",
+        "-e",
+        "$biber = q{/Library/TeX/texbin/biber %O %B};",
+        "-e",
+        "$xelatex = q{/Library/TeX/texbin/xelatex %O %S};",
+        "-e",
+        "$xdvipdfmx = q{/Library/TeX/texbin/xdvipdfmx -E -o %D %O %S};",
+        "-e",
+        "$kpsewhich = q{/Library/TeX/texbin/kpsewhich %S};",
+        "-xelatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "xelatex",
+      "command": "/Library/TeX/texbin/xelatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "biber",
+      "command": "/Library/TeX/texbin/biber",
+      "args": [
+        "%DOCFILE%"
+      ]
+    }
+  ],
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.synctex.afterBuild.enabled": true,
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux",
+    "*.bbl",
+    "*.bcf",
+    "*.blg",
+    "*.fdb_latexmk",
+    "*.fls",
+    "*.log",
+    "*.out",
+    "*.run.xml",
+    "*.synctex.gz",
+    "*.toc",
+    "*.xdv"
+  ]
 }

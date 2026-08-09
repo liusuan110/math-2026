@@ -1,0 +1,130 @@
+%==============================================================
+% 全国大学生数学建模竞赛 AI 工具使用详情说明模板
+% 编译方式：latexmk -xelatex AI工具使用详情说明.tex
+% 说明：请按赛题当年官方要求调整，本文件用于形成可提交的独立 PDF。
+%==============================================================
+
+\documentclass[a4paper]{ctexart}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\hypersetup{colorlinks=true, linkcolor=black, citecolor=black, urlcolor=black}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  columns=fullflexible,
+  keepspaces=true
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries AI 工具使用详情说明}
+\end{center}
+
+\section{所用 AI 工具名称、版本与使用日期}
+
+\begin{table}[h]
+  \centering
+  \caption{AI 工具使用概况}
+  \begin{tabular}{cccc}
+    \toprule
+    工具名称 & 模型/版本 & 开发机构 & 使用日期 \\
+    \midrule
+    ChatGPT / Codex & 【模型版本】 & OpenAI & 2026-09-【】至 2026-09-【】 \\
+    DeepSeek & 【模型版本】 & 深度求索 & 2026-09-【】至 2026-09-【】 \\
+    其他工具 & 【如未使用则删除】 & 【】 & 【】 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{具体使用目的和环节}
+
+\begin{enumerate}[label=\textbf{环节\arabic*：}, leftmargin=5em]
+  \item \textbf{题意理解与方案讨论。}
+  用于辅助梳理题目背景、识别关键变量、归纳问题之间的递进关系。最终问题分析、模型选择与论文表述由团队成员独立判断并修改确认。
+
+  \item \textbf{资料检索与文献线索整理。}
+  用于生成检索关键词、归纳可能相关的理论方法。所有正式引用文献均由团队成员人工核验来源、作者、年份和结论。
+
+  \item \textbf{代码框架生成与调试辅助。}
+  用于生成 Python/MATLAB 代码初稿、解释报错信息、提出算法优化建议。最终代码由团队成员运行、修改、测试，并以实际输出结果为准。
+
+  \item \textbf{图表表达与论文语言润色。}
+  用于改进图题、表题、摘要表述和部分语句的通顺性。论文中的核心公式、数据结果、结论判断均由团队成员复核。
+\end{enumerate}
+
+\section{关键交互记录}
+
+\subsection{示例一：题目理解与建模路线讨论}
+\noindent\textbf{提示词：}
+\begin{lstlisting}
+请根据题目要求，分析三个问题之间的递进关系，并给出可能的建模路线。
+\end{lstlisting}
+
+\noindent\textbf{AI 回复摘要：}
+\begin{lstlisting}
+AI 建议先完成数据清洗和变量定义，再针对问题一建立基础模型；
+问题二在问题一基础上加入约束或动态因素；
+问题三进行方案优化和稳定性检验。
+\end{lstlisting}
+
+\noindent\textbf{采纳与修改情况：}
+团队采纳了“先基础模型、再扩展模型、最后检验与推广”的总体结构，但具体变量、公式、参数和求解结果均由团队成员根据题目数据重新建立和计算。
+
+\subsection{示例二：代码调试辅助}
+\noindent\textbf{提示词：}
+\begin{lstlisting}
+下面的 Python 优化程序收敛失败，请分析可能原因并给出调试建议。
+\end{lstlisting}
+
+\noindent\textbf{AI 回复摘要：}
+\begin{lstlisting}
+AI 提醒检查变量尺度、初始值、约束可行性和目标函数是否存在 NaN。
+\end{lstlisting}
+
+\noindent\textbf{采纳与修改情况：}
+团队根据建议检查了变量归一化和约束边界，并重新设置参数范围。最终程序由团队成员独立运行验证。
+
+\subsection{示例三：摘要润色}
+\noindent\textbf{提示词：}
+\begin{lstlisting}
+请在不改变数学含义和数值结果的前提下，使下面摘要更加简洁、突出每问的模型和结论。
+\end{lstlisting}
+
+\noindent\textbf{AI 回复摘要：}
+\begin{lstlisting}
+AI 建议按“问题一、问题二、问题三、模型检验、总体结论”的顺序组织摘要。
+\end{lstlisting}
+
+\noindent\textbf{采纳与修改情况：}
+团队采纳了摘要结构建议，但对全部模型名称、指标数值和结论表述进行了人工核验与重写。
+
+\section{未采纳或人工修正的内容}
+
+\begin{itemize}
+  \item 对于 AI 给出的未标明来源的文献、数据或经验参数，团队未直接采用。
+  \item 对于 AI 生成的代码，团队逐行检查变量含义、公式实现和输出结果，删除了与题意无关或不可解释的部分。
+  \item 对于 AI 生成的文字，团队重点检查是否存在夸大结论、模型名称不准确、结果与图表不一致等问题。
+\end{itemize}
+
+\section{团队原创性与责任说明}
+
+本文的建模思路、公式推导、数据处理、程序运行、结果解释和最终结论均由团队成员完成并负责。AI 工具仅作为辅助工具用于启发思路、提高调试效率和改善表达，不替代团队成员对模型正确性、数据真实性和论文原创性的判断。
+
+\end{document}

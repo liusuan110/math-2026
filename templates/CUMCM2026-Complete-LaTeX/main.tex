@@ -1,0 +1,670 @@
+%==============================================================
+% CUMCM 2026 完整实战论文模板
+% 参考来源：
+% 1. templates/CUMCMThesis 原始 cumcmthesis 模板
+% 2. past-problems/external-projects/2025-B-sic-thickness-national-first/25_国赛/main.tex
+% 3. 2025-B 工程中的 AI 工具使用说明 example.tex
+%
+% 编译方式：
+%   latexmk -xelatex main.tex
+%
+% 赛时用法：
+%   1. 先改下方“队伍信息”
+%   2. 摘要先用填空版，最后 6 小时重写
+%   3. 每一问保持“分析 -> 建模 -> 求解 -> 结果 -> 检验”的闭环
+%==============================================================
+
+\documentclass{cumcmthesis}
+% 电子版提交通常使用 withoutpreface；打印版可保留承诺书页。
+% \documentclass[withoutpreface,bwprint]{cumcmthesis}
+
+%------------------------ 常用宏包 -----------------------------
+\usepackage{url}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{enumitem}
+\usepackage{mathtools}
+
+%------------------------ 图片和代码路径 ------------------------
+\graphicspath{{figures/}{img/}}
+
+%------------------------ 队伍信息 -------------------------------
+\title{【论文标题：用“方法 + 对象 + 目标”命名】}
+\tihao{B}              % 题号：A/B/C
+\baominghao{【12位报名号】}
+\schoolname{【学校全称】}
+\membera{【队员一】}
+\memberb{【队员二】}
+\memberc{【队员三】}
+\supervisor{【指导教师，可留空】}
+\yearinput{2026}
+\monthinput{9}
+\dayinput{10}
+
+%------------------------ 代码块样式 -----------------------------
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{teal},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  framesep=3pt,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false
+}
+
+%------------------------ 赛时小命令 -----------------------------
+\newcommand{\todo}[1]{\textcolor{red}{【待补：#1】}}
+\newcommand{\keyresult}[1]{\textbf{#1}}
+\newcommand{\methodname}[1]{\textbf{#1}}
+\newcommand{\figplaceholder}[1]{%
+  \fbox{\parbox[c][0.22\textheight][c]{0.82\textwidth}{\centering #1\\[0.6em]
+  请将对应图片放入 \texttt{figures/} 后替换文件名。}}%
+}
+
+\begin{document}
+
+\maketitle
+
+%==============================================================
+% 摘要：整篇论文最重要的一页
+% 写法要求：
+%   - 不能像引言，要像“结果报告”
+%   - 每一问都必须出现：方法 + 关键指标/结果 + 结论
+%   - 最好控制在 900-1200 字内，确保不超过 1 页
+%==============================================================
+\begin{abstract}
+针对【题目背景与核心矛盾，用一句话概括】，本文围绕【主要研究对象】建立了【总体模型体系】，并采用【核心算法/求解策略】对【评价、预测、优化、机理分析等任务】进行求解。
+
+\textbf{针对问题一}，本文首先对【数据/对象/约束】进行预处理与结构化描述，构建了【模型名称】。该模型以【目标函数或核心指标】为核心，综合考虑【关键因素 1】、【关键因素 2】和【关键约束】。通过【算法/软件】求解，得到【关键数值结果】。结果表明：【一句清晰结论】。
+
+\textbf{针对问题二}，在问题一的基础上，本文进一步引入【改进模型/扩展约束/动态因素】，建立【模型名称】。求解过程中采用【优化/预测/分类/仿真算法】，并通过【交叉验证/残差检验/对比实验】验证模型有效性。最终得到【关键结果，带单位或百分比】，相比基准方案【提升/降低】约【数值】。
+
+\textbf{针对问题三}，为解决【更复杂的问题要求】，本文设计了【综合模型或多阶段算法】。该方法先【步骤一】，再【步骤二】，最后【步骤三】，从而实现【目标】。计算结果显示【主要结论】，并且在【灵敏度/稳健性】检验下，关键输出变化不超过【数值】，说明模型具有较好的稳定性。
+
+综上，本文模型具有【可解释性强、结果稳定、计算效率高、便于推广】等优点，可为【实际应用场景】提供定量决策依据。
+
+\keywords{关键词1\quad 关键词2\quad 关键词3\quad 关键词4\quad 关键词5}
+\end{abstract}
+
+% 国赛论文一般不要目录，保持注释。
+% \tableofcontents
+% \newpage
+
+%==============================================================
+\section{问题重述}
+
+\subsection{问题背景}
+【用自己的话重述背景，避免大段照抄题面。建议 2--3 段：现实意义、题目给出的数据/条件、需要解决的核心矛盾。】
+
+\subsection{问题提出}
+根据题目要求，本文需要解决以下问题：
+\begin{enumerate}[label=\textbf{问题\arabic*：}, leftmargin=4em]
+  \item 【一句话概括问题一：输入是什么、输出是什么、限制是什么。】
+  \item 【一句话概括问题二：相比问题一新增了什么复杂性。】
+  \item 【一句话概括问题三：最终要给出什么方案/判定/预测。】
+\end{enumerate}
+
+%==============================================================
+\section{问题分析}
+
+【本节不是复述题目，而是从“问题类型”进入“模型选择”。建议配一张总流程图：数据预处理、模型建立、算法求解、结果检验、方案输出。】
+
+\begin{figure}[H]
+  \centering
+  \IfFileExists{figures/overall_flow.pdf}
+    {\includegraphics[width=0.88\textwidth]{overall_flow.pdf}}
+    {\figplaceholder{总体技术路线流程图}}
+  \caption{本文总体技术路线}
+  \label{fig:overall-flow}
+\end{figure}
+
+\subsection{问题一的分析}
+问题一属于【评价/预测/优化/机理推导/分类】问题。其难点在于【难点 1】和【难点 2】。因此，本文选择【模型/方法】作为主体方法，原因是该方法能够【解释为什么适合】。
+
+\subsection{问题二的分析}
+问题二在问题一基础上增加了【动态性/不确定性/多目标/高维约束】。本文将其转化为【数学问题类型】，并采用【算法】进行求解。为避免【局部最优/过拟合/指标量纲不一致】问题，本文进一步使用【归一化、权重、正则化、全局搜索等】处理。
+
+\subsection{问题三的分析}
+问题三强调【方案设计/鲁棒性/推广应用】。本文先基于前两问得到的模型结果构造【决策变量或判定指标】，再通过【仿真/敏感性分析/场景分析】检验方案稳定性，最终给出【最优方案/分组规则/预测结果】。
+
+%==============================================================
+\section{模型假设}
+
+为简化问题并突出主要矛盾，本文作出如下假设：
+\begin{enumerate}
+  \item 假设题目所给数据真实可靠，除特别说明外，不考虑数据录入错误对结论的根本性影响。
+  \item 假设研究时段内外部环境相对稳定，不发生会改变系统运行规律的突发事件。
+  \item 假设【关键变量】之间的关系可由【线性/非线性/概率/机理】模型近似刻画。
+  \item 假设模型中未显式考虑的因素对结果影响较小，可并入随机误差项。
+  \item 假设【与本题强相关的假设】，该假设将在第【】节模型建立中使用。
+\end{enumerate}
+
+%==============================================================
+\section{符号说明}
+
+\begin{table}[H]
+  \centering
+  \caption{主要符号说明}
+  \label{tab:symbols}
+  \begin{tabularx}{0.92\textwidth}{cXc}
+    \toprule
+    符号 & 含义 & 单位 \\
+    \midrule
+    $x_i$ & 第 $i$ 个决策变量，表示【含义】 & 【】 \\
+    $y_t$ & 第 $t$ 时刻的观测值 & 【】 \\
+    $\hat{y}_t$ & 第 $t$ 时刻的预测值 & 【】 \\
+    $w_j$ & 第 $j$ 个评价指标的权重 & 无量纲 \\
+    $Z$ & 优化模型的目标函数值 & 【】 \\
+    $\varepsilon$ & 误差项或容许偏差 & 【】 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+%==============================================================
+\section{数据预处理}
+
+\subsection{数据清洗}
+【说明缺失值、异常值、重复值、单位不一致、时间格式等如何处理。不要只写“进行了预处理”，要写清规则。】
+
+\begin{enumerate}
+  \item 缺失值处理：对【变量】采用【删除/均值填补/插值/KNN 填补】。
+  \item 异常值处理：采用【箱线图/IQR/3$\sigma$/业务阈值】识别异常样本。
+  \item 量纲统一：将【变量】统一转换为【单位】。
+  \item 标准化处理：对参与综合评价或距离计算的变量采用式 \eqref{eq:minmax} 归一化。
+\end{enumerate}
+
+\begin{equation}
+  x'_{ij} = \frac{x_{ij}-\min_i x_{ij}}{\max_i x_{ij}-\min_i x_{ij}}
+  \label{eq:minmax}
+\end{equation}
+
+\subsection{描述性统计与可视化}
+【放 1--2 张最关键的数据分布图，不要堆图。图下必须解释发现。】
+
+\begin{figure}[H]
+  \centering
+  \IfFileExists{figures/data_overview.png}
+    {\includegraphics[width=0.78\textwidth]{data_overview.png}}
+    {\figplaceholder{数据分布与异常值概览图}}
+  \caption{数据分布与异常值概览}
+  \label{fig:data-overview}
+\end{figure}
+
+由图 \ref{fig:data-overview} 可见，【变量】呈现【趋势/分布/异常特征】，这说明后续建模需要重点考虑【因素】。
+
+%==============================================================
+\section{总体建模框架与方法选择}
+
+本节用于说明本文并非直接套用单一算法，而是根据三个问题的递进关系建立“基础模型--扩展模型--检验修正”的总体框架。参考优秀论文的写法，建议在此处把模型链条讲清楚，避免后文每一问看起来互不相关。
+
+\subsection{模型链条}
+本文的总体模型链条如下：
+\begin{enumerate}
+  \item \textbf{数据层：} 对原始数据进行清洗、归一化、异常识别和特征构造，得到可用于建模的数据矩阵 $\mathbf{X}$。
+  \item \textbf{基础层：} 针对问题一建立基础模型 $M_1$，得到关键变量、基准结果和可解释的数学关系。
+  \item \textbf{扩展层：} 针对问题二在 $M_1$ 基础上加入【约束/不确定性/多目标/动态因素】，得到扩展模型 $M_2$。
+  \item \textbf{决策层：} 针对问题三将模型输出转化为方案、分组、排序或预测结果，并通过多场景检验得到最终结论。
+\end{enumerate}
+
+\subsection{候选方法比较}
+在正式确定模型前，本文对若干候选方法进行比较，如表 \ref{tab:method-compare} 所示。该表的作用是说明“为什么选择本文方法”，不是泛泛罗列算法名称。
+
+\begin{table}[H]
+  \centering
+  \caption{候选建模方法比较}
+  \label{tab:method-compare}
+  \begin{tabularx}{0.95\textwidth}{cXXX}
+    \toprule
+    方法 & 适用性 & 优点 & 局限性 \\
+    \midrule
+    方法一：【】 & 适合【】 & 解释性强，计算简单 & 难以处理【】 \\
+    方法二：【】 & 适合【】 & 能处理非线性/多约束 & 参数较多，需要检验稳定性 \\
+    本文方法：【】 & 适合本文问题结构 & 兼顾可解释性与精度 & 需要较完整的数据预处理 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{算法实现与复现约定}
+为保证计算结果可复现，本文所有程序遵循以下约定：
+\begin{enumerate}
+  \item 固定随机种子为【】，并在代码中显式记录；
+  \item 关键参数均在表 \ref{tab:global-params} 中列出；
+  \item 正文结果图表均由附录代码或支撑材料生成；
+  \item 每个问题的核心代码分别保存为 \texttt{code/q1.py}、\texttt{code/q2.py}、\texttt{code/q3.py}。
+\end{enumerate}
+
+\begin{table}[H]
+  \centering
+  \caption{全局参数与复现设置}
+  \label{tab:global-params}
+  \begin{tabular}{cccc}
+    \toprule
+    参数 & 含义 & 取值 & 设置依据 \\
+    \midrule
+    \texttt{random\_seed} & 随机种子 & 【】 & 保证结果可复现 \\
+    \texttt{max\_iter} & 最大迭代次数 & 【】 & 收敛性实验 \\
+    \texttt{tol} & 收敛容差 & 【】 & 精度要求 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+%==============================================================
+\section{问题一模型的建立与求解}
+
+\subsection{决策变量与参数设置}
+参考 2025B 题优秀工程的写法，正式建模前应先说明“哪些量是要求解的、哪些量是由题目给定的、哪些量来自文献或经验设定”。本文设问题一的决策变量为：
+\begin{equation}
+  \mathbf{x}^{(1)} = \{x_1, x_2,\ldots,x_n\}
+  \label{eq:q1-vars}
+\end{equation}
+其中，$x_i$ 表示【具体含义】。固定参数与待估参数如表 \ref{tab:q1-params} 所示。
+
+\begin{table}[H]
+  \centering
+  \caption{问题一参数分类}
+  \label{tab:q1-params}
+  \begin{tabular}{cccc}
+    \toprule
+    参数 & 类型 & 含义 & 来源 \\
+    \midrule
+    $a_{ij}$ & 已知参数 & 【】 & 题目数据/预处理结果 \\
+    $b_j$ & 已知参数 & 【】 & 题目约束 \\
+    $c_i$ & 待定或计算参数 & 【】 & 模型计算/文献设定 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{模型建立}
+【按“变量定义 -> 目标函数 -> 约束条件 -> 模型解释”的顺序写。】
+
+设 $x_i$ 表示【决策变量】，$c_i$ 表示【收益/成本/权重】，则问题一可建立为如下优化模型：
+\begin{equation}
+  \max Z = \sum_{i=1}^{n} c_i x_i
+  \label{eq:q1-obj}
+\end{equation}
+
+约束条件为：
+\begin{align}
+  \sum_{i=1}^{n} a_{ij}x_i &\le b_j,\quad j=1,2,\ldots,m, \label{eq:q1-con1}\\
+  x_i &\ge 0,\quad i=1,2,\ldots,n. \label{eq:q1-con2}
+\end{align}
+
+式 \eqref{eq:q1-obj} 表示【目标含义】，式 \eqref{eq:q1-con1} 表示【资源/容量/业务约束】，式 \eqref{eq:q1-con2} 表示【变量取值约束】。
+
+\subsection{模型求解}
+本文采用【算法名称】求解问题一。算法流程如下：
+\begin{enumerate}
+  \item 输入清洗后的数据矩阵与参数集合；
+  \item 根据式 \eqref{eq:q1-obj}--\eqref{eq:q1-con2} 构造目标函数与约束；
+  \item 调用【Python scipy / MATLAB / gurobi / 自写算法】求解；
+  \item 输出最优解，并进行可行性与稳定性检查。
+\end{enumerate}
+
+\subsection{算法复杂度与可行性}
+若问题规模为 $n$，算法主要时间开销来自【矩阵计算/迭代优化/仿真循环】，其时间复杂度约为 $O(\cdot)$。在本文数据规模下，程序运行时间约为【】秒，满足赛时快速迭代需求。
+
+\subsection{结果分析}
+
+\begin{table}[H]
+  \centering
+  \caption{问题一主要计算结果}
+  \label{tab:q1-result}
+  \begin{tabular}{cccc}
+    \toprule
+    指标 & 方案一 & 方案二 & 本文方案 \\
+    \midrule
+    指标 1 & 【】 & 【】 & 【】 \\
+    指标 2 & 【】 & 【】 & 【】 \\
+    指标 3 & 【】 & 【】 & 【】 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+由表 \ref{tab:q1-result} 可知，本文方案在【指标】上达到【数值】，相较于基准方案提升【数值】。这说明【结论】。
+
+\subsection{结果可靠性分析}
+为避免仅凭一次计算结果下结论，本文从以下角度验证问题一结果：
+\begin{enumerate}
+  \item \textbf{可行性检查：} 将最优解代回约束条件，确认所有约束均满足；
+  \item \textbf{对比基准模型：} 与【简单规则/传统方法/题目给定方案】比较，验证改进幅度；
+  \item \textbf{局部扰动检验：} 对关键输入进行小幅扰动，观察输出是否发生异常跳变。
+\end{enumerate}
+
+%==============================================================
+\section{问题二模型的建立与求解}
+
+\subsection{模型改进思路}
+问题二相较问题一的核心变化在于【新增条件】。因此，本文在问题一模型基础上引入【新变量/新约束/新目标】，建立如下模型：
+\begin{equation}
+  \min F = \alpha f_1(x) + \beta f_2(x) + \gamma f_3(x)
+  \label{eq:q2-obj}
+\end{equation}
+其中，$f_1(x)$、$f_2(x)$、$f_3(x)$ 分别表示【目标 1】、【目标 2】、【目标 3】，$\alpha,\beta,\gamma$ 为权重系数。
+
+\subsection{决策变量与约束扩展}
+设问题二新增决策变量为：
+\begin{equation}
+  \mathbf{x}^{(2)} = \{\mathbf{x}^{(1)}, u_1,u_2,\ldots,u_m\}
+  \label{eq:q2-vars}
+\end{equation}
+其中 $u_j$ 表示【问题二新增变量含义】。新增约束可写为：
+\begin{align}
+  g_k(\mathbf{x}^{(2)}) &\le 0,\quad k=1,2,\ldots,K, \\
+  h_l(\mathbf{x}^{(2)}) &= 0,\quad l=1,2,\ldots,L.
+\end{align}
+这样的写法能够清楚说明问题二是在问题一基础上的扩展，而不是重新开始一个无关模型。
+
+\subsection{参数确定}
+【说明权重或参数不是拍脑袋。可选方法：熵权法、层次分析法、交叉验证、网格搜索、文献依据。】
+
+\begin{table}[H]
+  \centering
+  \caption{问题二模型参数设置}
+  \label{tab:q2-params}
+  \begin{tabular}{ccc}
+    \toprule
+    参数 & 取值 & 依据 \\
+    \midrule
+    $\alpha$ & 【】 & 【】 \\
+    $\beta$ & 【】 & 【】 \\
+    $\gamma$ & 【】 & 【】 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{算法设计}
+参考 2025B 题工程中“全局搜索 + 局部优化”的写法，若问题二存在多参数、非凸或局部最优风险，可采用两阶段求解策略：
+\begin{enumerate}
+  \item \textbf{全局搜索阶段：} 使用【差分进化/遗传算法/粒子群/随机多起点】在较大参数空间内寻找候选最优区域；
+  \item \textbf{局部精修阶段：} 以上一阶段结果为初始值，使用【L-BFGS-B/SQP/牛顿法/线性规划求解器】进行精细优化；
+  \item \textbf{结果筛选阶段：} 对候选解进行约束可行性、目标函数值和实际意义检查。
+\end{enumerate}
+
+算法伪代码如下：
+\begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=5em]
+  \item 读取并预处理数据，构造目标函数 $F(\mathbf{x})$；
+  \item 初始化参数边界、随机种子和停止准则；
+  \item 执行全局搜索，得到候选解 $\mathbf{x}_0$；
+  \item 以 $\mathbf{x}_0$ 为初始值执行局部优化，得到 $\mathbf{x}^{*}$；
+  \item 输出 $\mathbf{x}^{*}$、目标函数值、约束残差和关键评价指标。
+\end{enumerate}
+
+\subsection{求解结果}
+\begin{figure}[H]
+  \centering
+  \IfFileExists{figures/q2_result.png}
+    {\includegraphics[width=0.82\textwidth]{q2_result.png}}
+    {\figplaceholder{问题二结果图，如拟合曲线、优化收敛曲线或空间分布图}}
+  \caption{问题二模型求解结果}
+  \label{fig:q2-result}
+\end{figure}
+
+由图 \ref{fig:q2-result} 可知，【描述趋势】，最终得到【核心数值结果】。
+
+\subsection{残差与一致性分析}
+若问题二涉及拟合或预测，应进一步给出残差分析。设观测值为 $y_i$，模型输出为 $\hat{y}_i$，则残差为：
+\begin{equation}
+  e_i = y_i-\hat{y}_i
+\end{equation}
+常用评价指标为：
+\begin{align}
+  \mathrm{MAE} &= \frac{1}{n}\sum_{i=1}^{n}|y_i-\hat{y}_i|,\\
+  \mathrm{RMSE} &= \sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2},\\
+  R^2 &= 1-\frac{\sum_{i=1}^{n}(y_i-\hat{y}_i)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}.
+\end{align}
+
+\begin{table}[H]
+  \centering
+  \caption{问题二模型拟合或预测误差}
+  \label{tab:q2-error}
+  \begin{tabular}{cccc}
+    \toprule
+    数据集/场景 & MAE & RMSE & $R^2$ 或准确率 \\
+    \midrule
+    场景一 & 【】 & 【】 & 【】 \\
+    场景二 & 【】 & 【】 & 【】 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+由表 \ref{tab:q2-error} 可知，【说明误差大小、是否满足题意、是否存在系统偏差】。
+
+%==============================================================
+\section{问题三模型的建立与求解}
+
+\subsection{多阶段建模框架}
+为解决问题三，本文采用“【阶段一】--【阶段二】--【阶段三】”的多阶段框架：
+\begin{enumerate}
+  \item 阶段一：【识别/预测/分类/聚类】；
+  \item 阶段二：【建立优化或决策模型】；
+  \item 阶段三：【检验、修正并输出最终方案】。
+\end{enumerate}
+
+\subsection{核心模型}
+【写出问题三最关键的数学表达式。】
+\begin{equation}
+  S_k = \sum_{j=1}^{p} w_j r_{kj},\quad k=1,2,\ldots,K
+  \label{eq:q3-score}
+\end{equation}
+其中，$S_k$ 表示第 $k$ 个方案的综合得分，$r_{kj}$ 表示标准化后的第 $j$ 个指标值。
+
+\subsection{场景设置与约束检验}
+若问题三需要给出最终方案，建议至少设置基准场景、保守场景和激进场景，检验方案是否稳定。
+
+\begin{table}[H]
+  \centering
+  \caption{问题三场景设置}
+  \label{tab:q3-scenarios}
+  \begin{tabular}{cccc}
+    \toprule
+    场景 & 关键参数设置 & 约束强度 & 设计目的 \\
+    \midrule
+    保守场景 & 【】 & 强 & 检验最坏情况下的可行性 \\
+    基准场景 & 【】 & 中 & 给出主要结论 \\
+    激进场景 & 【】 & 弱 & 估计潜在上限 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{结果与解释}
+\begin{table}[H]
+  \centering
+  \caption{问题三方案排序结果}
+  \label{tab:q3-ranking}
+  \begin{tabular}{cccc}
+    \toprule
+    排名 & 方案 & 综合得分 & 主要优势 \\
+    \midrule
+    1 & 【】 & 【】 & 【】 \\
+    2 & 【】 & 【】 & 【】 \\
+    3 & 【】 & 【】 & 【】 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+因此，本文推荐选择【方案】，理由是【量化解释，不要只写“效果最好”】。
+
+\subsection{最终方案生成}
+将表 \ref{tab:q3-ranking} 的排序结果与约束检验结合，得到最终方案：
+\begin{enumerate}
+  \item 【方案组成 1】；
+  \item 【方案组成 2】；
+  \item 【执行步骤或时间安排】。
+\end{enumerate}
+该方案在【核心指标】上达到【数值】，并在三类场景中均满足【关键约束】，因此具有较好的实际可行性。
+
+%==============================================================
+\section{模型检验与灵敏度分析}
+
+\subsection{结果有效性检验}
+【根据题型选择：残差分析、拟合优度、交叉验证、与基准模型对比、约束可行性检查。】
+
+\begin{table}[H]
+  \centering
+  \caption{模型检验指标}
+  \label{tab:validation}
+  \begin{tabular}{cccc}
+    \toprule
+    模型 & 指标 1 & 指标 2 & 结论 \\
+    \midrule
+    基准模型 & 【】 & 【】 & 【】 \\
+    本文模型 & 【】 & 【】 & 【】 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{交叉验证或留出检验}
+若数据量允许，可将数据划分为训练集和测试集，或采用 $K$ 折交叉验证。第 $k$ 折误差记为 $E_k$，平均误差为：
+\begin{equation}
+  \bar{E} = \frac{1}{K}\sum_{k=1}^{K}E_k
+\end{equation}
+若 $\bar{E}$ 与训练误差接近，说明模型不存在明显过拟合；若测试误差显著增大，则需要降低模型复杂度或重新选择特征。
+
+\begin{table}[H]
+  \centering
+  \caption{交叉验证结果}
+  \label{tab:cv}
+  \begin{tabular}{cccc}
+    \toprule
+    折数/场景 & 训练误差 & 测试误差 & 结论 \\
+    \midrule
+    1 & 【】 & 【】 & 【】 \\
+    2 & 【】 & 【】 & 【】 \\
+    平均 & 【】 & 【】 & 【】 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{灵敏度分析}
+为检验模型对关键参数的依赖程度，本文对参数【】进行 $\pm 10\%$ 扰动，结果如表 \ref{tab:sensitivity} 所示。
+
+\begin{table}[H]
+  \centering
+  \caption{关键参数灵敏度分析}
+  \label{tab:sensitivity}
+  \begin{tabular}{cccc}
+    \toprule
+    参数变化 & 输出结果 & 相对变化率 & 结论 \\
+    \midrule
+    $-10\%$ & 【】 & 【】 & 【】 \\
+    基准 & 【】 & 0 & 【】 \\
+    $+10\%$ & 【】 & 【】 & 【】 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+由表 \ref{tab:sensitivity} 可知，当关键参数在 $\pm 10\%$ 范围内变化时，模型输出变化不超过【】\%，说明模型具有较好的稳健性。
+
+\subsection{蒙特卡洛稳定性检验}
+参考 2025B 题工程的做法，可在原始数据或关键参数上加入随机扰动，重复计算模型输出。设第 $r$ 次扰动后的输出为 $z^{(r)}$，共重复 $N$ 次，则输出均值和标准差为：
+\begin{align}
+  \bar{z} &= \frac{1}{N}\sum_{r=1}^{N}z^{(r)},\\
+  s_z &= \sqrt{\frac{1}{N-1}\sum_{r=1}^{N}(z^{(r)}-\bar{z})^2}.
+\end{align}
+若 $s_z/\bar{z}$ 较小，说明模型对随机噪声不敏感。
+
+\begin{figure}[H]
+  \centering
+  \IfFileExists{figures/monte_carlo.png}
+    {\includegraphics[width=0.72\textwidth]{monte_carlo.png}}
+    {\figplaceholder{蒙特卡洛稳定性检验直方图或箱线图}}
+  \caption{蒙特卡洛稳定性检验结果}
+  \label{fig:monte-carlo}
+\end{figure}
+
+\subsection{算法收敛性检验}
+若采用迭代算法，应给出目标函数随迭代次数变化的收敛曲线。若目标函数在后期趋于稳定，说明迭代次数设置合理。
+
+\begin{figure}[H]
+  \centering
+  \IfFileExists{figures/convergence.png}
+    {\includegraphics[width=0.72\textwidth]{convergence.png}}
+    {\figplaceholder{算法收敛曲线}}
+  \caption{算法收敛性分析}
+  \label{fig:convergence}
+\end{figure}
+
+%==============================================================
+\section{模型评价、改进与推广}
+
+\subsection{模型优点}
+\begin{enumerate}
+  \item \textbf{针对性强：} 模型围绕题目中的【关键机制/约束】建立，能够解释主要结果。
+  \item \textbf{结果可复现：} 数据处理、参数设置与求解流程均可由附录代码复现。
+  \item \textbf{稳定性较好：} 灵敏度分析表明，关键参数扰动不会显著改变最终结论。
+\end{enumerate}
+
+\subsection{模型不足}
+\begin{enumerate}
+  \item 本文对【因素】进行了简化，可能导致在【场景】下存在偏差。
+  \item 模型结果对【参数/数据质量】仍有一定依赖，若数据噪声较大，需要进一步改进。
+  \item 当问题规模显著扩大时，【算法】的计算时间可能增加。
+\end{enumerate}
+
+\subsection{改进与推广}
+后续可从以下方面改进：第一，引入【更精细的机制模型】以放松假设；第二，采用【更强的优化/预测方法】提高精度；第三，将本文模型推广到【类似应用场景】中。
+
+%==============================================================
+\section{结论}
+本文围绕【题目核心】建立了【模型体系】，并完成了【主要任务】。主要结论如下：
+\begin{enumerate}
+  \item 对问题一，本文得到【结论 1，带数字】。
+  \item 对问题二，本文得到【结论 2，带数字】。
+  \item 对问题三，本文推荐【最终方案】，其优势为【量化说明】。
+\end{enumerate}
+
+%==============================================================
+% 参考文献：赛时建议正文至少 3--8 条，引用要真实可靠
+%==============================================================
+\begin{thebibliography}{9}
+  \bibitem{cumcm-format}
+  全国大学生数学建模竞赛组织委员会. 全国大学生数学建模竞赛论文格式规范[Z]. 2026.
+
+  \bibitem{latex}
+  刘海洋. \LaTeX 入门[M]. 北京: 电子工业出版社, 2013.
+
+  \bibitem{modeling}
+  姜启源, 谢金星, 叶俊. 数学模型[M]. 北京: 高等教育出版社, 2018.
+\end{thebibliography}
+
+\newpage
+
+%==============================================================
+% 附录：页数通常不计入正文限制，但要与正文结果对应
+%==============================================================
+\begin{appendices}
+
+\section{支撑材料清单}
+\begin{itemize}
+  \item \texttt{code/q1.py}: 问题一数据预处理与模型求解代码。
+  \item \texttt{code/q2.py}: 问题二优化模型求解代码。
+  \item \texttt{code/q3.py}: 问题三方案生成与灵敏度分析代码。
+  \item \texttt{code/sensitivity.py}: 关键参数扰动、蒙特卡洛稳定性与收敛性检验代码。
+  \item \texttt{figures/}: 正文所用图像与可视化结果。
+  \item \texttt{AI工具使用详情说明.pdf}: AI 工具使用说明。
+\end{itemize}
+
+\section{问题一核心代码}
+\lstinputlisting[language=Python, caption={问题一核心代码}]{code/q1.py}
+
+\section{问题二核心代码}
+\lstinputlisting[language=Python, caption={问题二核心代码}]{code/q2.py}
+
+\section{问题三核心代码}
+\lstinputlisting[language=Python, caption={问题三核心代码}]{code/q3.py}
+
+\section{模型检验与灵敏度分析代码}
+\lstinputlisting[language=Python, caption={模型检验与灵敏度分析代码}]{code/sensitivity.py}
+
+\end{appendices}
+
+\end{document}

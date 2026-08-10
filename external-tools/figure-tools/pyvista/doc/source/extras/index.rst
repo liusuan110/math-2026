@@ -1,0 +1,25 @@
+Extras
+******
+This section contains resources to expand the usage of PyVista beyond
+just running it from a Python console or IDE. For example, you can
+package PyVista in a docker image and build VTK with EGL to enable
+rich headless plotting on remote servers. You can also package
+PyVista using `pyinstaller`_ to be used within a standalone
+application.
+
+See the :ref:`contributing` section for details on contributing
+and how you can help develop PyVista.
+
+.. toctree::
+
+   building_vtk
+   docker
+   pyinstaller
+   plot_directive
+   vtk_role
+   examples_as_code
+   pytest_plugin
+   pyvista_data
+   extending_pyvista
+
+.. _pyinstaller: https://www.pyinstaller.org/

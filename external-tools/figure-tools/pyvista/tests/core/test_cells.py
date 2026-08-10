@@ -1,0 +1,590 @@
+from __future__ import annotations
+
+import re
+from types import GeneratorType
+
+import numpy as np
+import pytest
+
+import pyvista as pv
+from pyvista import Cell
+from pyvista import CellType
+from pyvista import _vtk
+from pyvista.core.celltype import _CELL_TYPE_INFO
+from pyvista.core.celltype import _DEPRECATED_CELL_TYPES
+from pyvista.core.celltype import _RENAMED_CELL_TYPES
+from pyvista.core.utilities.cells import numpy_to_idarr
+from pyvista.examples import cells as example_cells
+from pyvista.examples import load_airplane
+from pyvista.examples import load_explicit_structured
+from pyvista.examples import load_hexbeam
+from pyvista.examples import load_rectilinear
+from pyvista.examples import load_structured
+from pyvista.examples import load_tetbeam
+from pyvista.examples import load_uniform
+
+grids = [
+    load_hexbeam(),
+    load_airplane(),
+    load_rectilinear(),
+    load_structured(),
+    load_tetbeam(),
+    load_uniform(),
+    load_explicit_structured(),
+]
+ids = [str(type(grid)) for grid in grids]
+
+cells = [
+    # 0D cells
+    example_cells.Vertex().get_cell(0),
+    example_cells.PolyVertex().get_cell(0),
+    # 1D cells
+    example_cells.Line().get_cell(0),
+    example_cells.PolyLine().get_cell(0),
+    # 2D cells
+    example_cells.Triangle().get_cell(0),
+    example_cells.Quadrilateral().get_cell(0),
+    example_cells.Polygon().get_cell(0),
+    example_cells.TriangleStrip().get_cell(0),
+    # 3D cells
+    example_cells.Hexahedron().get_cell(0),
+    example_cells.Voxel().get_cell(0),
+    example_cells.Tetrahedron().get_cell(0),
+    example_cells.Polyhedron().get_cell(0),
+]
+types = [
+    # 0D cells
+    CellType.VERTEX,
+    CellType.POLY_VERTEX,
+    # 1D cells
+    CellType.LINE,
+    CellType.POLY_LINE,
+    # 2D cells
+    CellType.TRIANGLE,
+    CellType.QUAD,
+    CellType.POLYGON,
+    CellType.TRIANGLE_STRIP,
+    # 3D cells
+    CellType.HEXAHEDRON,
+    CellType.VOXEL,
+    CellType.TETRA,
+    CellType.POLYHEDRON,
+]
+dims = [
+    # 0D cells
+    0,
+    0,
+    # 1D cells
+    1,
+    1,
+    # 2D cells
+    2,
+    2,
+    2,
+    2,
+    # 3D cells
+    3,
+    3,
+    3,
+    3,
+]
+npoints = [
+    # 0D cells
+    1,
+    6,
+    # 1D cells
+    2,
+    4,
+    # 2D cells
+    3,
+    4,
+    6,
+    8,
+    # 3D cells
+    8,
+    8,
+    4,
+    4,
+]
+nfaces = [
+    # 0D cells
+    0,
+    0,
+    # 1D cells
+    0,
+    0,
+    # 2D cells
+    0,
+    0,
+    0,
+    0,
+    # 3D cells
+    6,
+    6,
+    4,
+    4,
+]
+nedges = [
+    # 0D cells
+    0,
+    0,
+    # 1D cells
+    0,
+    0,
+    # 2D cells
+    3,
+    4,
+    6,
+    8,
+    # 3D cells
+    12,
+    12,
+    6,
+    6,
+]
+cell_ids = list(map(repr, types))
+
+
+def test_bad_init():
+    with pytest.raises(TypeError, match='must be a vtkCell'):
+        _ = Cell(1)
+
+
+@pytest.mark.parametrize('grid', grids, ids=ids)
+def test_cell_attribute(grid):
+    assert isinstance(grid.cell, GeneratorType)
+    assert all(issubclass(type(cell), Cell) for cell in grid.cell)
+
+
+@pytest.mark.parametrize('grid', grids, ids=ids)
+def test_cell_point_ids(grid):
+    # Test that the point_ids for all cells in the grid are unique,
+    # which is not the case when using the GetCell(i) method of DataSet.
+    # See https://vtk.org/doc/nightly/html/classvtkDataSet.html#a711ed1ebb7bdf4a4e2ed6896081cd1b2
+    point_ids = {frozenset(c.point_ids) for c in grid.cell}
+    assert len(point_ids) == grid.n_cells
+
+
+def test_cell_get_cell():
+    hexbeam = grids[0]
+    with pytest.raises(IndexError, match='Invalid index'):
+        hexbeam.get_cell(hexbeam.n_cells)
+    assert isinstance(hexbeam.get_cell(0), pv.Cell)
+
+
+@pytest.mark.parametrize('cell', cells, ids=cell_ids)
+def test_cell_type_is_inside_enum(cell):
+    assert cell.type in CellType
+
+
+@pytest.mark.parametrize(('cell', 'type_'), zip(cells, types, strict=True), ids=cell_ids)
+def test_cell_type(cell, type_):
+    assert cell.type == type_
+
+
+@pytest.mark.parametrize('cell', cells, ids=cell_ids)
+def test_cell_is_linear(cell):
+    assert cell.is_linear
+
+
+@pytest.mark.parametrize(('cell', 'dim'), zip(cells, dims, strict=True), ids=cell_ids)
+def test_cell_dimension(cell, dim):
+    assert cell.dimension == dim
+
+
+def test_celltype_dimension_map():
+    dimension_map = CellType.dimension_map
+    dimensions = list(dimension_map.keys())
+    assert dimensions == [0, 1, 2, 3]
+
+    for grouping in dimension_map.values():
+        assert isinstance(grouping, frozenset)
+        assert all(isinstance(m, CellType) for m in grouping)
+
+    assert CellType.VERTEX in dimension_map[0]
+    assert CellType.POLY_VERTEX in dimension_map[0]
+    assert CellType.LINE in dimension_map[1]
+    assert CellType.POLY_LINE in dimension_map[1]
+    assert CellType.TRIANGLE in dimension_map[2]
+    assert CellType.QUAD in dimension_map[2]
+    assert CellType.POLYGON in dimension_map[2]
+    assert CellType.PIXEL in dimension_map[2]
+    assert CellType.TRIANGLE_STRIP in dimension_map[2]
+    assert CellType.TETRA in dimension_map[3]
+    assert CellType.HEXAHEDRON in dimension_map[3]
+    assert CellType.VOXEL in dimension_map[3]
+    assert CellType.POLYHEDRON in dimension_map[3]
+
+    for i in (0, 1, 2, 3):
+        for j in (0, 1, 2, 3):
+            if i != j:
+                assert dimension_map[i].isdisjoint(dimension_map[j])
+
+    union = dimension_map[0] | dimension_map[1] | dimension_map[2] | dimension_map[3]
+    assert union == set(CellType)
+
+    for member in CellType:
+        assert member in dimension_map[member.dimension]
+
+
+def test_celltype_dimension_map_not_mutable():
+    mapping = CellType.dimension_map
+    match = "'mappingproxy' object does not support item assignment"
+    with pytest.raises(TypeError, match=match):
+        mapping[42] = 'foo'
+
+
+def test_abstract_celltype_attributes():
+    # ``HIGHER_ORDER_HEXAHEDRON`` has no concrete vtk class, but its dimension
+    # is well-defined and the same on every supported VTK build. See
+    # https://github.com/pyvista/pyvista/issues/8634
+    celltype = pv.CellType.HIGHER_ORDER_HEXAHEDRON
+    assert celltype.dimension == 3
+    assert not celltype.is_linear
+
+    match = "'HIGHER_ORDER_HEXAHEDRON' without a concrete cell instance."
+    with pytest.raises(ValueError, match=match):
+        _ = celltype.n_points
+    with pytest.raises(ValueError, match=match):
+        _ = celltype.n_edges
+    with pytest.raises(ValueError, match=match):
+        _ = celltype.n_faces
+
+
+@pytest.mark.parametrize(
+    ('celltype', 'expected_dim'),
+    [
+        ('PARAMETRIC_CURVE', 1),
+        ('PARAMETRIC_SURFACE', 2),
+        ('PARAMETRIC_TETRA_REGION', 3),
+        (pv.CellType.HIGHER_ORDER_CURVE, 1),
+        (pv.CellType.HIGHER_ORDER_TRIANGLE, 2),
+        (pv.CellType.HIGHER_ORDER_HEXAHEDRON, 3),
+        (pv.CellType.LAGRANGE_PYRAMID, 3),
+        (pv.CellType.BEZIER_PYRAMID, 3),
+    ],
+)
+def test_abstract_celltype_dimension_is_correct(celltype, expected_dim):
+    """Abstract / placeholder cell types report their canonical dimension."""
+    if isinstance(celltype, str):
+        with pytest.warns(pv.PyVistaDeprecationWarning):
+            celltype = getattr(CellType, celltype)
+
+    assert celltype.dimension == expected_dim
+
+
+@pytest.mark.parametrize('celltype', _DEPRECATED_CELL_TYPES)
+def test_celltype_deprecated(celltype):
+    val = _CELL_TYPE_INFO[celltype].value
+    match = f'<CellType.{celltype}: {val}> is deprecated and will be removed in a future version.'
+    with pytest.warns(pv.PyVistaDeprecationWarning, match=re.escape(match)):
+        getattr(CellType, celltype)
+    with pytest.warns(pv.PyVistaDeprecationWarning, match=re.escape(match)):
+        CellType(val)
+
+
+@pytest.mark.parametrize('celltype', _RENAMED_CELL_TYPES)
+def test_celltype_renamed(celltype):
+    val = _CELL_TYPE_INFO[celltype].value
+    new_name = _RENAMED_CELL_TYPES[celltype]
+    called = CellType(val)
+    assert called.name == new_name
+
+    match = f'CellType.{celltype} is deprecated and has been renamed. Use {new_name} instead'
+    with pytest.warns(pv.PyVistaDeprecationWarning, match=re.escape(match)):
+        getattr(CellType, celltype)
+
+
+@pytest.mark.parametrize(('cell', 'np'), zip(cells, npoints, strict=True), ids=cell_ids)
+def test_cell_n_points(cell, np):
+    assert cell.n_points == np
+
+
+@pytest.mark.parametrize(('cell', 'nf'), zip(cells, nfaces, strict=True), ids=cell_ids)
+def test_cell_n_faces(cell, nf):
+    assert cell.n_faces == nf
+
+
+@pytest.mark.parametrize(('cell', 'ne'), zip(cells, nedges, strict=True), ids=cell_ids)
+def test_cell_n_edges(cell, ne):
+    assert cell.n_edges == ne
+
+
+@pytest.mark.parametrize('cell', cells, ids=cell_ids)
+def test_cell_get_edges(cell):
+    assert all(cell.get_edge(i).type == CellType.LINE for i in range(cell.n_edges))
+
+    with pytest.raises(IndexError, match='Invalid index'):
+        cell.get_edge(cell.n_edges)
+
+
+@pytest.mark.parametrize('cell', cells, ids=cell_ids)
+def test_cell_edges(cell):
+    assert all(edge.type == CellType.LINE for edge in cell.edges)
+
+
+def test_cell_no_field_data():
+    with pytest.raises(NotImplementedError, match='does not support field data'):
+        cells[0].add_field_data([1, 2, 3], 'field_data')
+
+    with pytest.raises(NotImplementedError, match='does not support field data'):
+        cells[0].clear_field_data()
+
+
+@pytest.mark.parametrize('cell', cells, ids=cell_ids)
+def test_cell_copy_generic(cell):
+    cell = cell.copy()
+    cell_copy = cell.copy(deep=True)
+    assert cell_copy == cell
+    cell_copy.points[:] = 1000
+    assert cell_copy != cell
+
+    cell_copy = cell.copy(deep=False)
+    assert cell_copy == cell
+    cell_copy.points[:] = 1000
+    assert cell_copy == cell
+
+
+def test_cell_copy():
+    cell = example_cells.Hexahedron().get_cell(0).get_face(0)
+    assert isinstance(cell, pv.Cell)
+    cell_copy = cell.copy(deep=True)
+    assert cell_copy == cell
+    cell_copy.points[:] = 0
+    assert cell_copy != cell
+
+    cell_copy = cell.copy(deep=False)
+    assert cell_copy == cell
+    cell_copy.points[:] = 0
+    assert cell_copy == cell
+
+
+@pytest.mark.parametrize('cell', cells, ids=cell_ids)
+def test_cell_edges_point_ids(cell):
+    point_ids = {frozenset(cell.get_edge(i).point_ids) for i in range(cell.n_edges)}
+    assert len(point_ids) == cell.n_edges
+
+
+@pytest.mark.parametrize('cell', cells, ids=cell_ids)
+def test_cell_faces_point_ids(cell):
+    point_ids = {frozenset(cell.get_face(i).point_ids) for i in range(cell.n_faces)}
+    assert len(point_ids) == cell.n_faces
+
+
+@pytest.mark.parametrize('cell', cells, ids=cell_ids)
+def test_cell_faces(cell):
+    if cell.n_faces:
+        assert cell.get_face(0) == cell.faces[0]
+        assert cell.get_face(1) != cell.faces[0]
+    else:
+        with pytest.raises(IndexError, match='Invalid index'):
+            cell.get_face(0)
+
+
+@pytest.mark.parametrize('grid', grids, ids=ids)
+def test_cell_bounds(grid):
+    assert isinstance(grid.get_cell(0).bounds, tuple)
+    assert all(
+        bc >= bg for bc, bg in zip(grid.get_cell(0).bounds[::2], grid.bounds[::2], strict=True)
+    )
+    assert all(
+        bc <= bg for bc, bg in zip(grid.get_cell(0).bounds[1::2], grid.bounds[1::2], strict=True)
+    )
+
+
+@pytest.mark.parametrize('grid', grids, ids=ids)
+def test_cell_center(grid):
+    center = grid.get_cell(0).center
+    bounds = grid.get_cell(0).bounds
+
+    assert isinstance(center, tuple)
+    assert bounds.x_min <= center[0] <= bounds.x_max
+    assert bounds.y_min <= center[1] <= bounds.y_max
+    assert bounds.z_min <= center[2] <= bounds.z_max
+
+
+def test_cell_center_value():
+    points = [[0, 0, 0], [1, 0, 0], [0.5, np.sqrt(3) / 2, 0]]
+    cell = [3, 0, 1, 2]
+    mesh = pv.PolyData(points, cell)
+    assert np.allclose(mesh.get_cell(0).center, [0.5, np.sqrt(3) / 6, 0.0], rtol=1e-8, atol=1e-8)
+
+
+@pytest.mark.parametrize(('cell', 'type_'), zip(cells, types, strict=True), ids=cell_ids)
+def test_str(cell, type_):
+    assert str(type_) in str(cell)
+
+
+@pytest.mark.parametrize(('cell', 'type_'), zip(cells, types, strict=True), ids=cell_ids)
+def test_repr(cell, type_):
+    assert str(type_) in repr(cell)
+
+
+@pytest.mark.parametrize('cell', cells, ids=cell_ids)
+def test_cell_points(cell):
+    points = cell.points
+    assert isinstance(points, np.ndarray)
+    assert points.ndim == 2
+    assert points.shape[0] > 0
+    assert points.shape[1] == 3
+
+
+@pytest.mark.parametrize('cell', cells)
+def test_cell_cast_to_unstructured_grid(cell):
+    grid = cell.cast_to_unstructured_grid()
+    assert grid.n_cells == 1
+    assert grid.get_cell(0) == cell
+    assert grid.get_cell(0).type == cell.type
+
+
+@pytest.mark.parametrize('cell', cells)
+def test_cell_cast_to_polydata(cell):
+    if cell.dimension == 3:
+        with pytest.raises(
+            ValueError,
+            match=f'3D cells cannot be cast to PolyData: got cell type {cell.type}',
+        ):
+            cell.cast_to_polydata()
+    else:
+        poly = cell.cast_to_polydata()
+        assert poly.n_cells == 1
+        assert poly.get_cell(0) == cell
+        assert poly.get_cell(0).type == cell.type
+
+
+CELL_LIST = [3, 0, 1, 2, 3, 3, 4, 5]
+NCELLS = 2
+FCONTIG_ARR = np.array(np.vstack(([3, 0, 1, 2], [3, 3, 4, 5])), order='F')
+
+
+@pytest.mark.parametrize(
+    'cells',
+    [
+        CELL_LIST,
+        np.array(CELL_LIST, np.int16),
+        np.array(CELL_LIST, np.int32),
+        np.array(CELL_LIST, np.int64),
+        FCONTIG_ARR,
+    ],
+)
+def test_init_cell_array(cells):
+    cell_array = pv.core.cell.CellArray(cells)
+    assert np.allclose(np.array(cells).ravel(), cell_array.cells)
+    assert cell_array.n_cells == cell_array.GetNumberOfCells() == NCELLS
+
+
+CONNECTIVITY_LIST = [0, 1, 2, 3, 4, 5]
+OFFSETS_LIST = [0, 3, 6]
+
+
+@pytest.mark.parametrize(
+    'offsets',
+    [
+        OFFSETS_LIST,
+        np.array(OFFSETS_LIST, np.int16),
+        np.array(OFFSETS_LIST, np.int32),
+        np.array(OFFSETS_LIST, np.int64),
+    ],
+)
+@pytest.mark.parametrize(
+    'connectivity',
+    [
+        CONNECTIVITY_LIST,
+        np.array(CONNECTIVITY_LIST, np.int16),
+        np.array(CONNECTIVITY_LIST, np.int32),
+        np.array(CONNECTIVITY_LIST, np.int64),
+    ],
+)
+@pytest.mark.parametrize('deep', [False, True])
+def test_init_cell_array_from_arrays(offsets, connectivity, deep):
+    cell_array = pv.core.cell.CellArray.from_arrays(offsets, connectivity, deep=deep)
+    assert np.array_equal(np.array(connectivity), cell_array.connectivity_array)
+    assert np.array_equal(np.array(offsets), cell_array.offset_array)
+    assert cell_array.n_cells == cell_array.GetNumberOfCells() == len(offsets) - 1
+
+
+@pytest.mark.parametrize('deep', [False, True])
+def test_init_cell_array_preserves_int32_storage(deep):
+    # int32 offsets/connectivity should be stored natively as 32-bit instead of
+    # being cast up to int64, which avoids a copy that doubles memory on large
+    # meshes. See https://github.com/pyvista/pyvista/issues/8477
+    offsets = np.array(OFFSETS_LIST, np.int32)
+    connectivity = np.array(CONNECTIVITY_LIST, np.int32)
+    cell_array = pv.core.cell.CellArray.from_arrays(offsets, connectivity, deep=deep)
+    # The array dtype reflects the native VTK storage width, so an int32 dtype here
+    # proves 32-bit storage was kept (no upcast copy). This is checked instead of
+    # ``IsStorage32Bit()`` because that method is not available on all supported VTK
+    # versions (e.g. 9.4.2).
+    assert cell_array.offset_array.dtype == np.int32
+    assert cell_array.connectivity_array.dtype == np.int32
+    assert np.array_equal(cell_array.offset_array, offsets)
+    assert np.array_equal(cell_array.connectivity_array, connectivity)
+
+
+def test_init_cell_array_int64_uses_64bit_storage():
+    # int64 input should keep 64-bit storage (unchanged behavior).
+    cell_array = pv.core.cell.CellArray.from_arrays(
+        np.array(OFFSETS_LIST, np.int64), np.array(CONNECTIVITY_LIST, np.int64)
+    )
+    assert cell_array.offset_array.dtype == np.int64
+    assert cell_array.connectivity_array.dtype == np.int64
+
+
+REGULAR_CELL_LIST = [[0, 1, 2], [3, 4, 5]]
+
+
+@pytest.mark.parametrize(
+    'cells',
+    [
+        REGULAR_CELL_LIST,
+        np.array(REGULAR_CELL_LIST, np.int16),
+        np.array(REGULAR_CELL_LIST, np.int32),
+        np.array(REGULAR_CELL_LIST, np.int64),
+        np.array(np.vstack(REGULAR_CELL_LIST), order='F'),
+    ],
+)
+@pytest.mark.parametrize('deep', [False, True])
+def test_init_cell_array_from_regular_cells(cells, deep):
+    cell_array = pv.core.cell.CellArray.from_regular_cells(cells, deep=deep)
+    assert np.array_equal(np.array(cells), cell_array.regular_cells)
+    assert cell_array.n_cells == cell_array.GetNumberOfCells() == len(cells)
+
+
+def test_set_shallow_regular_cells():
+    points = [[1.0, 1, 1], [-1, 1, -1], [1, -1, -1], [-1, -1, 1]]
+    faces = [[0, 1, 2], [1, 3, 2], [0, 2, 3], [0, 3, 1]]
+    meshes = [pv.PolyData.from_regular_faces(points, faces, deep=False) for _ in range(2)]
+
+    for m in meshes:
+        assert np.array_equal(m.regular_faces, faces)
+
+
+def test_numpy_to_idarr_bool():
+    mask = np.ones(10, np.bool_)
+    idarr = numpy_to_idarr(mask)
+    assert np.allclose(mask.nonzero()[0], _vtk.vtk_to_numpy(idarr))
+
+
+@pytest.mark.parametrize('cell_type_name', _CELL_TYPE_INFO)
+def test_cell_types(cell_type_name):
+    if not hasattr(_vtk, 'VTK_' + cell_type_name):
+        pytest.skip(f'Unsupported cell type {cell_type_name} by VTK')
+
+    if cell_type_name in _DEPRECATED_CELL_TYPES or cell_type_name in _RENAMED_CELL_TYPES:
+        with pytest.warns(pv.PyVistaDeprecationWarning):
+            pyvista_member = getattr(pv.CellType, cell_type_name)
+    else:
+        pyvista_member = getattr(pv.CellType, cell_type_name)
+    vtk_member = getattr(_vtk, 'VTK_' + cell_type_name)
+    assert pyvista_member == vtk_member
+
+
+def test_n_cells_removed():
+    with pytest.raises(TypeError, match=r'unexpected keyword argument'):
+        _ = pv.core.cell.CellArray([3, 0, 1, 2], n_cells=1)
+
+
+@pytest.mark.parametrize('deep', [True, False])
+def test_deep_removed(deep: bool):
+    with pytest.raises(TypeError, match=r'unexpected keyword argument'):
+        _ = pv.core.cell.CellArray([3, 0, 1, 2], deep=deep)

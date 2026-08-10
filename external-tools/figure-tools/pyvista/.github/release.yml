@@ -1,0 +1,27 @@
+# release.yml
+
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+    authors:
+      - dependabot
+      - github-actions
+      - pre-commit-ci
+      - pyvista-bot
+  categories:
+    - title: Breaking Changes
+      labels:
+        - breaking-change
+    - title: New Features
+      labels:
+        - enhancement
+    - title: Bug fixes or behavior changes
+      labels:
+        - bug
+    - title: Documentation
+      labels:
+        - documentation
+    - title: Maintenance
+      labels:
+        - maintenance

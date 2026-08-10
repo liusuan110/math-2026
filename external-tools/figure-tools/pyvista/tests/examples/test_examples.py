@@ -1,0 +1,158 @@
+"""Test examples that do not require downloading."""
+
+from __future__ import annotations
+
+import numpy as np
+import pytest
+
+import pyvista as pv
+from pyvista import examples
+from tests.examples.test_dataset_loader import DatasetLoaderTestCase
+from tests.examples.test_dataset_loader import _generate_dataset_loader_test_cases_from_module
+from tests.examples.test_dataset_loader import _get_mismatch_fail_msg
+
+
+def pytest_generate_tests(metafunc):
+    """Generate parametrized tests."""
+    if 'test_case' in metafunc.fixturenames:
+        # Generate a separate test case for each loadable dataset
+        test_cases = _generate_dataset_loader_test_cases_from_module(pv.examples.examples)
+        ids = [case.dataset_name for case in test_cases]
+        metafunc.parametrize('test_case', test_cases, ids=ids)
+
+
+def test_dataset_loader_name_matches_function_name(test_case: DatasetLoaderTestCase):
+    if (msg := _get_mismatch_fail_msg(test_case)) is not None:
+        pytest.fail(msg)
+
+
+def test_load_nut():
+    mesh = examples.load_nut()
+    assert mesh.n_points
+
+
+def test_load_ant():
+    """Load ply ant mesh"""
+    mesh = examples.load_ant()
+    assert mesh.n_points
+
+
+def test_load_airplane():
+    """Load ply airplane mesh"""
+    mesh = examples.load_airplane()
+    assert mesh.n_points
+
+
+def test_load_sphere():
+    """Loads sphere ply mesh"""
+    mesh = examples.load_sphere()
+    assert mesh.n_points
+
+
+def test_load_channels():
+    """Loads geostat training image"""
+    mesh = examples.load_channels()
+    assert mesh.n_points
+
+
+def test_load_spline():
+    mesh = examples.load_spline()
+    assert mesh.n_points
+
+
+def test_load_random_hills(random_hills):
+    assert random_hills.n_cells
+
+
+def test_load_tetbeam():
+    mesh = examples.load_tetbeam()
+    assert mesh.n_cells
+    assert (mesh.celltypes == 10).all()
+
+
+@pytest.mark.parametrize(
+    'planet',
+    [
+        'sun',
+        'moon',
+        'mercury',
+        'venus',
+        'earth',
+        'mars',
+        'jupiter',
+        'saturn',
+        'uranus',
+        'neptune',
+        'pluto',
+    ],
+)
+def test_planets_deprecated(planet):
+    match = (
+        f'`load_{planet}` is deprecated and will be removed in v0.52. Use `load_planet` instead.'
+    )
+    func = getattr(examples.planets, f'load_{planet}')
+    with pytest.warns(pv.PyVistaDeprecationWarning, match=match):
+        _ = func()
+
+
+def test_load_saturn_rings_deprecated():
+    match = (
+        '`load_saturn_rings` is deprecated and will be removed in v0.52. '
+        'Use `load_planet_rings` instead.'
+    )
+    with pytest.warns(pv.PyVistaDeprecationWarning, match=match):
+        _ = examples.planets.load_saturn_rings()
+
+
+def test_load_planet():
+    planet = examples.planets.load_planet()
+    assert isinstance(planet, pv.PolyData)
+    assert 'Texture Coordinates' in planet.point_data
+    assert planet['Texture Coordinates'].shape == (planet.n_points, 2)
+
+    assert planet.n_points == 4850
+    assert planet.n_cells == 4900
+    r = 1.0
+    assert np.allclose(planet.bounds, (-r, r, -r, r, -r, r), atol=1e2)
+
+    r = 5
+    planet = examples.planets.load_planet(radius=r, lat_resolution=20, lon_resolution=30)
+    assert planet.n_points == 560
+    assert planet.n_cells == 570
+    assert np.allclose(planet.bounds, (-r, r, -r, r, -r, r), atol=1e-1)
+
+
+def test_load_planet_rings():
+    rings = examples.planets.load_planet_rings()
+    assert isinstance(rings, pv.PolyData)
+    assert 'Texture Coordinates' in rings.point_data
+    assert rings['Texture Coordinates'].shape == (rings.n_points, 2)
+    assert rings.n_points == 100
+    assert rings.n_cells == 50
+
+
+def test_load_hydrogen_orbital():
+    with pytest.raises(ValueError, match='`n` must be'):
+        pv.examples.load_hydrogen_orbital(-1, 1, 0)
+    with pytest.raises(ValueError, match='`l` must be'):
+        pv.examples.load_hydrogen_orbital(1, 1, 0)
+    with pytest.raises(ValueError, match='`m` must be'):
+        pv.examples.load_hydrogen_orbital(1, 0, 1)
+
+    orbital = pv.examples.load_hydrogen_orbital(3, 2, 1)
+    assert isinstance(orbital, pv.ImageData)
+    assert 'wf' in orbital.point_data
+    assert orbital.point_data['wf'].dtype == np.complex128
+    assert 'real_wf' in orbital.point_data
+    assert orbital.point_data['real_wf'].dtype == np.float64
+
+
+def test_load_logo():
+    mesh = examples.load_logo()
+    assert mesh.n_points
+
+
+def test_load_frog_tissue():
+    data = examples.load_frog_tissues()
+    assert data.n_points
+    assert data.get_data_range() == (0, 29)

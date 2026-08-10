@@ -1,0 +1,89 @@
+# Minimal makefile for Sphinx documentation
+#
+
+export PYVISTA_OFF_SCREEN := True
+
+# You can set these variables from the command line.
+SPHINXOPTS    =
+DEFAULTS	  = -w sphinx_warnings.txt -W --keep-going
+SPHINXBUILD   ?= uv run python -msphinx
+SPHINXPROJ    = pyvista
+SOURCEDIR     = source
+BUILDDIR      = _build
+
+
+.PHONY: all help Makefile test clean clean-dataset-gallery clean-external-examples clean-autosummary clean-except-examples phtml update-intersphinx gen-dataset-gallery gen-external-examples serve-html ci-build ci-test
+
+# Put it first so that "make" without argument is like "make help".
+help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(DEFAULTS) $(O)
+
+# `all` and `test` are POSIX conventions aliased to the CI-parity targets.
+all: ci-build
+test: ci-test
+
+clean-dataset-gallery:
+	rm -rf "$(SOURCEDIR)/api/examples/dataset-gallery"
+
+clean-external-examples:
+	rm -f $(SOURCEDIR)/getting-started/external_examples.rst
+
+# remove autosummary files
+clean-autosummary:
+	find $(SOURCEDIR) -type d -name "_autosummary" -exec rm -rf {} +
+
+clean-except-examples: clean-dataset-gallery clean-external-examples clean-autosummary
+	rm -rf $(BUILDDIR)/*
+	rm -f errors.txt
+	rm -f sphinx_warnings.txt
+	rm -rf $(SOURCEDIR)/images/auto-generated
+	rm -rf $(SOURCEDIR)/tags
+
+clean: clean-except-examples
+	rm -rf $(SOURCEDIR)/examples/
+
+# build html docs in parallel using all available CPUs
+# WARNING: this is a resource hog
+phtml:
+	$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(DEFAULTS) $(O) -j auto
+
+# Catch-all target: route all unknown targets to Sphinx using the new
+# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+%: Makefile
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(DEFAULTS) $(O)
+
+update-intersphinx:
+	cd intersphinx && ./update.sh
+
+gen-dataset-gallery:
+	@if [ -d "$(SOURCEDIR)/api/examples/dataset-gallery" ]; then \
+		echo "Dataset gallery directory already exists, skipping. Run clean-dataset-gallery to clear."; \
+	else \
+		mkdir -p "$(SOURCEDIR)/api/examples/dataset-gallery" && cd "$(SOURCEDIR)" && uv run python make_tables.py; \
+	fi
+
+gen-external-examples:
+	@if [ -f "$(SOURCEDIR)/getting-started/external_examples.rst" ]; then \
+		echo "external_examples.rst already exists, skipping. Run clean-external-examples to clear."; \
+	else \
+		cd "$(SOURCEDIR)" && uv run python make_external_gallery.py; \
+	fi
+
+# Spin up a local http server to view the rendered documentation.
+# This is required for interactive examples to work.
+serve-html:
+	uv run python -m http.server 11000 --directory "$(BUILDDIR)"/html
+
+# Full CI-parity documentation build via tox. Delegates to the `docs-build`
+# tox env defined in ../tox.ini, which handles the gen steps and runs
+# sphinx with the exact same flags as CI. Equivalent to `make docs` from
+# the repo root.
+ci-build:
+	@echo "Building documentation via tox (matches CI)"
+	@cd .. && uv run tox -e docs-build -- $(ARGS)
+
+# Test the built documentation via tox (matches CI `tox -e docs-test`).
+# Requires a prior successful `make ci-build` (or `make docs` at the root).
+ci-test:
+	@echo "Testing built documentation via tox (matches CI)"
+	@cd .. && uv run tox -e docs-test -- $(ARGS)

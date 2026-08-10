@@ -40,6 +40,7 @@ env/
 # ===== 数据缓存 / 大文件 =====
 *.tmp
 *.cache
+.mplconfig/
 .matplotlib-cache/
 .DS_Store
 Thumbs.db

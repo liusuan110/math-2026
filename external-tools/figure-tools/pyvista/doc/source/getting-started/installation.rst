@@ -1,0 +1,412 @@
+.. _install:
+
+Installation
+============
+
+PyVista is supported on Python versions 3.10+.
+
+For the best experience, please considering using Anaconda as a virtual
+environment and package manager for Python and following the instructions to
+install PyVista with Anaconda.
+
+
+Dependencies
+~~~~~~~~~~~~
+
+PyVista is built on top of the Visualization Toolkit (VTK) and NumPy - as such,
+the following projects are required dependencies of PyVista:
+
+* `vtk <https://pypi.org/project/vtk/>`_ - PyVista directly inherits types from the VTK library.
+* `NumPy <https://pypi.org/project/numpy/>`_ - NumPy arrays provide a core foundation for PyVista's data array access.
+* `matplotlib <https://pypi.org/project/matplotlib/>`_ - Used for colormaps and 2D plotting with :class:`pyvista.ChartMPL`.
+* `pillow <https://pypi.org/project/Pillow/>`_ - PIL fork used for saving screenshots.
+* `imageio <https://pypi.org/project/imageio/>`_ - This library is used for reading images and writing animations.
+* `pooch <https://pypi.org/project/pooch/>`_ - Data management for our example datasets so users can download tutorials on the fly.
+* `scooby <https://github.com/banesullivan/scooby>`_ - Reporting and debugging tools.
+
+
+Optional Dependencies
+~~~~~~~~~~~~~~~~~~~~~
+PyVista includes several optional dependencies for visualization and reading a variety of additional file formats, including:
+
+* `cmocean <https://pypi.org/project/cmocean/>`_ - Colormaps for Oceanography.
+* `colorcet <https://colorcet.holoviz.org/>`_ - Perceptually accurate 256-color colormaps for use with Python.
+* `trame <https://github.com/Kitware/trame>`_ - Used for client and server-side rendering in Jupyter.
+* `meshio <https://pypi.org/project/meshio/>`_ - Input/Output for many mesh formats.
+
+
+PyPI
+~~~~
+
+.. image:: https://img.shields.io/pypi/v/pyvista.svg?logo=python&logoColor=white
+   :target: https://pypi.org/project/pyvista/
+
+PyVista can be installed from `PyPI <https://pypi.org/project/pyvista/>`_
+using ``pip``::
+
+    pip install pyvista
+
+To install all the additional packages that extend PyVista, install using
+``pip`` with::
+
+    pip install pyvista[all]
+
+.. asciinema:: 507562
+
+Anaconda
+~~~~~~~~
+
+.. image:: https://img.shields.io/conda/vn/conda-forge/pyvista.svg?logo=conda-forge&logoColor=white
+   :target: https://anaconda.org/conda-forge/pyvista
+
+To install this package with ``conda`` run::
+
+    conda install -c conda-forge pyvista
+
+.. asciinema:: 507565
+
+
+Pixi
+~~~~
+
+`Pixi <https://pixi.sh/>`_ is a modern package management tool that provides fast, reliable, and reproducible software environments. It can be used as an alternative to conda/mamba for managing PyVista installations.
+
+To install PyVista using pixi, first ensure you have pixi installed (see `pixi installation instructions <https://pixi.sh/latest/#installation>`_), then run::
+
+    pixi add pyvista
+
+This will add PyVista to your ``pixi.toml`` file and install it in your project environment. To use PyVista in your pixi environment::
+
+    pixi shell
+    python -c 'import pyvista as pv; print(pv.__version__)'
+
+Pixi automatically handles all dependencies and ensures compatibility across different platforms.
+
+
+Installing the Current Development Branch from GitHub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There may be features or bug-fixes that have been implemented in PyVista but
+have not made their way into a release. To install ``pyvista`` from the latest
+up-to-date development branch from github, use one of the following
+
+.. code-block:: bash
+
+   pip install -U git+https://github.com/pyvista/pyvista.git@main
+
+Alternatively, you can clone the repository with git and install it with pip.
+
+.. code-block:: bash
+
+   git clone https://github.com/pyvista/pyvista.git
+   cd pyvista
+   pip install -e .
+
+Note the development flag ``-e``. This allows you to change pyvista
+in-place without having to reinstall it for each change.
+
+
+.. _dev_wheels:
+
+Development Wheels
+~~~~~~~~~~~~~~~~~~
+
+The PyVista documentation site also hosts a `PEP 503
+<https://peps.python.org/pep-0503/>`_ "simple repository" of wheels built
+from the latest commit on ``main``. These wheels are rebuilt and
+republished by the documentation pipeline on every push to ``main``, so the
+index always points at the most recent ``main`` build, with no GitHub clone
+or checkout required.
+
+To install the latest development wheel:
+
+.. code-block:: bash
+
+   pip install --upgrade --pre --index-url https://dev.pyvista.org/wheels/simple/ pyvista
+
+To keep PyPI as the source for dependencies and only pull ``pyvista`` itself
+from the development index, use ``--extra-index-url`` instead:
+
+.. code-block:: bash
+
+   pip install --upgrade --pre --extra-index-url https://dev.pyvista.org/wheels/simple/ pyvista
+
+Each build is published with a `PEP 440
+<https://peps.python.org/pep-0440/>`_ local version segment of the form
+``<base>+g<short-sha>`` (for example ``0.48.dev0+g11c36e50``), so the
+specific commit a wheel was built from is always recoverable from its
+version string. Running ``pip install --pre -U pyvista`` against the
+development index will always pick up the newest commit's wheel.
+
+A human-readable landing page listing the current build is available at
+`dev.pyvista.org/wheels/ <https://dev.pyvista.org/wheels/>`_.
+
+.. warning::
+
+   These wheels are **unsupported development builds**. They may contain
+   in-progress changes, regressions, or breaking API changes that have not
+   yet been released. Use them for testing upcoming features or reproducing
+   reports against ``main``, not for production. For stable releases,
+   install from PyPI as usual.
+
+
+Optional Dependencies
+~~~~~~~~~~~~~~~~~~~~~
+
+The following are a list of optional dependencies and their purpose:
+
++-----------------------------------+-----------------------------------------+
+| Package                           | Purpose                                 |
++===================================+=========================================+
+| ``trame``                         | Interactive notebook rendering          |
++-----------------------------------+-----------------------------------------+
+| ``sphinx_gallery``                | Capturing PyVista output for docs       |
++-----------------------------------+-----------------------------------------+
+| ``colorcet``                      | Perceptually uniform colormaps          |
++-----------------------------------+-----------------------------------------+
+| ``cmocean``                       | Oceanographic colormaps                 |
++-----------------------------------+-----------------------------------------+
+| ``imageio-ffmpeg``                | Saving movie files                      |
++-----------------------------------+-----------------------------------------+
+| ``tqdm``                          | Status bars for monitoring filters      |
++-----------------------------------+-----------------------------------------+
+| ``trimesh``                       |                                         |
+| ``rtree``                         | Vectorised ray tracing                  |
+| ``pyembree``                      |                                         |
++-----------------------------------+-----------------------------------------+
+
+
+Source / Developers
+~~~~~~~~~~~~~~~~~~~
+
+Alternatively, you can install the latest version from GitHub by visiting
+`PyVista <https://github.com/pyvista/pyvista>`_, and downloading the source
+(cloning) by running::
+
+    git clone https://github.com/pyvista/pyvista.git
+    cd pyvista
+    python -m pip install -e .
+
+
+The latest documentation for the ``main`` branch of PyVista can be found at
+`dev.pyvista.org <https://dev.pyvista.org>`_.
+
+
+Test Installation
+~~~~~~~~~~~~~~~~~
+
+You can test your installation by running an example:
+
+.. code-block:: python
+
+    >>> from pyvista import demos
+    >>> demos.plot_wave()
+
+See other examples and demos:
+
+.. code-block:: python
+
+    >>> from pyvista import examples
+    >>> from pyvista import demos
+
+    List all available examples.
+
+    >>> print(dir(examples))
+
+    List all available demos.
+
+
+.. note::
+
+    A more comprehensive testing suite is available after cloning the source
+    repository. For details on how to clone and test the PyVista source, please
+    see our `Contributing Guide`_ and specifically, the `Testing`_ section.
+
+.. _Contributing Guide: https://dev.pyvista.org/contributing
+.. _Testing: https://dev.pyvista.org/contributing#unit-testing
+
+
+Running on CI Services
+~~~~~~~~~~~~~~~~~~~~~~
+Please head over to `pyvista/setup-headless-display-action`_ for details on
+setting up a headless display in GitHub Actions Workflows using PyVista.
+
+In the past, we have also supported `pyvista/gl-ci-helpers`_ for setting up CI
+services like Travis and Azure Pipelines to run PyVista.
+
+.. _pyvista/setup-headless-display-action: https://github.com/pyvista/setup-headless-display-action
+.. _pyvista/gl-ci-helpers: https://github.com/pyvista/gl-ci-helpers
+
+
+Running on MyBinder
+~~~~~~~~~~~~~~~~~~~
+This section is for advanced users that would like to install and use PyVista
+with headless displays on notebook hosting services like MyBinder_.
+
+Please see `this project`_ for a convenient Cookiecutter_ to get started using
+PyVista on the notebook hosting service MyBinder_.
+
+.. _this project: https://github.com/pyvista/cookiecutter-pyvista-binder
+.. _Cookiecutter: https://github.com/cookiecutter/cookiecutter
+.. _MyBinder: https://mybinder.org
+
+The Docker container only needs VTK's runtime GL libraries. For MyBinder,
+include the following in a file called ``apt.txt``::
+
+    libopengl0
+    libgl1
+    libegl1
+    libxrender1
+
+That is the complete system-library set: ``libegl1`` enables EGL so VTK
+picks up GPU acceleration automatically when the container is run with the
+NVIDIA container runtime, and falls back to Mesa's ``llvmpipe`` software
+renderer on CPU-only hosts. As of VTK 9.5, headless off-screen rendering
+works out of the box with the stock PyPI ``vtk`` wheel, so no ``Xvfb`` or
+``DISPLAY`` setup is required.
+
+Include PyVista in your Python requirements and ``pv.Plotter(off_screen=True)``
+will render. If you need more help than this on setting up PyVista for
+these types of services, hop on the Discussions page and chat with the
+developers or take a look at `this repository`_ that is currently using
+PyVista on MyBinder.
+
+.. _this repository: https://github.com/OpenGeoVis/PVGeo-Examples
+
+Running on Remote Servers
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Using PyVista on remote servers requires similar setup steps as in the above
+Docker case. As an example, here are the complete steps to use PyVista on AWS
+EC2 Ubuntu 18.04 LTS (``ami-0a313d6098716f372`` in ``us-east-1``).
+Other servers would work similarly.
+
+After logging into the remote server, install VTK's runtime GL libraries
+and set up Python:
+
+.. code-block:: bash
+
+    sudo apt update && sudo apt install -y \
+        libopengl0 libgl1 libegl1 libxrender1
+    python -m venv vtk_env
+    source vtk_env/bin/activate
+    pip install jupyter 'pyvista[jupyter]'
+
+With ``libegl1`` installed, VTK 9.5+ renders off-screen via EGL out of the
+box, so no ``Xvfb`` or ``DISPLAY`` configuration is required. Set
+``PYVISTA_OFF_SCREEN=true`` in your shell (or pass ``off_screen=True``
+when constructing a ``Plotter``) and ``pv.Plotter(off_screen=True)`` will
+just work.
+
+Reconnect to the server with port-forwarding, and start Jupyter:
+
+.. code-block:: bash
+
+    ssh -i "your-ssh-key" your-user-name@your-server-ip -L 8888:localhost:8888
+    source vtk_env/bin/activate
+    jupyter lab --NotebookApp.token='' --no-browser --port=8888
+
+Visit ``localhost:8888`` in the web browser.
+
+Running on WSL
+~~~~~~~~~~~~~~
+Similar to the example of the remote server above, the windows subsystem for Linux does
+not provide an x-server for visualization. Instead, the fastest way to get up and
+running on WSL is through `JupyterLab <https://jupyter.org/>`_.
+
+First, install VTK's runtime GL libraries and set up Python:
+
+.. code-block:: bash
+
+    sudo apt update && sudo apt install -y \
+        libopengl0 libgl1 libegl1 libxrender1
+    python -m venv vtk_env
+    source vtk_env/bin/activate
+    pip install jupyter 'pyvista[jupyter]'
+
+VTK Link to Jupyter
+^^^^^^^^^^^^^^^^^^^
+As of VTK 9.5, headless off-screen rendering works out of the box with
+the stock PyPI ``vtk`` wheel when ``libegl1`` is installed. No ``Xvfb``
+or ``DISPLAY`` configuration is needed. Start Jupyter:
+
+.. code-block:: bash
+
+    jupyter lab --NotebookApp.token='' --no-browser --port=8888
+
+Visit ``localhost:8888`` in the web browser.
+
+Finally add this example code and your interactive visualizations
+should be displayed in JupyterLab.
+
+.. code-block:: python
+
+    import pyvista as pv
+
+    pl = pv.Plotter(shape=(1, 2))
+    actor = pl.add_mesh(pyvista.Cube())
+    pl.subplot(0, 1)
+    actor = pl.add_mesh(pyvista.Sphere())
+    pl.set_background('orange', all_renderers=False)
+    pl.show()
+
+Your visualizations should now be showing directly in the Jupyter frontend.
+
+Running with Sphinx-Gallery
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In your ``conf.py``, add the following:
+
+
+.. code-block:: python
+
+    import pyvista as pv
+
+    # necessary when building the sphinx gallery
+    pv.BUILDING_GALLERY = True
+    pv.OFF_SCREEN = True
+
+    # Optional - set parameters like theme or window size
+    pv.set_plot_theme('document')
+    pv.global_theme.window_size = np.array([1024, 768]) * 2
+
+    extensions = [
+        ...,
+        "sphinx_gallery.gen_gallery",
+    ]
+
+    # Add the PyVista image scraper to SG
+    sphinx_gallery_conf = {
+        ...: ...,
+        "image_scrapers": ('pyvista', ...),
+        ...: ...,
+    }
+
+We also have a Sphinx-Gallery scraper for embedding dynamic 3D scenes
+instead of static screenshots. This scraper can be enabled by passing
+an instance directly to the ``image_scrapers`` parameter instead of
+the string ``'pyvista'`` above and by registering the
+``pyvista.ext.viewer_directive`` extension
+
+.. code-block:: python
+
+    import pyvista as pv
+    from pyvista.plotting.utilities.sphinx_gallery import DynamicScraper
+
+    # necessary when building the sphinx gallery
+    pv.BUILDING_GALLERY = True
+    pv.OFF_SCREEN = True
+
+    # Optional - set parameters like theme or window size
+    pv.set_plot_theme('document')
+    pv.global_theme.window_size = np.array([1024, 768]) * 2
+
+    extensions = [
+        ...,
+        "sphinx_gallery.gen_gallery",
+        "pyvista.ext.viewer_directive",
+    ]
+
+    # Add the PyVista image scraper to SG
+    sphinx_gallery_conf = {
+        ...: ...,
+        "image_scrapers": (DynamicScraper(), ...),
+        ...: ...,
+    }

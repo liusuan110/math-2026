@@ -1,0 +1,5 @@
+sphinx
+nbsphinx
+myst-parser
+jupyter
+sphinx-book-theme

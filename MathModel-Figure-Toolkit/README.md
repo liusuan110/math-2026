@@ -71,6 +71,7 @@ MathModel-Figure-Toolkit/
 ├── 04_common_model_templates/# 常用数学模型框架图
 ├── 05_paper_assets/          # 论文插图规范与 LaTeX 示例
 ├── 06_AI_Model_Figures/      # AI、GNN、信号处理结构图
+├── 07_competition_ready_templates/ # 赛时可直接开画模板
 └── examples/                 # 竞赛场景示例说明
 ```
 
@@ -94,6 +95,29 @@ MathModel-Figure-Toolkit/
 - Pearson 相关矩阵热力图：`correlation.py`
 - PCA 二维降维可视化：`PCA_visualization.py`
 - KMeans / DBSCAN 聚类结果图：`clustering.py`
+
+## 赛时优先入口
+
+如果比赛现场时间紧，优先使用：
+
+```text
+07_competition_ready_templates/
+```
+
+这里放的是已经按赛时工作流整理过的模板：
+
+- Python 论文级静态图
+- MATLAB 高质量导出图
+- 物理 / 工程类三维机制图
+- 出图检查清单
+
+外部开源项目源码统一放在：
+
+```text
+../external-tools/figure-tools/
+```
+
+外部项目用于查例子和补能力，赛时正式出图优先调用本工具库自己的模板。
 
 ## 图片展示
 

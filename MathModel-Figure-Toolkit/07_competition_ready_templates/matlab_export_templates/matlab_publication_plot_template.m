@@ -48,13 +48,23 @@ save_publication_figure(fig, baseName);
 fprintf('Saved MATLAB figure to: %s.[png/pdf]\n', baseName);
 
 function save_publication_figure(fig, baseName)
-    % 优先使用 export_fig；没有时使用 MATLAB 自带 exportgraphics。
+    % PNG 优先使用 export_fig；PDF 若缺少 Ghostscript，则回退到 exportgraphics。
     if exist('export_fig', 'file') == 2
         export_fig(fig, [baseName, '.png'], '-r300', '-transparent');
-        export_fig(fig, [baseName, '.pdf'], '-pdf', '-transparent');
     else
         exportgraphics(fig, [baseName, '.png'], 'Resolution', 300);
+    end
+
+    if exist('export_fig', 'file') == 2 && has_ghostscript()
+        export_fig(fig, [baseName, '.pdf'], '-pdf', '-transparent');
+    else
         exportgraphics(fig, [baseName, '.pdf'], 'ContentType', 'vector');
     end
 end
 
+function ok = has_ghostscript()
+    % export_fig 的 PDF/EPS 导出依赖 Ghostscript；Windows 赛场机器常常未安装。
+    [statusWin, ~] = system('where gswin64c');
+    [statusUnix, ~] = system('where gs');
+    ok = (statusWin == 0) || (statusUnix == 0);
+end

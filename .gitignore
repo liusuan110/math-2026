@@ -47,6 +47,8 @@ Thumbs.db
 
 # ===== 演示/临时产物 =====
 _demo_*
+tools/figure_check_outputs/
+MathModel-Figure-Toolkit/07_competition_ready_templates/matlab_export_templates/output/
 # 误生成在子目录的演示 figures（绘图 demo 以 cwd 为基准）
 code/**/figures/
 

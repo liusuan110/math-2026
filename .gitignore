@@ -64,5 +64,12 @@ code/**/figures/
 *.h5
 *.ckpt
 
+# ===== Local tool/runtime artifacts =====
+node_modules/
+.uv-cache/
+runs/
+*.log
+.env
+
 # 官方赛题超大附件：本地保留，避免超过 GitHub 单文件限制
 past-problems/2020-2025-A-B-C-E题汇总/2024/E题/附件2.csv

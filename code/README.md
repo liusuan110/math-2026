@@ -57,7 +57,9 @@ python3 -m venv .venv
 |------|------|-----------|
 | `mechanism/geometry.py` | 三维几何判据 | 烟幕遮蔽、定日镜反射、多波束覆盖、碰撞/视线判定 |
 | `mechanism/trajectory.py` | 轨迹与时序仿真 | 匀速/抛体/烟幕下沉/有效时长/最近接近 |
+| `mechanism/spatial_analysis.py` | 空间点集与覆盖分析 | KDTree 近邻、凸包、点云覆盖率、测线条带覆盖 |
 | `mechanism/inverse_problem.py` | 参数反演与残差诊断 | 物理公式拟合实验数据；加权最小二乘、多初值、FFT 初值 |
+| `mechanism/system_identification.py` | 轻量 SINDy 动力学识别 | 从观测数据识别可解释微分方程，辅助机理建模 |
 | `mechanism/ode_models.py` | 微分方程(scipy/sympy) | A 题机理：SIR、Logistic、阻尼振动；**含参数拟合到数据** |
 | `graph/graph_models.py` | 图论(networkx) | 最短路/最小生成树/最大流/TSP（路径调度） |
 | `simulation/monte_carlo.py` | 蒙特卡洛 | 含不确定性：积分估计、不确定性传播、置信区间 |
@@ -67,6 +69,7 @@ python3 -m venv .venv
 |------|------|-----------|
 | `clustering/cluster_pca.py` | KMeans + 肘部法 + PCA | 样本分组、降维可视化 |
 | `common/sensitivity.py` | 灵敏度分析 | 论文必有一节：单因素 OAT + 龙卷风图数据 |
+| `common/global_sensitivity.py` | 全局敏感性分析 | Morris 参数筛选、Sobol 一阶/总效应近似 |
 | `common/plotting.py` | 论文级绘图模板 | 中文字体 + 统一风格 + 300dpi 导出 |
 
 ## 典型组合套路
@@ -86,8 +89,9 @@ python3 -m venv .venv
   -> trajectory.py    # 运动学/时序仿真：给定参数，生成状态
   -> objective.py     # 把判据变成目标函数或约束罚函数
   -> global_optimization.py  # 全局搜索 + 局部精修 + 多种子稳定性
-  -> inverse_problem.py      # 若题目有实验曲线/物理参数，需要反演
-  -> sensitivity.py / monte_carlo.py  # 鲁棒性、误差传播
+  -> spatial_analysis.py     # 点云、测线、覆盖率、凸包/近邻分析
+  -> inverse_problem.py / system_identification.py  # 参数反演或从数据识别方程
+  -> global_sensitivity.py / sensitivity.py / monte_carlo.py  # 鲁棒性、误差传播
 ```
 
 赛时不要一上来就调 PSO。偏物理题的关键通常是：先把几何/物理判据写对，再谈优化。

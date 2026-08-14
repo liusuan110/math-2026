@@ -115,7 +115,7 @@ code/
 - 优化：线性规划、非线性规划、全局优化、启发式算法。
 - 评价：AHP、熵权法、TOPSIS、模糊灰色评价。
 - 统计与聚类：PCA、聚类、相关性分析。
-- 机理与仿真：三维几何判据、轨迹仿真、参数反演、ODE、蒙特卡洛、图论模型。
+- 机理与仿真：三维几何判据、轨迹仿真、空间覆盖分析、参数反演、动力学识别、ODE、蒙特卡洛、图论模型。
 
 ## 绘图工具库
 
@@ -285,4 +285,4 @@ MathModel-Figure-Toolkit/07_competition_ready_templates/matlab_export_templates/
 - 课程/作业参考材料已归入 `refs/coursework/`。
 - Beacon 的本地运行环境、依赖缓存、日志和 `.env` 已清理。
 - 绘图工具链已补齐 Python、MATLAB、PyVista/VTK。
-- `tools/verify_env.py` 当前自检通过 `22 / 22`，覆盖通用建模、物理几何/轨迹/反演、优化、绘图等模块。
+- `tools/verify_env.py` 当前自检通过 `25 / 25`，覆盖通用建模、物理几何/轨迹/空间分析/反演/动力学识别、优化、绘图等模块。

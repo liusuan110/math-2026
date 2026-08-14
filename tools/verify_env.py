@@ -15,6 +15,9 @@ os.environ.setdefault("MPLBACKEND", "Agg")
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CODE = os.path.join(REPO, "code")
+CACHE = os.path.join(REPO, ".matplotlib-cache")
+os.environ.setdefault("MPLCONFIGDIR", CACHE)
+os.environ.setdefault("XDG_CACHE_HOME", CACHE)
 
 TESTS = [
     ("evaluation", "ahp.py"),
@@ -24,11 +27,15 @@ TESTS = [
     ("optimization", "linear_programming.py"),
     ("optimization", "nonlinear_programming.py"),
     ("optimization", "heuristic.py"),
+    ("optimization", "global_optimization.py"),
     ("prediction", "regression.py"),
     ("prediction", "arima_forecast.py"),
     ("prediction", "grey_model.py"),
     ("prediction", "ml_models.py"),
     ("clustering", "cluster_pca.py"),
+    ("mechanism", "geometry.py"),
+    ("mechanism", "trajectory.py"),
+    ("mechanism", "inverse_problem.py"),
     ("mechanism", "ode_models.py"),
     ("preprocessing", "data_prep.py"),
     ("graph", "graph_models.py"),

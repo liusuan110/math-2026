@@ -101,9 +101,9 @@ code/
 ├── common/                        # 通用绘图、敏感性分析等工具
 ├── evaluation/                    # AHP、熵权、TOPSIS、灰色评价等
 ├── graph/                         # 图论与网络模型
-├── mechanism/                     # 机理模型、微分方程模型
+├── mechanism/                     # 几何判据、轨迹仿真、参数反演、微分方程
 ├── notebooks/                     # 数据探索 notebook 模板
-├── optimization/                  # 线性规划、非线性规划、启发式算法
+├── optimization/                  # 线性规划、非线性规划、全局优化、启发式算法
 ├── prediction/                    # 回归、ARIMA、灰色预测、机器学习预测
 ├── preprocessing/                 # 数据清洗与预处理
 └── simulation/                    # 蒙特卡洛与仿真
@@ -112,10 +112,10 @@ code/
 当前覆盖的模型类型：
 
 - 预测：回归、ARIMA、灰色预测、机器学习预测。
-- 优化：线性规划、非线性规划、启发式算法。
+- 优化：线性规划、非线性规划、全局优化、启发式算法。
 - 评价：AHP、熵权法、TOPSIS、模糊灰色评价。
 - 统计与聚类：PCA、聚类、相关性分析。
-- 机理与仿真：ODE、蒙特卡洛、图论模型。
+- 机理与仿真：三维几何判据、轨迹仿真、参数反演、ODE、蒙特卡洛、图论模型。
 
 ## 绘图工具库
 
@@ -285,4 +285,4 @@ MathModel-Figure-Toolkit/07_competition_ready_templates/matlab_export_templates/
 - 课程/作业参考材料已归入 `refs/coursework/`。
 - Beacon 的本地运行环境、依赖缓存、日志和 `.env` 已清理。
 - 绘图工具链已补齐 Python、MATLAB、PyVista/VTK。
-- `tools/verify_env.py` 当前自检通过 `18 / 18`。
+- `tools/verify_env.py` 当前自检通过 `22 / 22`，覆盖通用建模、物理几何/轨迹/反演、优化、绘图等模块。

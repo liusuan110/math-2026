@@ -42,6 +42,7 @@ python3 -m venv .venv
 | `optimization/linear_programming.py` | 线性/整数规划(scipy) | 约束与目标都线性，决策变量离散/连续 |
 | `optimization/nonlinear_programming.py` | 非线性规划(scipy) | 目标或约束含非线性项；带多初值重启 |
 | `optimization/heuristic.py` | 模拟退火/遗传/粒子群 | **大规模/非凸**，求解器搞不定时（B 题主力） |
+| `optimization/global_optimization.py` | 差分进化/退火/粗搜索/局部精修 | 物理题非凸连续参数优化；建议多随机种子统计稳定性 |
 
 ### 预测类（由历史推未来）
 | 文件 | 方法 | 什么时候用 |
@@ -54,6 +55,9 @@ python3 -m venv .venv
 ### 机理 / 图论 / 模拟（A、B 题进阶）
 | 文件 | 方法 | 什么时候用 |
 |------|------|-----------|
+| `mechanism/geometry.py` | 三维几何判据 | 烟幕遮蔽、定日镜反射、多波束覆盖、碰撞/视线判定 |
+| `mechanism/trajectory.py` | 轨迹与时序仿真 | 匀速/抛体/烟幕下沉/有效时长/最近接近 |
+| `mechanism/inverse_problem.py` | 参数反演与残差诊断 | 物理公式拟合实验数据；加权最小二乘、多初值、FFT 初值 |
 | `mechanism/ode_models.py` | 微分方程(scipy/sympy) | A 题机理：SIR、Logistic、阻尼振动；**含参数拟合到数据** |
 | `graph/graph_models.py` | 图论(networkx) | 最短路/最小生成树/最大流/TSP（路径调度） |
 | `simulation/monte_carlo.py` | 蒙特卡洛 | 含不确定性：积分估计、不确定性传播、置信区间 |
@@ -68,8 +72,24 @@ python3 -m venv .venv
 ## 典型组合套路
 - **数据分析题(C)**：`data_prep`（清洗）→ `cluster_pca`（分组/降维）→ `ml_models`/`regression`（建关系）→ `plotting`
 - **评价题**：`data_prep` → `entropy_weight`/`ahp`（定权）→ `topsis`/`fuzzy_grey`（排序）→ `sensitivity`（稳健性）→ `plotting`
-- **优化题(B)**：`linear_programming`/`nonlinear_programming`，规模大或非凸转 `heuristic` → `sensitivity`（改参数循环跑）
+- **优化题(B)**：`linear_programming`/`nonlinear_programming`，规模大或非凸转 `global_optimization`/`heuristic` → `sensitivity`（改参数循环跑）
 - **预测题**：数据少 `grey_model`，数据多 `arima_forecast`/`regression`/`ml_models`
-- **机理题(A)**：`ode_models`（建方程+数值解+参数拟合）→ `sensitivity` → `monte_carlo`（含不确定性时）
+- **机理题(A)**：`geometry`/`trajectory`（先写对物理判据和仿真）→ `inverse_problem`/`ode_models`（参数反演或微分方程）→ `global_optimization`（优化参数）→ `sensitivity`/`monte_carlo`（稳健性）
+
+## 偏物理 / 工程题的推荐内核
+
+如果选 A/B 中的物理工程题，建议先搭出这条链：
+
+```text
+题面对象
+  -> geometry.py      # 坐标系、距离、遮挡、反射、覆盖等判据
+  -> trajectory.py    # 运动学/时序仿真：给定参数，生成状态
+  -> objective.py     # 把判据变成目标函数或约束罚函数
+  -> global_optimization.py  # 全局搜索 + 局部精修 + 多种子稳定性
+  -> inverse_problem.py      # 若题目有实验曲线/物理参数，需要反演
+  -> sensitivity.py / monte_carlo.py  # 鲁棒性、误差传播
+```
+
+赛时不要一上来就调 PSO。偏物理题的关键通常是：先把几何/物理判据写对，再谈优化。
 
 > 这些是**起点模板**，比赛时按题意改目标函数/约束/数据即可。进阶模型参考 `docs/资源汇总.md`。

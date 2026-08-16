@@ -64,7 +64,7 @@
         "svg": {
           "relative_path": "figures/final/q4_optimization_curves.svg",
           "bytes": 129108,
-          "sha256": "fea116d6e51524b18bae5cd2a314775fa1eb6dc107dd0ac4d685d3b73c03b183"
+          "sha256": "bce5ff125f500eb879a08b292fc7288e3daadeb15f390c2eae0eaeb135c778ae"
         },
         "pdf": {
           "relative_path": "figures/final/q4_optimization_curves.pdf",
@@ -84,7 +84,7 @@
         "svg": {
           "relative_path": "figures/final/q4_total_power_surface.svg",
           "bytes": 171013,
-          "sha256": "c35eb48f5cbe0879f0fc32a72ae076e37987a4e9ed1268cdb439c26df1b857ed"
+          "sha256": "16440657b41df5771d08a66fab0375e123687b35299dffa44b055cfe2e4222d8"
         },
         "pdf": {
           "relative_path": "figures/final/q4_total_power_surface.pdf",
@@ -104,7 +104,7 @@
         "svg": {
           "relative_path": "figures/final/q4_optimal_period_response.svg",
           "bytes": 173220,
-          "sha256": "bfbdcdc995105a8ff5d79e34265a60eb48149becc68c247e7008fc9102e57f07"
+          "sha256": "2af8a975f71952c81c74e51ec7c3783c992cd4167a441b6c105847860cd7b0bd"
         },
         "pdf": {
           "relative_path": "figures/final/q4_optimal_period_response.pdf",

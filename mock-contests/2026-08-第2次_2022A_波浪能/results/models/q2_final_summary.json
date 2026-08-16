@@ -40,7 +40,7 @@
         "svg": {
           "relative_path": "figures/final/q2_optimization_curves.svg",
           "bytes": 111133,
-          "sha256": "9d9b3aaf298a94e80d02c5a743e3a82e47f05bccc4110540f6db351bb17c30c3"
+          "sha256": "ce292f43be38e7d32869f9abf79556fbbcc2b4c7bae15e39c581f911755c3201"
         },
         "pdf": {
           "relative_path": "figures/final/q2_optimization_curves.pdf",
@@ -60,7 +60,7 @@
         "svg": {
           "relative_path": "figures/final/q2_nonlinear_power_surface.svg",
           "bytes": 157006,
-          "sha256": "31b1b75fde90878191099dcd622fe968429cbfae5b5969821fa5acd7920f22e6"
+          "sha256": "a4bcd8b2effcc2b66304e0cc54acaf5652df28a0a27876506c8ec546dada4e26"
         },
         "pdf": {
           "relative_path": "figures/final/q2_nonlinear_power_surface.pdf",
@@ -80,7 +80,7 @@
         "svg": {
           "relative_path": "figures/final/q2_optimal_period_comparison.svg",
           "bytes": 129468,
-          "sha256": "b3a10a44b43a0693fcc9b4086b1230ff27bc67ade54c4d8c156ae453bc25ccad"
+          "sha256": "d59367bd46e54ea70ed84c5353df68fc54e71aa0c7a89d1024b62ea3e4ad9ada"
         },
         "pdf": {
           "relative_path": "figures/final/q2_optimal_period_comparison.pdf",

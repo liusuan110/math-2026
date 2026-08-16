@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "dense_time_count": 14654,
+  "dense_step_s": 0.01,
+  "official_frozen_max_absolute_difference": 5.0813520058312633e-14,
+  "maximum_instantaneous_linear_pto_power_W": 245.42873642741088,
+  "maximum_instantaneous_rotational_pto_power_W": 0.06976742000535759,
+  "cumulative_linear_pto_energy_at_40T_J": 6935.244394191545,
+  "cumulative_rotational_pto_energy_at_40T_J": 1.9281702886701801
+}

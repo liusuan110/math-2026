@@ -1,0 +1,201 @@
+{
+  "status": "passed",
+  "model": "CUMCM 2022 A, question 3",
+  "parameter_case": 3,
+  "shell_convention": "sealed_with_top",
+  "state_order": [
+    "float_heave_displacement",
+    "float_heave_velocity",
+    "oscillator_heave_displacement",
+    "oscillator_heave_velocity",
+    "float_pitch_displacement",
+    "float_pitch_velocity",
+    "oscillator_pitch_displacement",
+    "oscillator_pitch_velocity"
+  ],
+  "time_grid": {
+    "count": 733,
+    "first": 0.0,
+    "last": 146.4,
+    "step": 0.2
+  },
+  "wave_period_s": 3.6632377024134715,
+  "forty_period_end_s": 146.52950809653885,
+  "key_time_values": {
+    "10.0": [
+      -0.528276022785626,
+      0.969851353239977,
+      -0.5987291334795016,
+      1.0382006797938834,
+      0.05499376014127687,
+      -0.1978082931280512,
+      0.057152980105568414,
+      -0.20493272484815517
+    ],
+    "20.0": [
+      -0.7048147405143941,
+      -0.2693056132286334,
+      -0.7722938760711158,
+      -0.319025500395991,
+      0.0863349317879596,
+      -0.045551226241347734,
+      0.08939805450688514,
+      -0.0474032742264148
+    ],
+    "40.0": [
+      0.36936125121277064,
+      0.7575795629296916,
+      0.3926530250028357,
+      0.8449623253060841,
+      -0.10823415731346081,
+      -0.076353752715489,
+      -0.11214757435135737,
+      -0.07913524794362414
+    ],
+    "60.0": [
+      -0.32067528348405366,
+      -0.72176176874885,
+      -0.34142623760543744,
+      -0.7993211354684309,
+      0.04751113545105366,
+      0.11984431955962226,
+      0.04909265796113557,
+      0.12417320922638317
+    ],
+    "100.0": [
+      -0.05015398562294801,
+      -0.9466896468584463,
+      -0.04261177384809036,
+      -1.0365259973455154,
+      0.03807879889093716,
+      0.11855444311347367,
+      0.039433620041490744,
+      0.12266822152761954
+    ]
+  },
+  "peak_absolute_responses": {
+    "float_heave_displacement_peak": 0.8312738172229011,
+    "float_heave_velocity_peak": 1.4872742675284807,
+    "oscillator_heave_displacement_peak": 0.9158467357580075,
+    "oscillator_heave_velocity_peak": 1.639829646096879,
+    "float_pitch_displacement_peak": 0.14829503082008463,
+    "float_pitch_velocity_peak": 0.22877743061351502,
+    "oscillator_pitch_displacement_peak": 0.153757968131474,
+    "oscillator_pitch_velocity_peak": 0.2371288720309327,
+    "minimum_spring_length": 0.11492340676426227,
+    "maximum_spring_length": 0.28867548764530215,
+    "maximum_absolute_pitch": 0.153757968131474
+  },
+  "energy_at_40_period_end_J": {
+    "mechanical": 5072.542373564631,
+    "wave_input_work": 62277.12889859158,
+    "heave_radiation_loss": 49263.88220481916,
+    "linear_pto_output": 6935.244394191545,
+    "pitch_radiation_loss": 1003.5317557280569,
+    "rotational_pto_output": 1.9281702886701801,
+    "balance_residual": 4.874891601502895e-10
+  },
+  "sensitivity": {
+    "alternative_shell_convention": "lateral_only",
+    "float_pitch_peak_relative_change": 0.012621851721441356,
+    "float_pitch_velocity_peak_relative_change": -0.017733065646855763,
+    "oscillator_pitch_peak_relative_change": 0.01509665422751255,
+    "oscillator_pitch_velocity_peak_relative_change": -0.01503916482482257,
+    "float_pitch_max_pointwise_difference": 0.061614750647348795,
+    "oscillator_pitch_max_pointwise_difference": 0.06430010847213867,
+    "heave_difference": 0.0
+  },
+  "numerical_errors": {
+    "main_vs_reference_global_max_absolute": 1.768307722471718e-13,
+    "main_vs_reference_global_max_normalized": 1.2431005048948762e-13,
+    "main_vs_matrix_exponential_global_max_absolute": 8.455736111301349e-14,
+    "main_vs_matrix_exponential_global_max_normalized": 6.506774160497075e-14,
+    "reference_vs_matrix_exponential_global_max_absolute": 1.4829196898213937e-13,
+    "reference_vs_matrix_exponential_global_max_normalized": 1.0251590646748737e-13,
+    "augmented_vs_main_global_max_normalized": 3.251149600601593e-14,
+    "energy_relative_residual": 1.1215865973831133e-14,
+    "energy_absolute_residual": 6.984919309616089e-10
+  },
+  "plot_metrics": {
+    "status": "passed",
+    "dense_time_count": 14654,
+    "dense_step_s": 0.01,
+    "official_frozen_max_absolute_difference": 5.0813520058312633e-14,
+    "maximum_instantaneous_linear_pto_power_W": 245.42873642741088,
+    "maximum_instantaneous_rotational_pto_power_W": 0.06976742000535759,
+    "cumulative_linear_pto_energy_at_40T_J": 6935.244394191545,
+    "cumulative_rotational_pto_energy_at_40T_J": 1.9281702886701801
+  },
+  "official_workbook": {
+    "relative_path": "results/tables/result3.xlsx",
+    "bytes": 88311,
+    "sha256": "93b015463a59c2a206879f9f3e6fcf01e911da0c967dacd87820a51a64807cee"
+  },
+  "frozen_response": {
+    "relative_path": "results/models/q3_full_response.npz",
+    "bytes": 92110,
+    "sha256": "dfb003908a6909fd09eaebf25c31a40b05e4c9057e03421c2b50517361830b62"
+  },
+  "formal_figures": [
+    {
+      "base_name": "q3_heave_response",
+      "formats": {
+        "png": {
+          "relative_path": "figures/final/q3_heave_response.png",
+          "bytes": 581055,
+          "sha256": "205fadc752d3b993e8924eb860a3743d0b46b8757c87d9c174d32b41aad57333"
+        },
+        "svg": {
+          "relative_path": "figures/final/q3_heave_response.svg",
+          "bytes": 169805,
+          "sha256": "00656f50b91ca825626f0ab3dea4eb2a9e9561b4a294030431efd0de80724f91"
+        },
+        "pdf": {
+          "relative_path": "figures/final/q3_heave_response.pdf",
+          "bytes": 59178,
+          "sha256": "fddc317342fb23d1dc4b86bdc52009ef2fdc813dfe56d45c9ef85d0eb9674fc0"
+        }
+      }
+    },
+    {
+      "base_name": "q3_pitch_response",
+      "formats": {
+        "png": {
+          "relative_path": "figures/final/q3_pitch_response.png",
+          "bytes": 595414,
+          "sha256": "b2d91632d6d41a18b854eb0c6924ee8d1f47131b6b3ca7136d25eccab4aa34d8"
+        },
+        "svg": {
+          "relative_path": "figures/final/q3_pitch_response.svg",
+          "bytes": 183236,
+          "sha256": "d663f36213f332393167934d5e77e8b0fe91c1f6f218bf3dbc0c8378f721a092"
+        },
+        "pdf": {
+          "relative_path": "figures/final/q3_pitch_response.pdf",
+          "bytes": 58929,
+          "sha256": "6983050e792413e134c569826c620169c7eba32cdb0446908f864a53b5188f3a"
+        }
+      }
+    },
+    {
+      "base_name": "q3_pto_and_sensitivity",
+      "formats": {
+        "png": {
+          "relative_path": "figures/final/q3_pto_and_sensitivity.png",
+          "bytes": 476616,
+          "sha256": "2c0d3789c03ed93a181675ea7ea0b6a3fa623a52464f409564105fbf4a9d49e5"
+        },
+        "svg": {
+          "relative_path": "figures/final/q3_pto_and_sensitivity.svg",
+          "bytes": 261736,
+          "sha256": "1c83897b3af8e535d09795d92995fc673c29ae6f60b8eedf48aaf1d06af546eb"
+        },
+        "pdf": {
+          "relative_path": "figures/final/q3_pto_and_sensitivity.pdf",
+          "bytes": 65602,
+          "sha256": "db050d7af8cad5664b2a966579a294239daab6ed21fc4f992eda8487f03891bd"
+        }
+      }
+    }
+  ]
+}

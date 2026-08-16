@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "tests_run": 10,
+  "failures": 0,
+  "errors": 0,
+  "npz_sha256": "dfb003908a6909fd09eaebf25c31a40b05e4c9057e03421c2b50517361830b62",
+  "json_sha256": "5a400b37a30cc09fd03b8a0d51737498cbc1cf763e8921c9704f67690a3b29d2",
+  "source_full_validation_sha256": "54dd3489fa4d01cd1cfa0dd6cda713780c25597d103287dca1a1ca4872792b02"
+}

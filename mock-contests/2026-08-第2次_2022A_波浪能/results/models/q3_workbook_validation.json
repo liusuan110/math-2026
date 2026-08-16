@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "output": "results/tables/result3.xlsx",
+  "source_data": "results/models/q3_full_response.npz",
+  "source_data_sha256": "dfb003908a6909fd09eaebf25c31a40b05e4c9057e03421c2b50517361830b62",
+  "workbook_sha256": "93b015463a59c2a206879f9f3e6fcf01e911da0c967dacd87820a51a64807cee",
+  "workbook_size_bytes": 88311,
+  "sheet": "Sheet1",
+  "used_range": "A1:I735",
+  "header_rows": 2,
+  "data_rows": 733,
+  "data_columns": 9,
+  "numeric_cells_checked": 6597,
+  "mismatch_count": 0,
+  "maximum_absolute_difference": 0,
+  "formula_error_count": 0,
+  "key_excel_rows_checked": [3, 53, 103, 203, 303, 503, 735],
+  "format_checks": {
+    "official_header_preserved": true,
+    "merged_header_cells_preserved": true,
+    "time_number_format": "0.0",
+    "state_number_format": "0.000000",
+    "data_borders_extended_to_row_735": true,
+    "font_and_alignment_consistent": true
+  },
+  "visual_checks": {
+    "template_rendered_before_edit": true,
+    "exported_top_passed": true,
+    "exported_10_second_region_passed": true,
+    "exported_tail_float_block_passed": true,
+    "exported_tail_oscillator_block_passed": true,
+    "clipped_headers_or_values": false
+  }
+}

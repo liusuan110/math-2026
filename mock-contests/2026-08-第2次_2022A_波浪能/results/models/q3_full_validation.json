@@ -1,0 +1,95 @@
+{
+  "status": "passed",
+  "scope": "full_40_period_validation_without_result3_workbook",
+  "shell_convention": "sealed_with_top",
+  "wave_period": 3.6632377024134715,
+  "forty_period_end": 146.52950809653885,
+  "official_grid": {
+    "count": 733,
+    "first": 0.0,
+    "last": 146.4,
+    "step": 0.2
+  },
+  "diagnostic_grid": {
+    "count": 14654,
+    "first": 0.0,
+    "last": 146.52950809653885,
+    "regular_step": 0.01
+  },
+  "errors": {
+    "main_vs_reference_global_max_absolute": 1.768307722471718e-13,
+    "main_vs_reference_global_max_normalized": 1.2431005048948762e-13,
+    "main_vs_matrix_exponential_global_max_absolute": 8.455736111301349e-14,
+    "main_vs_matrix_exponential_global_max_normalized": 6.506774160497075e-14,
+    "reference_vs_matrix_exponential_global_max_absolute": 1.4829196898213937e-13,
+    "reference_vs_matrix_exponential_global_max_normalized": 1.0251590646748737e-13,
+    "augmented_vs_main_global_max_normalized": 3.251149600601593e-14,
+    "energy_relative_residual": 1.1215865973831133e-14,
+    "energy_absolute_residual": 6.984919309616089e-10
+  },
+  "physical_ranges": {
+    "float_heave_displacement_peak": 0.8312738172229011,
+    "float_heave_velocity_peak": 1.4872742675284807,
+    "oscillator_heave_displacement_peak": 0.9158467357580075,
+    "oscillator_heave_velocity_peak": 1.639829646096879,
+    "float_pitch_displacement_peak": 0.14829503082008463,
+    "float_pitch_velocity_peak": 0.22877743061351502,
+    "oscillator_pitch_displacement_peak": 0.153757968131474,
+    "oscillator_pitch_velocity_peak": 0.2371288720309327,
+    "minimum_spring_length": 0.11492340676426227,
+    "maximum_spring_length": 0.28867548764530215,
+    "maximum_absolute_pitch": 0.153757968131474
+  },
+  "energy_at_40_period_end": {
+    "mechanical": 5072.542373564631,
+    "wave_input_work": 62277.12889859158,
+    "heave_radiation_loss": 49263.88220481916,
+    "linear_pto_output": 6935.244394191545,
+    "pitch_radiation_loss": 1003.5317557280569,
+    "rotational_pto_output": 1.9281702886701801,
+    "balance_residual": 4.874891601502895e-10
+  },
+  "sensitivity": {
+    "alternative_shell_convention": "lateral_only",
+    "float_pitch_peak_relative_change": 0.012621851721441356,
+    "float_pitch_velocity_peak_relative_change": -0.017733065646855763,
+    "oscillator_pitch_peak_relative_change": 0.01509665422751255,
+    "oscillator_pitch_velocity_peak_relative_change": -0.01503916482482257,
+    "float_pitch_max_pointwise_difference": 0.061614750647348795,
+    "oscillator_pitch_max_pointwise_difference": 0.06430010847213867,
+    "heave_difference": 0.0
+  },
+  "key_time_values": {
+    "10.0": [-0.528276022785626, 0.969851353239977, -0.5987291334795016, 1.0382006797938834, 0.05499376014127687, -0.1978082931280512, 0.057152980105568414, -0.20493272484815517],
+    "20.0": [-0.7048147405143941, -0.2693056132286334, -0.7722938760711158, -0.319025500395991, 0.0863349317879596, -0.045551226241347734, 0.08939805450688514, -0.0474032742264148],
+    "40.0": [0.36936125121277064, 0.7575795629296916, 0.3926530250028357, 0.8449623253060841, -0.10823415731346081, -0.076353752715489, -0.11214757435135737, -0.07913524794362414],
+    "60.0": [-0.32067528348405366, -0.72176176874885, -0.34142623760543744, -0.7993211354684309, 0.04751113545105366, 0.11984431955962226, 0.04909265796113557, 0.12417320922638317],
+    "100.0": [-0.05015398562294801, -0.9466896468584463, -0.04261177384809036, -1.0365259973455154, 0.03807879889093716, 0.11855444311347367, 0.039433620041490744, 0.12266822152761954]
+  },
+  "state_order": [
+    "float_heave_displacement",
+    "float_heave_velocity",
+    "oscillator_heave_displacement",
+    "oscillator_heave_velocity",
+    "float_pitch_displacement",
+    "float_pitch_velocity",
+    "oscillator_pitch_displacement",
+    "oscillator_pitch_velocity"
+  ],
+  "checks": {
+    "official_grid": true,
+    "all_main_values_finite": true,
+    "all_dense_values_finite": true,
+    "all_alternative_values_finite": true,
+    "main_reference_convergence": true,
+    "main_matrix_exponential": true,
+    "reference_matrix_exponential": true,
+    "augmented_matches_main": true,
+    "energy_balance": true,
+    "losses_nonnegative": true,
+    "losses_monotone": true,
+    "spring_length_positive": true,
+    "small_angle_warning_not_triggered": true,
+    "all_passed": true
+  }
+}

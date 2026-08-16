@@ -1,0 +1,132 @@
+{
+  "status": "passed",
+  "model": "CUMCM 2022 A, question 2, nonlinear coefficient upper boundary",
+  "scope": "candidate optimization only; final cold-start verification not executed",
+  "fixed_coefficient": 100000.0,
+  "full_boundary_scan": {
+    "points": 501,
+    "step": 0.002,
+    "wall_time_s": 54.27458049999768,
+    "strict_fallback_points": 3,
+    "total_ode_function_evaluations": 5755238,
+    "maximum_periodicity_error": 6.538535941760436e-07,
+    "root_non_success_flag_count": 1,
+    "strict_interior_peak_count": 1,
+    "strict_peak_exponents": [
+      0.41600000000000004
+    ],
+    "grid_best": {
+      "exponent": 0.41600000000000004,
+      "mean_power_W": 229.99420382079637
+    },
+    "endpoint_power_W": {
+      "exponent_zero": 150.19928764585947,
+      "exponent_one": 137.01293607101064
+    }
+  },
+  "bounded_refinement": {
+    "success": true,
+    "iterations": 25,
+    "function_evaluations": 25,
+    "unique_strict_power_evaluations_including_checks": 33,
+    "wall_time_s": 15.656772499998624,
+    "candidate": {
+      "coefficient": 100000.0,
+      "exponent": 0.4157797076423078,
+      "mean_power_W": 229.99433499184065,
+      "periodicity_error": 7.149358320252423e-10,
+      "root_success": true,
+      "periodic_state": [
+        -0.4454400877702167,
+        0.12931747622351247,
+        -0.4814238093608202,
+        0.04920220175494234
+      ],
+      "pto_energy_one_cycle_J": 652.620253062039
+    },
+    "local_curvature_W_per_exponent_squared": -1627.2450466203736
+  },
+  "local_perturbations": [
+    {
+      "exponent_change": -0.01,
+      "exponent": 0.4057797076423078,
+      "mean_power_W": 229.94973268884786,
+      "power_loss_from_candidate_W": 0.04460230299278578,
+      "periodicity_error": 5.590106131416514e-12
+    },
+    {
+      "exponent_change": -0.005,
+      "exponent": 0.4107797076423078,
+      "mean_power_W": 229.9833494423278,
+      "power_loss_from_candidate_W": 0.010985549512838588,
+      "periodicity_error": 5.940070721735652e-11
+    },
+    {
+      "exponent_change": -0.001,
+      "exponent": 0.4147797076423078,
+      "mean_power_W": 229.99393819312564,
+      "power_loss_from_candidate_W": 0.00039679871500197805,
+      "periodicity_error": 1.5517476227138528e-11
+    },
+    {
+      "exponent_change": -0.0001,
+      "exponent": 0.4156797076423078,
+      "mean_power_W": 229.99433261389103,
+      "power_loss_from_candidate_W": 2.3779496132192435e-06,
+      "periodicity_error": 7.304079589397724e-10
+    },
+    {
+      "exponent_change": 0.0001,
+      "exponent": 0.4158797076423078,
+      "mean_power_W": 229.9943210973398,
+      "power_loss_from_candidate_W": 1.3894500852984493e-05,
+      "periodicity_error": 2.8187131973491447e-11
+    },
+    {
+      "exponent_change": 0.001,
+      "exponent": 0.4167797076423078,
+      "mean_power_W": 229.99382495156593,
+      "power_loss_from_candidate_W": 0.0005100402747189037,
+      "periodicity_error": 3.852612869345669e-12
+    },
+    {
+      "exponent_change": 0.005,
+      "exponent": 0.4207797076423078,
+      "mean_power_W": 229.9828363052999,
+      "power_loss_from_candidate_W": 0.01149868654073316,
+      "periodicity_error": 4.1209793452641155e-10
+    },
+    {
+      "exponent_change": 0.01,
+      "exponent": 0.4257797076423078,
+      "mean_power_W": 229.94902053785668,
+      "power_loss_from_candidate_W": 0.04531445398396272,
+      "periodicity_error": 1.7337953160229046e-11
+    }
+  ],
+  "comparison_with_interior_audit": {
+    "best_internal_audit_power_W": 229.99375400504894,
+    "boundary_candidate_power_W": 229.99433499184065,
+    "boundary_advantage_W": 0.0005809867917037081
+  },
+  "interpretation": {
+    "candidate_lies_on_coefficient_upper_boundary": true,
+    "candidate_exponent_is_interior": true,
+    "final_answer_ready": false,
+    "remaining_requirement": "strict shooting and independent cold-start long-transient verification"
+  },
+  "acceptance": {
+    "all_scan_values_are_finite": true,
+    "all_scan_power_is_nonnegative": true,
+    "all_scan_roots_succeeded_or_closed": true,
+    "all_scan_periodicity_errors_pass": true,
+    "boundary_scan_has_one_strict_peak": true,
+    "scan_peak_is_not_exponent_endpoint": true,
+    "refined_candidate_is_interior_in_exponent": true,
+    "all_local_perturbations_are_lower": true,
+    "local_curvature_is_negative": true,
+    "refined_candidate_improves_grid_best": true,
+    "boundary_candidate_exceeds_internal_audit": true,
+    "strict_candidate_periodicity_passes": true
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "status": "passed",
+  "model": "CUMCM 2022 A, question 2, constant PTO damping",
+  "bounds_N_s_per_m": [
+    0.0,
+    100000.0
+  ],
+  "dense_grid": {
+    "points": 10001,
+    "step_N_s_per_m": 10.0,
+    "best_damping_N_s_per_m": 37190.0,
+    "best_mean_power_W": 229.33393864167417,
+    "strict_interior_peak_count": 1,
+    "strict_peak_damping_N_s_per_m": [
+      37190.0
+    ]
+  },
+  "bounded_optimizer": {
+    "success": true,
+    "iterations": 21,
+    "function_evaluations": 21,
+    "damping_N_s_per_m": 37193.81261612592,
+    "mean_power_W": 229.33393983846096,
+    "relative_displacement_amplitude_m": 0.05015074101652798,
+    "relative_velocity_amplitude_m_per_s": 0.11104878583289791,
+    "float_displacement_phasor_m": {
+      "real": -0.44546814628680076,
+      "imag": -0.05769456241720425
+    },
+    "oscillator_displacement_phasor_m": {
+      "real": -0.48211857165036837,
+      "imag": -0.023462367845771617
+    },
+    "dynamic_residual_norm_N": 8.134767913360665e-12,
+    "local_curvature_W_per_damping_squared": -1.6471273056595237e-07
+  },
+  "analytic_check": {
+    "receptance_real": 1.2141818313662493e-05,
+    "receptance_imag": -7.868700358234167e-08,
+    "damping_N_s_per_m": 37193.811887974385,
+    "mean_power_W": 229.33393983845937,
+    "optimizer_damping_relative_error": 1.9577222620629807e-08
+  },
+  "time_domain_check": {
+    "mean_power_W": 229.33393979282198,
+    "frequency_time_relative_error": 1.990066720154551e-10,
+    "cycles_to_convergence": 302,
+    "cycle_state_error": 9.384359850018848e-11,
+    "function_evaluations": 446392
+  },
+  "boundary_power_W": {
+    "lower": 0.0,
+    "upper": 150.1992894736949
+  },
+  "local_perturbations": [
+    {
+      "relative_damping_change": -0.05,
+      "damping_N_s_per_m": 35334.12198531962,
+      "mean_power_W": 229.0345192613891,
+      "power_loss_from_optimum_W": 0.29942057707185654
+    },
+    {
+      "relative_damping_change": -0.01,
+      "damping_N_s_per_m": 36821.87448996466,
+      "mean_power_W": 229.32243251603097,
+      "power_loss_from_optimum_W": 0.011507322429991973
+    },
+    {
+      "relative_damping_change": -0.001,
+      "damping_N_s_per_m": 37156.618803509795,
+      "mean_power_W": 229.33382580028524,
+      "power_loss_from_optimum_W": 0.00011403817572386288
+    },
+    {
+      "relative_damping_change": 0.001,
+      "damping_N_s_per_m": 37231.00642874204,
+      "mean_power_W": 229.33382601921994,
+      "power_loss_from_optimum_W": 0.00011381924102238372
+    },
+    {
+      "relative_damping_change": 0.01,
+      "damping_N_s_per_m": 37565.75074228718,
+      "mean_power_W": 229.3226602842704,
+      "power_loss_from_optimum_W": 0.011279554190565477
+    },
+    {
+      "relative_damping_change": 0.05,
+      "damping_N_s_per_m": 39053.50324693222,
+      "mean_power_W": 229.06300139353465,
+      "power_loss_from_optimum_W": 0.27093844492631547
+    }
+  ],
+  "acceptance": {
+    "grid_peak_is_interior": true,
+    "grid_has_one_strict_peak": true,
+    "optimizer_is_interior": true,
+    "all_local_perturbations_are_lower": true,
+    "curvature_is_negative": true,
+    "optimizer_matches_analytic_condition": true,
+    "frequency_dynamic_residual_passes": true,
+    "time_domain_matches_frequency_domain": true
+  }
+}

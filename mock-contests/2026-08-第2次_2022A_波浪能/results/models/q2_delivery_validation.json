@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "checks": {
+    "summary_status_passed": true,
+    "constant_value_matches_source": true,
+    "nonlinear_value_matches_source": true,
+    "nine_formal_figure_files_present": true,
+    "formal_figure_hashes_match": true,
+    "formal_figure_signatures_pass": true,
+    "handoff_files_complete": true,
+    "handoff_contains_final_constant_result": true,
+    "handoff_contains_final_nonlinear_result": true,
+    "handoff_contains_all_q2_figure_bases": true
+  },
+  "passed_count": 10,
+  "total_count": 10,
+  "failed": []
+}

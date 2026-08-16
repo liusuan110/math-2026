@@ -1,0 +1,93 @@
+{
+  "status": "passed",
+  "model": "CUMCM 2022 A, question 2",
+  "parameter_case": 2,
+  "wave": {
+    "angular_frequency_per_s": 2.2143,
+    "period_s": 2.83754925131174,
+    "added_mass_kg": 1165.992,
+    "radiation_damping_N_s_per_m": 167.8395,
+    "excitation_amplitude_N": 4890.0
+  },
+  "constant_damping": {
+    "optimal_damping_N_s_per_m": 37193.81261612592,
+    "maximum_mean_power_W": 229.33393983846096,
+    "acceptance_passed": true,
+    "acceptance_count": 8
+  },
+  "power_law_damping": {
+    "optimal_coefficient": 100000.0,
+    "optimal_exponent": 0.4157183801090447,
+    "maximum_mean_power_W": 229.99433292586076,
+    "pto_energy_per_period_J": 652.6202471997193,
+    "acceptance_passed": true,
+    "acceptance_count": 19
+  },
+  "comparison": {
+    "power_difference_W": 0.6603930873997967,
+    "relative_improvement": 0.0028796134050850333,
+    "relative_improvement_percent": 0.2879613405085033
+  },
+  "formal_figures": [
+    {
+      "base_name": "q2_optimization_curves",
+      "formats": {
+        "png": {
+          "relative_path": "figures/final/q2_optimization_curves.png",
+          "bytes": 175477,
+          "sha256": "d6836b8eb7a54def62fab6ba3a53ac1009f1769e67fac4c21ba4db8bfa99e45f"
+        },
+        "svg": {
+          "relative_path": "figures/final/q2_optimization_curves.svg",
+          "bytes": 111133,
+          "sha256": "9d9b3aaf298a94e80d02c5a743e3a82e47f05bccc4110540f6db351bb17c30c3"
+        },
+        "pdf": {
+          "relative_path": "figures/final/q2_optimization_curves.pdf",
+          "bytes": 32463,
+          "sha256": "9570ded5c38c7c03cc4eba8adc4190630d8dbb2a6d2565b802ca7087bc7bcfc5"
+        }
+      }
+    },
+    {
+      "base_name": "q2_nonlinear_power_surface",
+      "formats": {
+        "png": {
+          "relative_path": "figures/final/q2_nonlinear_power_surface.png",
+          "bytes": 323577,
+          "sha256": "165cb84020f38f1f1e440f169a1ecc123ea52bc283369bda8d88b0e98b97a632"
+        },
+        "svg": {
+          "relative_path": "figures/final/q2_nonlinear_power_surface.svg",
+          "bytes": 157006,
+          "sha256": "31b1b75fde90878191099dcd622fe968429cbfae5b5969821fa5acd7920f22e6"
+        },
+        "pdf": {
+          "relative_path": "figures/final/q2_nonlinear_power_surface.pdf",
+          "bytes": 41595,
+          "sha256": "2bb0660c785373aa9a57926dec2dd9904c206d94fa76ee181c9d3da6f300f78b"
+        }
+      }
+    },
+    {
+      "base_name": "q2_optimal_period_comparison",
+      "formats": {
+        "png": {
+          "relative_path": "figures/final/q2_optimal_period_comparison.png",
+          "bytes": 314697,
+          "sha256": "72bc43d4e1adb1fdeae8737a1e203296fb512ae0c7a4573b6f8cba87d4f70049"
+        },
+        "svg": {
+          "relative_path": "figures/final/q2_optimal_period_comparison.svg",
+          "bytes": 129468,
+          "sha256": "b3a10a44b43a0693fcc9b4086b1230ff27bc67ade54c4d8c156ae453bc25ccad"
+        },
+        "pdf": {
+          "relative_path": "figures/final/q2_optimal_period_comparison.pdf",
+          "bytes": 34390,
+          "sha256": "b91d3d4c62e166dea8c7df927a1e9b54bf51cc65ab83330785278293c7a72df2"
+        }
+      }
+    }
+  ]
+}

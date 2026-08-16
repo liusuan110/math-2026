@@ -1,0 +1,228 @@
+{
+  "status": "passed",
+  "model": "CUMCM 2022 A, question 2, nonlinear interior ridge refinement",
+  "scope": "interior ridge only; true coefficient upper boundary not optimized",
+  "ridge_trace": {
+    "exponents": [
+      0.0,
+      0.025,
+      0.05,
+      0.07500000000000001,
+      0.1,
+      0.125,
+      0.15000000000000002,
+      0.17500000000000002,
+      0.2,
+      0.225,
+      0.25,
+      0.275,
+      0.30000000000000004,
+      0.325,
+      0.35000000000000003,
+      0.375,
+      0.4,
+      0.42500000000000004,
+      0.45
+    ],
+    "best_coefficient_by_exponent": [
+      37193.80040737916,
+      39489.43118011415,
+      41909.279112254066,
+      44473.06487992193,
+      47241.42724032657,
+      50152.32624091436,
+      53265.50606027139,
+      56496.45666077472,
+      60043.84475262497,
+      63719.76877008539,
+      67710.8740007536,
+      71899.04447671375,
+      76282.40060521502,
+      80962.83490934156,
+      86071.71580842363,
+      91521.46193980955,
+      97108.90338870714,
+      99998.10575767067,
+      99996.80607422178
+    ],
+    "best_mean_power_W_by_exponent": [
+      229.33393999266534,
+      229.3369031749094,
+      229.34408431613076,
+      229.3569502275303,
+      229.37621741525714,
+      229.39782356749782,
+      229.4260924376713,
+      229.45896299639597,
+      229.49742293879112,
+      229.53947422958578,
+      229.5862489753916,
+      229.63743807150132,
+      229.69321740251442,
+      229.75533566683276,
+      229.81608074710957,
+      229.88306892141833,
+      229.95355227414439,
+      229.9557350073794,
+      229.47453948919636
+    ],
+    "periodicity_error": [
+      5.155746014369025e-10,
+      7.178073365156576e-08,
+      7.244332935835665e-09,
+      3.2616314637443757e-08,
+      2.439952832831863e-07,
+      1.5100804291774803e-08,
+      6.74086965408894e-08,
+      7.282241656152295e-08,
+      1.6755077923706312e-07,
+      2.67285971925605e-08,
+      2.8293684115919255e-08,
+      2.7115869786936387e-08,
+      7.703729948816125e-08,
+      5.257403051134242e-07,
+      4.799618616283355e-08,
+      9.068083969998457e-08,
+      8.853776336930263e-08,
+      5.954377014565628e-08,
+      5.5165772482687726e-08
+    ],
+    "optimizer_success": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "function_evaluations": [
+      12,
+      17,
+      14,
+      14,
+      17,
+      16,
+      17,
+      21,
+      17,
+      17,
+      21,
+      14,
+      18,
+      16,
+      21,
+      17,
+      22,
+      24,
+      23
+    ],
+    "wall_time_s": 34.21427059999951,
+    "sampled_ridge_best": {
+      "coefficient": 99998.10575767067,
+      "exponent": 0.42500000000000004,
+      "mean_power_W": 229.9557350073794
+    },
+    "first_exponent_directed_to_upper_boundary": 0.42500000000000004
+  },
+  "interior_multistart_audit": {
+    "coefficient_cap": 99900.0,
+    "purpose": "detect an interior stationary point without claiming boundary optimum",
+    "runs": [
+      {
+        "start": {
+          "coefficient": 60000.0,
+          "exponent": 0.2
+        },
+        "success": true,
+        "message": "Optimization terminated successfully.",
+        "function_evaluations": 105,
+        "candidate": {
+          "coefficient": 99893.10084012167,
+          "exponent": 0.4151869073580299,
+          "mean_power_W": 229.99367115364558,
+          "periodicity_error": 5.434169901542738e-09
+        },
+        "reaches_interior_audit_cap": true
+      },
+      {
+        "start": {
+          "coefficient": 75000.0,
+          "exponent": 0.3
+        },
+        "success": true,
+        "message": "Optimization terminated successfully.",
+        "function_evaluations": 94,
+        "candidate": {
+          "coefficient": 99900.0,
+          "exponent": 0.416518450677396,
+          "mean_power_W": 229.993331260557,
+          "periodicity_error": 8.11589665606234e-08
+        },
+        "reaches_interior_audit_cap": true
+      },
+      {
+        "start": {
+          "coefficient": 95000.0,
+          "exponent": 0.4
+        },
+        "success": true,
+        "message": "Optimization terminated successfully.",
+        "function_evaluations": 60,
+        "candidate": {
+          "coefficient": 99900.0,
+          "exponent": 0.41522105693817163,
+          "mean_power_W": 229.99375400504894,
+          "periodicity_error": 6.566100849971565e-09
+        },
+        "reaches_interior_audit_cap": true
+      }
+    ],
+    "wall_time_s": 27.717159700001503,
+    "coefficient_range": [
+      99893.10084012167,
+      99900.0
+    ],
+    "exponent_range": [
+      0.4151869073580299,
+      0.416518450677396
+    ],
+    "power_range_W": [
+      229.993331260557,
+      229.99375400504894
+    ]
+  },
+  "interpretation": {
+    "stable_interior_stationary_point_detected": false,
+    "all_multistarts_move_toward_coefficient_upper_boundary": true,
+    "next_required_check": "optimize exponent on the true coefficient=100000 boundary"
+  },
+  "computation": {
+    "unique_power_evaluations": 595,
+    "strict_fallback_evaluations": 1,
+    "total_wall_time_s": 61.93143030000101
+  },
+  "acceptance": {
+    "all_ridge_optimizers_succeeded": true,
+    "ridge_coefficient_is_nondecreasing": true,
+    "ridge_reaches_coefficient_upper_neighborhood": true,
+    "all_local_runs_succeeded": true,
+    "all_local_runs_reach_audit_cap": true,
+    "local_exponent_candidates_agree": true,
+    "local_power_candidates_agree": true,
+    "local_refinement_improves_coarse_grid_best": true,
+    "all_periodicity_errors_pass": true
+  }
+}

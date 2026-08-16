@@ -1,0 +1,174 @@
+{
+  "status": "passed",
+  "model": "CUMCM 2022 A, question 2, final power-law PTO result",
+  "final_result": {
+    "coefficient": 100000.0,
+    "exponent": 0.4157183801090447,
+    "mean_power_W": 229.99433292586076,
+    "pto_energy_per_period_J": 652.6202471997193,
+    "period_s": 2.83754925131174,
+    "periodic_state": [
+      -0.4454452467293639,
+      0.1293176987484054,
+      -0.4814246890021279,
+      0.049203885385464635
+    ],
+    "periodicity_error": 6.7810176659130865e-12,
+    "root_success": true
+  },
+  "strict_refinement": {
+    "prior_candidate_exponent": 0.4157797076423078,
+    "exponent_change": -6.132753326310025e-05,
+    "optimizer_success": true,
+    "iterations": 20,
+    "function_evaluations": 20,
+    "unique_strict_evaluations_including_checks": 31,
+    "wall_time_s": 10.582546199999342,
+    "central_derivative_W_per_exponent": -4.7040771278261666e-05,
+    "central_curvature_W_per_exponent_squared": -1624.0824152191633
+  },
+  "exponent_perturbations": [
+    {
+      "change": -0.0005,
+      "exponent": 0.4152183801090447,
+      "mean_power_W": 229.99422128833464,
+      "power_loss_W": 0.00011163752611764721,
+      "periodicity_error": 1.7409538524448656e-12
+    },
+    {
+      "change": -0.0001,
+      "exponent": 0.4156183801090447,
+      "mean_power_W": 229.99432857377175,
+      "power_loss_W": 4.352089007397808e-06,
+      "periodicity_error": 4.205847836075977e-12
+    },
+    {
+      "change": -5e-05,
+      "exponent": 0.4156683801090447,
+      "mean_power_W": 229.9943318894691,
+      "power_loss_W": 1.0363916658207017e-06,
+      "periodicity_error": 1.017022437832921e-11
+    },
+    {
+      "change": -1e-05,
+      "exponent": 0.4157083801090447,
+      "mean_power_W": 229.99433284512705,
+      "power_loss_W": 8.073371304817556e-08,
+      "periodicity_error": 2.651806607010541e-12
+    },
+    {
+      "change": 1e-05,
+      "exponent": 0.4157283801090447,
+      "mean_power_W": 229.99433284418623,
+      "power_loss_W": 8.167452847374079e-08,
+      "periodicity_error": 6.813374930189178e-13
+    },
+    {
+      "change": 5e-05,
+      "exponent": 0.4157683801090447,
+      "mean_power_W": 229.99433168117326,
+      "power_loss_W": 1.2446874961824506e-06,
+      "periodicity_error": 6.97779480421937e-13
+    },
+    {
+      "change": 0.0001,
+      "exponent": 0.4158183801090447,
+      "mean_power_W": 229.9943282249496,
+      "power_loss_W": 4.700911148347586e-06,
+      "periodicity_error": 2.594128009129057e-13
+    },
+    {
+      "change": 0.0005,
+      "exponent": 0.4162183801090447,
+      "mean_power_W": 229.99421966579652,
+      "power_loss_W": 0.00011326006423928447,
+      "periodicity_error": 3.4142014881366744e-12
+    }
+  ],
+  "coefficient_inward_checks": [
+    {
+      "coefficient": 99990.0,
+      "exponent_fixed_at_final": 0.4157183801090447,
+      "mean_power_W": 229.99420805097532,
+      "power_loss_W": 0.00012487488544365988,
+      "periodicity_error": 2.664119146142481e-12
+    },
+    {
+      "coefficient": 99900.0,
+      "exponent_fixed_at_final": 0.4157183801090447,
+      "mean_power_W": 229.9930128243447,
+      "power_loss_W": 0.001320101516057548,
+      "periodicity_error": 1.2121819632136466e-12
+    },
+    {
+      "coefficient": 99000.0,
+      "exponent_fixed_at_final": 0.4157183801090447,
+      "mean_power_W": 229.97389173321656,
+      "power_loss_W": 0.02044119264419919,
+      "periodicity_error": 8.148514314633424e-12
+    }
+  ],
+  "coefficient_one_sided_derivative_W_per_coefficient": 1.2487488544365987e-05,
+  "independent_zero_guess_shooting": {
+    "mean_power_W": 229.9943328668277,
+    "periodicity_error": 3.287035481992113e-12,
+    "state_relative_difference": 2.498762335485768e-13,
+    "power_relative_difference": 2.5667178421834135e-10
+  },
+  "cold_start_long_transient": {
+    "mean_power_W": 229.99433587719952,
+    "cycles_to_convergence": 239,
+    "cycle_state_error": 5.426197779150829e-09,
+    "function_evaluations": 294082,
+    "wall_time_s": 4.224115200002416,
+    "state_relative_difference_from_shooting": 1.1122721441166758e-08,
+    "power_relative_difference_from_shooting": 1.2832223655108164e-08
+  },
+  "dense_period_quadrature": {
+    "samples": 8001,
+    "mean_power_W": 229.99433289326132,
+    "energy_J": 652.6202471072168,
+    "power_relative_difference_from_augmented_state": 1.417402094703685e-10,
+    "minimum_instantaneous_power_W": 1.1098150519182847e-06,
+    "maximum_instantaneous_power_W": 432.9092593309125,
+    "independent_power_array_max_difference_W": 0.0
+  },
+  "steady_response": {
+    "float_displacement_min_m": -0.4492378931029383,
+    "float_displacement_max_m": 0.44923789310406065,
+    "oscillator_displacement_min_m": -0.48194259321578503,
+    "oscillator_displacement_max_m": 0.4819425932188214,
+    "relative_displacement_max_absolute_m": 0.05214761706323451,
+    "relative_velocity_max_absolute_m_per_s": 0.10509290531819915,
+    "cylinder_draft_min_m": 1.5507723760882857,
+    "cylinder_draft_max_m": 2.4492481622952846,
+    "spring_length_min_m": 0.14980988293701392,
+    "spring_length_max_m": 0.25410511706323446
+  },
+  "global_comparison": {
+    "best_internal_audit_power_W": 229.99375400504894,
+    "final_boundary_advantage_W": 0.0005789208118187616
+  },
+  "acceptance": {
+    "strict_optimizer_succeeded": true,
+    "final_exponent_is_interior": true,
+    "final_coefficient_is_active_upper_bound": true,
+    "final_periodicity_error_passes": true,
+    "all_exponent_perturbations_are_lower": true,
+    "exponent_curvature_is_negative": true,
+    "exponent_derivative_is_small": true,
+    "all_inward_coefficient_checks_are_lower": true,
+    "coefficient_one_sided_derivative_is_positive": true,
+    "independent_shooting_state_matches": true,
+    "independent_shooting_power_matches": true,
+    "cold_start_converged": true,
+    "cold_start_state_matches": true,
+    "cold_start_power_matches": true,
+    "dense_quadrature_matches_augmented_energy": true,
+    "instantaneous_power_is_nonnegative": true,
+    "physical_waterline_regime_passes": true,
+    "spring_length_is_positive": true,
+    "final_boundary_power_exceeds_internal_audit": true
+  },
+  "final_answer_ready": true
+}

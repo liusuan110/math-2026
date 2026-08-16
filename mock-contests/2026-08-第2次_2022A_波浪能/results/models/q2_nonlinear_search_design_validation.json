@@ -1,0 +1,163 @@
+{
+  "status": "passed",
+  "purpose": "validate evaluator settings before nonlinear optimization",
+  "optimization_executed": false,
+  "sentinel_points": [
+    {
+      "coefficient": 10000.0,
+      "exponent": 0.0,
+      "screening": {
+        "mean_power_W": 115.37533924875243,
+        "periodicity_error": 1.2722407772967655e-13,
+        "root_success": true,
+        "root_map_evaluations": 8,
+        "ode_function_evaluations": 3378,
+        "wall_time_s": 0.031119799999942188
+      },
+      "strict": {
+        "mean_power_W": 115.37533924842133,
+        "periodicity_error": 3.0850150551089636e-16,
+        "root_success": true,
+        "root_map_evaluations": 9,
+        "ode_function_evaluations": 21632,
+        "wall_time_s": 0.18699779999951716
+      },
+      "independent_reference": {
+        "kind": "frequency-domain exact solution",
+        "mean_power_W": 115.37533924842134,
+        "cycles": 0,
+        "state_error": 0.0,
+        "ode_function_evaluations": 0,
+        "wall_time_s": 0.0
+      },
+      "screening_to_strict_relative_error": 2.8697528099708003e-12,
+      "strict_to_reference_relative_error": 1.2317064294479591e-16,
+      "ode_evaluation_speedup_over_reference": null
+    },
+    {
+      "coefficient": 10000.0,
+      "exponent": 0.5,
+      "screening": {
+        "mean_power_W": 43.96022835883247,
+        "periodicity_error": 1.6103545613812765e-08,
+        "root_success": true,
+        "root_map_evaluations": 15,
+        "ode_function_evaluations": 7616,
+        "wall_time_s": 0.06645779999962542
+      },
+      "strict": {
+        "mean_power_W": 43.96021831743785,
+        "periodicity_error": 2.7638706817520637e-12,
+        "root_success": true,
+        "root_map_evaluations": 15,
+        "ode_function_evaluations": 40700,
+        "wall_time_s": 0.3560634999994363
+      },
+      "independent_reference": {
+        "kind": "cold-start long-transient periodic convergence",
+        "mean_power_W": 43.9602183135083,
+        "cycles": 617,
+        "state_error": 8.13594196055399e-11,
+        "ode_function_evaluations": 1092406,
+        "wall_time_s": 14.402691400000549
+      },
+      "screening_to_strict_relative_error": 2.2842003523785466e-07,
+      "strict_to_reference_relative_error": 8.938877397484124e-11,
+      "ode_evaluation_speedup_over_reference": 143.43566176470588
+    },
+    {
+      "coefficient": 50000.0,
+      "exponent": 1.0,
+      "screening": {
+        "mean_power_W": 76.26985819223329,
+        "periodicity_error": 1.8618245784262457e-07,
+        "root_success": true,
+        "root_map_evaluations": 12,
+        "ode_function_evaluations": 6182,
+        "wall_time_s": 0.056571299999632174
+      },
+      "strict": {
+        "mean_power_W": 76.26982699205624,
+        "periodicity_error": 1.3016077031389182e-12,
+        "root_success": true,
+        "root_map_evaluations": 10,
+        "ode_function_evaluations": 26206,
+        "wall_time_s": 0.24156439999933355
+      },
+      "independent_reference": {
+        "kind": "cold-start long-transient periodic convergence",
+        "mean_power_W": 76.26982713626646,
+        "cycles": 478,
+        "state_error": 8.46449789657259e-11,
+        "ode_function_evaluations": 784148,
+        "wall_time_s": 10.368659799998568
+      },
+      "screening_to_strict_relative_error": 4.0907627929210483e-07,
+      "strict_to_reference_relative_error": 1.890789900702272e-09,
+      "ode_evaluation_speedup_over_reference": 126.84373989000323
+    },
+    {
+      "coefficient": 90000.0,
+      "exponent": 0.25,
+      "screening": {
+        "mean_power_W": 222.65211174044322,
+        "periodicity_error": 1.0236781696362309e-07,
+        "root_success": true,
+        "root_map_evaluations": 12,
+        "ode_function_evaluations": 8942,
+        "wall_time_s": 0.08039999999891734
+      },
+      "strict": {
+        "mean_power_W": 222.65157533624733,
+        "periodicity_error": 6.567668603160673e-12,
+        "root_success": true,
+        "root_map_evaluations": 16,
+        "ode_function_evaluations": 46882,
+        "wall_time_s": 0.4162285000002157
+      },
+      "independent_reference": {
+        "kind": "cold-start long-transient periodic convergence",
+        "mean_power_W": 222.6515757338384,
+        "cycles": 370,
+        "state_error": 9.445705248056728e-11,
+        "ode_function_evaluations": 716480,
+        "wall_time_s": 9.260029199998826
+      },
+      "screening_to_strict_relative_error": 2.40916416187091e-06,
+      "strict_to_reference_relative_error": 1.7857096431400672e-09,
+      "ode_evaluation_speedup_over_reference": 80.12525162156118
+    }
+  ],
+  "ranking": {
+    "screening_descending_indices": [
+      3,
+      0,
+      2,
+      1
+    ],
+    "strict_descending_indices": [
+      3,
+      0,
+      2,
+      1
+    ],
+    "preserved": true
+  },
+  "search_design": {
+    "stage_1": "21 x 11 full-domain grid using screening shooting settings",
+    "stage_2": "refine cells surrounding separated high-power grid candidates",
+    "stage_3": "bounded multi-start local refinement from separated candidates",
+    "stage_4": "strict shooting recomputation and local perturbation checks",
+    "stage_5": "independent cold-start long-transient verification only at finalists",
+    "continuation": "reuse neighboring periodic state as the next shooting initial guess",
+    "zero_boundary": "treat coefficient=0 as an exact zero-power boundary"
+  },
+  "acceptance": {
+    "all_screening_roots_converged": true,
+    "all_strict_roots_converged": true,
+    "screening_power_error_below_1e-5": true,
+    "strict_reference_error_below_1e-8": true,
+    "screening_preserves_sentinel_ranking": true,
+    "nonlinear_speedup_exceeds_20x": true
+  }
+}

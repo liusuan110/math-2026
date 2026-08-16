@@ -8,6 +8,8 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,decorations.pathmorphing,positioning}
 
 \graphicspath{{../figures/final/}}
 \sisetup{detect-all}
@@ -47,11 +49,11 @@
 \begin{abstract}
 针对波浪能装置中浮子与振子的垂荡响应及 PTO 阻尼优化问题，本文以静水平衡位置为基准，综合考虑附加质量、兴波阻尼、静水恢复力及 PTO 弹簧阻尼作用，建立二自由度耦合动力学模型。针对问题一，将二阶运动方程化为四维一阶状态方程，采用 DOP853 自适应方法对常量阻尼和幂律阻尼两种工况的前 $40$ 个波浪周期进行时域积分，并以 \SI{0.2}{s} 为间隔输出位移与速度。数值收敛、能量闭合和物理适用范围检验均通过，两工况状态量的收敛误差均低于 $10^{-7}$。
 
-针对问题二，以周期稳态平均输出功率为统一目标，分别建立常量阻尼的复频域解析优化模型和幂律阻尼的周期射击优化模型。通过全域扫描、参数脊线追踪、多起点精修和边界优化，得到常量阻尼最优系数为 $37193.8126\ \mathrm{N\,s/m}$，幂律阻尼最优参数为 $a=100000$、$p=0.415718380$，对应平均功率分别为 $229.333940\ \mathrm{W}$ 和 $229.994333\ \mathrm{W}$。幂律阻尼的最优比例系数取到允许上界，平均功率较常量阻尼提高 $0.287961\%$。零初猜射击、冷启动长时积分和周期能量积分的独立复核结果一致。
+针对问题二，以周期稳态平均输出功率为统一目标，分别建立常量阻尼的复频域解析优化模型和幂律阻尼的周期射击优化模型。通过全域扫描、参数脊线追踪、多起点精修和边界优化，得到常量阻尼最优系数为 $3.7194\times10^4\ \mathrm{N\,s/m}$，幂律阻尼最优参数为 $a=1.0000\times10^5$、$p=0.41572$，对应平均功率分别为 $229.334\ \mathrm{W}$ 和 $229.994\ \mathrm{W}$。幂律阻尼的最优比例系数取到允许上界，平均功率较常量阻尼提高 $0.2880\%$。零初猜射击、冷启动长时积分和周期能量积分的独立复核结果一致。
 
-针对问题三，在微幅波和小角度条件下建立包含浮子与振子垂荡、纵摇运动的四自由度线性模型，并由封闭薄壳几何与平行轴定理补全物理转动惯量。高精度时域积分得到前 $40$ 个波浪周期的八状态响应，最大垂荡位移为 $0.915847\ \mathrm{m}$，最大纵摇角为 $0.153758\ \mathrm{rad}$；直线与旋转 PTO 的累计输出分别为 $6935.244394\ \mathrm{J}$ 和 $1.928170\ \mathrm{J}$。严格积分、矩阵指数解和能量闭合验证了结果一致性，壳体口径敏感性说明纵摇峰值规模较稳健，但低阻尼瞬态相位对转动惯量较敏感。
+针对问题三，在微幅波和小角度条件下建立包含浮子与振子垂荡、纵摇运动的四自由度线性模型，并由封闭薄壳几何与平行轴定理补全物理转动惯量。高精度时域积分得到前 $40$ 个波浪周期的八状态响应，最大垂荡位移为 $0.91585\ \mathrm{m}$，最大纵摇角为 $0.15376\ \mathrm{rad}$；直线与旋转 PTO 的累计输出分别为 $6935.24\ \mathrm{J}$ 和 $1.92817\ \mathrm{J}$。严格积分、矩阵指数解和能量闭合验证了结果一致性，壳体口径敏感性说明纵摇峰值规模较稳健，但低阻尼瞬态相位对转动惯量较敏感。
 
-针对问题四，将垂荡与纵摇子系统的频域周期稳态平均功率严格分解为两个单变量函数，并利用 Sherman--Morrison 秩一更新推导解析最优条件。得到直线阻尼最优系数为 $59152.916113\ \mathrm{N\,s/m}$，旋转阻尼最优系数为上边界 $100000\ \mathrm{N\,m\,s}$，最大总平均功率为 $318.679256\ \mathrm{W}$。全域扫描、二维差分进化、可行邻域扰动和周期时域能量积分均验证了该约束全局最优解。
+针对问题四，将垂荡与纵摇子系统的频域周期稳态平均功率严格分解为两个单变量函数，并利用 Sherman--Morrison 秩一更新推导解析最优条件。得到直线阻尼最优系数为 $5.9153\times10^4\ \mathrm{N\,s/m}$，旋转阻尼最优系数为上边界 $1.0000\times10^5\ \mathrm{N\,m\,s}$，最大总平均功率为 $318.679\ \mathrm{W}$。全域扫描、二维差分进化、可行邻域扰动和周期时域能量积分均验证了该约束全局最优解。
 
 \keywords{波浪能\quad 耦合动力学\quad 垂荡与纵摇\quad PTO 阻尼\quad 参数优化}
 \end{abstract}
@@ -60,7 +62,7 @@
 
 \subsection{问题背景}
 
-波浪能装置通过浮子与内部振子的相对运动驱动能量输出系统（power take-off，PTO）中的阻尼器做功，将波浪的机械能转化为可利用能量。浮子在微幅周期波中运动时，除受波浪激励外，还会受到附加惯性力、兴波阻尼力和静水恢复力。因此，准确描述浮子、振子与 PTO 之间的耦合关系，是后续优化输出功率的基础。
+波浪能装置通过浮子与内部振子的相对运动驱动能量输出系统（power take-off，PTO）中的阻尼器做功，将波浪的机械能转化为可利用能量。在线性波浪理论下，浮子除受周期激励外，还受到附加惯性、兴波阻尼和静水恢复作用\cite{falnes2002,cummins1962}。因此，准确描述浮子、振子与 PTO 之间的耦合关系，是后续优化输出功率的基础。
 
 \subsection{问题一的要求}
 
@@ -126,7 +128,8 @@
     $D(v_r)$ & PTO 阻尼力函数 & $\mathrm{N}$ \\
     $f,\omega$ & 波浪激励力幅值和角频率 & $\mathrm{N},\ \mathrm{s^{-1}}$ \\
     $c$ & 常量阻尼系数 & $\mathrm{N\,s/m}$ \\
-    $a,p$ & 幂律阻尼的比例系数和幂指数 & 随 $p$ 变化，无量纲 \\
+    $a$ & 幂律阻尼的比例系数 & $\mathrm{N}(\mathrm{s/m})^{p+1}$ \\
+    $p$ & 幂律阻尼的幂指数 & 无量纲 \\
     $\overline P$ & 周期稳态平均 PTO 输出功率 & $\mathrm{W}$ \\
     $\theta_f,\theta_o$ & 浮子和振子的绝对纵摇角 & $\mathrm{rad}$ \\
     $J_{f,C},J_{o,C}$ & 浮子、振子绕自身质心横轴的转动惯量 & $\mathrm{kg\,m^2}$ \\
@@ -142,9 +145,60 @@
 
 以浮子和振子的静水平衡位置为坐标原点，规定竖直向上为正方向。记
 \begin{equation}
-  r=x_o-x_f,\qquad v_r=v_o-v_f .
+ r=x_o-x_f,\qquad v_r=v_o-v_f .
   \label{eq:relative}
 \end{equation}
+坐标正方向、PTO 连接关系及纵摇角约定如图 \ref{fig:mechanical-schematic} 所示。图中弹簧与阻尼器均连接浮子和内部振子，其作用力在两物体方程中大小相等、方向相反。
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    x=0.95cm,y=0.95cm,>=Latex,
+    force/.style={-{Latex[length=2.6mm]},very thick},
+    labelnode/.style={font=\small},
+    body/.style={draw=black,thick,fill=blue!8},
+    mass/.style={draw=black,thick,fill=orange!22}
+  ]
+    % 水面、浮子外形与中轴
+    \draw[blue!65,thick] (-4.2,1.25)--(4.2,1.25);
+    \node[blue!65,labelnode,anchor=west] at (4.25,1.25) {静水面};
+    \draw[body] (-1.75,0.15) rectangle (1.75,2.55);
+    \draw[body] (-1.75,0.15)--(0,-1.25)--(1.75,0.15)--cycle;
+    \draw[densely dashed,gray] (0,-1.25)--(0,3.15);
+    \node[labelnode] at (-1.25,0.86) {浮子};
+    \draw[mass] (-0.52,0.55) rectangle (0.52,1.35);
+    \node[labelnode] at (0,0.95) {振子};
+
+    % 弹簧与阻尼器
+    \draw[decorate,decoration={coil,aspect=0.55,segment length=2.4mm,amplitude=1.7mm},thick]
+      (-0.72,2.35)--(-0.72,1.35);
+    \node[labelnode,anchor=east] at (-0.92,1.83) {$k$};
+    \draw[thick] (0.72,2.35)--(0.72,2.05);
+    \draw[thick] (0.47,2.05) rectangle (0.97,1.77);
+    \draw[thick] (0.72,1.77)--(0.72,1.35);
+    \node[labelnode,anchor=west] at (1.02,1.90) {$D(v_r)$};
+
+    % 垂荡方向与外载荷
+    \draw[force,blue!70!black] (2.55,0.35)--(2.55,2.55)
+      node[above,labelnode] {$x_f$ 正向};
+    \draw[force,orange!80!black] (0.22,1.45)--(0.22,2.15)
+      node[right,labelnode] {$x_o$};
+    \draw[force,red!75!black] (-2.65,0.20)--(-2.65,2.05)
+      node[above,labelnode] {$f\cos\omega t$};
+    \draw[force,gray!80] (-3.35,2.25)--(-3.35,0.55)
+      node[below,labelnode,align=center] {$b\dot x_f$\\$k_hx_f$};
+
+    % 纵摇角与力矩约定
+    \draw[force,green!55!black] (0.95,-0.78) arc[start angle=-35,end angle=45,radius=1.18];
+    \node[green!45!black,labelnode,anchor=west] at (1.45,-1.55) {$\theta_f$：逆时针为正};
+    \draw[force,purple!70!black] (-0.95,-0.80) arc[start angle=215,end angle=135,radius=1.18];
+    \node[purple!70!black,labelnode,anchor=east] at (-1.45,-1.55) {$L\cos\omega t$};
+    \fill (0,-0.05) circle (1.7pt);
+    \node[labelnode,anchor=west] at (0.08,-0.05) {$O$};
+  \end{tikzpicture}
+  \caption{浮子--振子系统的坐标、PTO 连接与受力示意}
+  \label{fig:mechanical-schematic}
+\end{figure}
 附件给出 $m_f=4866\ \mathrm{kg}$、$m_o=2433\ \mathrm{kg}$ 和 $m_a=1335.535\ \mathrm{kg}$，故浮子的垂荡有效质量为
 \begin{equation}
   M_f=m_f+m_a=6201.535\ \mathrm{kg}.
@@ -197,7 +251,7 @@
 \end{cases}
 \label{eq:state-space}
 \end{equation}
-本文采用 DOP853 高阶自适应 Runge--Kutta 方法积分式 \eqref{eq:state-space}，相对容差取 $10^{-10}$，绝对容差取 $10^{-12}$，最大内部步长取 $0.02\ \mathrm{s}$。计算时间覆盖 $40T=179.455489\ \mathrm{s}$，并在 $0$--$179.4\ \mathrm{s}$ 上按 $0.2\ \mathrm{s}$ 间隔输出，共得 $898$ 个时刻。题目指定的五个时刻均位于输出网格上，可直接取值，无需额外插值。
+本文采用 DOP853 高阶自适应 Runge--Kutta 方法\cite{hairer1993}积分式 \eqref{eq:state-space}，相对容差取 $10^{-10}$，绝对容差取 $10^{-12}$，最大内部步长取 $0.02\ \mathrm{s}$。计算时间覆盖 $40T=179.455489\ \mathrm{s}$，并在 $0$--$179.4\ \mathrm{s}$ 上按 $0.2\ \mathrm{s}$ 间隔输出，共得 $898$ 个时刻。题目指定的五个时刻均位于输出网格上，可直接取值，无需额外插值。
 
 \subsection{求解结果与响应特征}
 
@@ -334,8 +388,8 @@
 \end{equation}
 首先对完整可行区间进行 $10001$ 点扫描，确认目标函数只有一个内部峰值；再采用有界一维优化精修。全区间扫描、数值优化与秩一阻尼更新导出的解析最优条件相互一致，最终得到
 \begin{equation}
-  \boxed{c^*=37193.8126\ \mathrm{N\,s/m}},\qquad
-  \boxed{\overline P_{\max}=229.333940\ \mathrm{W}}.
+  \boxed{c^*=3.7194\times10^4\ \mathrm{N\,s/m}},\qquad
+  \boxed{\overline P_{\max}=229.334\ \mathrm{W}}.
   \label{eq:q2-constant-result}
 \end{equation}
 
@@ -347,7 +401,7 @@
   P_{\mathrm{PTO}}=a|v_r|^{p+2}\geq0,
   \label{eq:q2-power-law}
 \end{equation}
-其中 $0\leq a\leq100000$、$0\leq p\leq1$。比例系数 $a$ 的量纲随 $p$ 变化，因此不将其统一标注为常量阻尼系数的单位。
+其中 $0\leq a\leq100000$、$0\leq p\leq1$。由量纲一致性可知 $[a]=\mathrm{N}(\mathrm{s/m})^{p+1}$，其量纲随 $p$ 变化。为避免把 $a$ 误写成常量阻尼系数的单位，参数域图统一采用归一化横坐标 $a/a_{\max}$，其中每个给定 $p$ 下均有 $a_{\max}=100000$。
 
 为直接定位稳定周期轨道，定义状态经过一个周期后的映射 $\boldsymbol\Phi_T$，并求解射击条件
 \begin{equation}
@@ -366,15 +420,15 @@
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.94\textwidth]{q2_nonlinear_power_surface.pdf}
-  \caption{幂律阻尼参数域内的周期稳态平均功率与高功率脊线}
+  \caption{归一化幂律阻尼参数域内的周期稳态平均功率与高功率脊线}
   \label{fig:q2-surface}
 \end{figure}
 
 脊线随 $p$ 增大持续向 $a$ 的上边界移动，多个内部初值也均指向同一边界。因此固定真实边界 $a=100000$，对 $p\in[0,1]$ 作 $501$ 点扫描并严格精修，最终得到
 \begin{equation}
   \boxed{a^*=100000},\qquad
-  \boxed{p^*=0.415718380},\qquad
-  \boxed{\overline P_{\max}=229.994333\ \mathrm{W}}.
+  \boxed{p^*=0.41572},\qquad
+  \boxed{\overline P_{\max}=229.994\ \mathrm{W}}.
   \label{eq:q2-nonlinear-result}
 \end{equation}
 最优比例系数取到允许上界，而幂指数位于区间内部。在最优指数两侧作微小扰动，功率均下降；固定最优指数并将 $a$ 从上边界向可行域内移动，功率同样下降，说明 $a=100000$ 为活跃约束。
@@ -400,17 +454,17 @@
     \toprule
     阻尼形式 & 最优参数 & 最大平均功率/W \\
     \midrule
-    常量阻尼 & $c^*=37193.8126\ \mathrm{N\,s/m}$ & 229.333940 \\
-    幂律阻尼 & $a^*=100000,\ p^*=0.415718380$ & 229.994333 \\
+    常量阻尼 & $c^*=3.7194\times10^4\ \mathrm{N\,s/m}$ & 229.334 \\
+    幂律阻尼 & $a^*=1.0000\times10^5,\ p^*=0.41572$ & 229.994 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 幂律阻尼的最大平均功率比常量阻尼提高
 \begin{equation}
-  229.994333-229.333940=0.660393\ \mathrm{W},
+  229.994-229.334=0.660\ \mathrm{W},
 \end{equation}
-相对增幅为 $0.287961\%$。两种最优阻尼下一个稳定周期内的相对位移、相对速度和瞬时 PTO 功率如图 \ref{fig:q2-period} 所示。图中归一化时间为 $t/T$。
+相对增幅约为 $0.2880\%$。两种最优阻尼下一个稳定周期内的相对位移、相对速度和瞬时 PTO 功率如图 \ref{fig:q2-period} 所示。图中归一化时间为 $t/T$。
 
 \begin{figure}[H]
   \centering
@@ -663,7 +717,7 @@
   s=\boldsymbol r^{\mathsf T}\boldsymbol Z_0^{-1}\boldsymbol r.
   \label{eq:q4-rank-one-definitions}
 \end{equation}
-应用 Sherman--Morrison 秩一更新公式，得到相对位移复振幅和平均功率
+应用 Sherman--Morrison 秩一更新公式\cite{sherman1950}，得到相对位移复振幅和平均功率
 \begin{equation}
   \boldsymbol r^{\mathsf T}\boldsymbol X(c)
   =\frac{\alpha}{1+\mathrm i\omega cs},
@@ -686,7 +740,7 @@
   \label{fig:q4-curves}
 \end{figure}
 
-直线阻尼的无约束最优点为 $59152.916113\ \mathrm{N\,s/m}$，位于区间内部；旋转阻尼的无约束最优点为 $120114.390453\ \mathrm{N\,m\,s}$，超过题设上限。因此旋转阻尼在可行区间内随系数增大而增功，$c_\theta=100000$ 为活跃上边界。
+直线阻尼的无约束最优点为 $5.9153\times10^4\ \mathrm{N\,s/m}$，位于区间内部；旋转阻尼的无约束最优点约为 $1.2011\times10^5\ \mathrm{N\,m\,s}$，超过题设上限。因此旋转阻尼在可行区间内随系数增大而增功，$c_\theta=1.0000\times10^5$ 为活跃上边界。
 
 \subsection{最优结果与全局性验证}
 
@@ -700,17 +754,17 @@
     \toprule
     指标 & 最优值 \\
     \midrule
-    直线阻尼系数 $c_z^*$ & $59152.916113\ \mathrm{N\,s/m}$ \\
-    旋转阻尼系数 $c_\theta^*$ & $100000\ \mathrm{N\,m\,s}$ \\
-    直线 PTO 平均功率 & $318.336440\ \mathrm{W}$ \\
-    旋转 PTO 平均功率 & $0.342817\ \mathrm{W}$ \\
-    最大总平均功率 & $318.679256\ \mathrm{W}$ \\
+    直线阻尼系数 $c_z^*$ & $5.9153\times10^4\ \mathrm{N\,s/m}$ \\
+    旋转阻尼系数 $c_\theta^*$ & $1.0000\times10^5\ \mathrm{N\,m\,s}$ \\
+    直线 PTO 平均功率 & $318.336\ \mathrm{W}$ \\
+    旋转 PTO 平均功率 & $0.343\ \mathrm{W}$ \\
+    最大总平均功率 & $318.679\ \mathrm{W}$ \\
     单周期总输出能量 & $1010.966789\ \mathrm{J}$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-旋转 PTO 仅占总平均功率的 $0.107574\%$，表明情形 4 中装置输出主要由垂荡相对运动贡献。为排除解析分解和单峰判断带来的路径依赖，本文对两个阻尼区间分别进行 $10001$ 点全域扫描和有界连续优化，并在完整二维参数域内独立执行差分进化搜索。二维搜索经 $1554$ 次目标函数评价得到近似点 $(59152.895070,99999.999943)$，总功率为 $318.679256467\ \mathrm{W}$，与解析约束最优值一致。图 \ref{fig:q4-surface} 以对数色标给出参数域内相对最优点的功率损失 $\overline P_{\max}-\overline P$，图中色值并非总功率本身。
+旋转 PTO 仅占总平均功率的 $0.108\%$，表明情形 4 中装置输出主要由垂荡相对运动贡献。为排除解析分解和单峰判断带来的路径依赖，本文对两个阻尼区间分别进行 $10001$ 点全域扫描和有界连续优化，并在完整二维参数域内独立执行差分进化搜索。二维搜索经 $1554$ 次目标函数评价得到近似点 $(5.91529\times10^4,1.00000\times10^5)$，总功率为 $318.679256\ \mathrm{W}$，与解析约束最优值一致。图 \ref{fig:q4-surface} 以对数色标给出参数域内相对最优点的功率损失 $\overline P_{\max}-\overline P$，图中色值并非总功率本身。
 
 \begin{figure}[H]
   \centering
@@ -755,13 +809,51 @@
 
 周期首尾状态的最大绝对差为 $1.78\times10^{-15}$，时域总平均功率与频域结果的相对差小于 $10^{-13}$，平均能量平衡残差为 $5.92\times10^{-13}\ \mathrm{W}$。弹簧长度保持在 $0.149577$--$0.254338\ \mathrm{m}$，圆柱段吃水保持在 $1.249696$--$2.750325\ \mathrm{m}$，最大绝对纵摇角为 $0.055774\ \mathrm{rad}$，均满足本文的物理适用性条件。
 
+\section{模型评价与推广}
+
+\subsection{模型优点}
+
+\begin{enumerate}[leftmargin=3.2em]
+  \item \textbf{物理口径统一。} 四问均以静水平衡位置为基准，弹簧力和 PTO 阻尼力始终作为系统内力成对出现；功率统一按阻尼耗散定义，保证动力学方程与能量计算具有一致的符号约定。
+  \item \textbf{优化目标可比。} 问题二和问题四均采用单个周期稳态平均功率，排除了初始自由振动对阻尼参数优劣的干扰；常量阻尼使用频域解析解，幂律阻尼使用周期射击，使线性与非线性工况在同一评价尺度下比较。
+  \item \textbf{验证链条完整。} 关键结果同时经过步长与容差收敛、频域或矩阵指数独立解、能量闭合、全域扫描及最优点邻域扰动检验。模型不仅给出数值，还说明了最优解的唯一性、活跃边界及物理适用范围。
+\end{enumerate}
+
+\subsection{模型局限}
+
+\begin{enumerate}[leftmargin=3.2em]
+  \item 水动力系数按题设视为定常线性参数，未考虑大幅运动下附加质量、兴波阻尼随频率和振幅变化，也未计入黏性阻力、系泊系统及 PTO 机械效率。
+  \item 垂荡--纵摇模型采用微幅波和小角度一阶线性化。问题三最大纵摇角约为 $8.81^\circ$，仍在本文预警线内，但已提示在更强海况下应改用非线性几何和时变水动力模型。
+  \item 题面未完全规定浮子内部质量分布。本文以均匀封闭薄壳为主口径，并通过替代壳体口径给出敏感性分析；因此纵摇瞬态相位应结合实际结构惯量进一步校准。
+\end{enumerate}
+
+\subsection{模型推广}
+
+本文框架可直接推广到多频不规则波：将规则波激励替换为波谱离散叠加，在足够长的统计窗口内计算平均功率与载荷极值；也可把常量阻尼扩展为分段、饱和或可控阻尼，并增加位移、速度和峰值载荷约束，形成面向真实 PTO 控制器的多目标优化。若获得试验或实海数据，还可通过参数辨识更新附加质量、兴波阻尼和转动惯量，并沿用本文的能量闭合与独立求解路径进行模型校验。
+
 \section{结论}
 
-本文建立了波浪周期激励下浮子--振子系统的二自由度垂荡耦合模型，完成了常量与幂律阻尼下的时域响应计算，并通过收敛、能量和几何范围检验验证了模型可靠性。在此基础上，将平均输出功率统一定义为周期稳态口径，分别得到常量阻尼的唯一内部最优点和幂律阻尼的边界最优点。幂律阻尼的最大平均功率较常量阻尼提高 $0.287961\%$，但比例系数已取到允许上界，说明参数域的边界对最优解具有决定作用。
+本文建立了波浪周期激励下浮子--振子系统的二自由度垂荡耦合模型，完成了常量与幂律阻尼下的时域响应计算，并通过收敛、能量和几何范围检验验证了模型可靠性。在此基础上，将平均输出功率统一定义为周期稳态口径，分别得到常量阻尼的唯一内部最优点和幂律阻尼的边界最优点。幂律阻尼的最大平均功率较常量阻尼提高 $0.2880\%$，但比例系数已取到允许上界，说明参数域的边界对最优解具有决定作用。
 
 对垂荡--纵摇联合运动，本文通过壳体几何和平行轴定理补全转动惯量，建立了四自由度线性动力学模型。题给阻尼参数下，装置能量输出主要来自垂荡方向的直线 PTO，旋转 PTO 输出较小。数值积分、矩阵指数解与能量闭合结果一致，并且主响应满足小角度与结构几何范围。壳体敏感性分析同时表明，峰值规模较稳健，但低阻尼纵摇瞬态的相位结论应对转动惯量口径保持谨慎。
 
-在垂荡与纵摇联合优化中，本文利用一阶模型的块对角结构将二维总功率目标严格分解，并以秩一更新得到解析最优条件。最优直线阻尼为 $59152.916113\ \mathrm{N\,s/m}$，最优旋转阻尼取上边界 $100000\ \mathrm{N\,m\,s}$，最大总平均功率为 $318.679256\ \mathrm{W}$。解析推导、穷举扫描、二维差分进化与周期时域能量闭合相互一致，使最终结果同时具备全局最优性、数值可复现性和物理自洽性。
+在垂荡与纵摇联合优化中，本文利用一阶模型的块对角结构将二维总功率目标严格分解，并以秩一更新得到解析最优条件。最优直线阻尼为 $5.9153\times10^4\ \mathrm{N\,s/m}$，最优旋转阻尼取上边界 $1.0000\times10^5\ \mathrm{N\,m\,s}$，最大总平均功率为 $318.679\ \mathrm{W}$。解析推导、穷举扫描、二维差分进化与周期时域能量闭合相互一致，使最终结果同时具备全局最优性、数值可复现性和物理自洽性。
+
+\begin{thebibliography}{99}
+\small
+\setlength{\itemsep}{0.35em}
+  \bibitem{falnes2002}
+  Falnes J. \emph{Ocean Waves and Oscillating Systems: Linear Interactions Including Wave-Energy Extraction}[M]. Cambridge: Cambridge University Press, 2002.
+
+  \bibitem{cummins1962}
+  Cummins W E. The impulse response function and ship motions[J]. \emph{Schiffstechnik}, 1962, 9(47): 101--109.
+
+  \bibitem{hairer1993}
+  Hairer E, N{\o}rsett S P, Wanner G. \emph{Solving Ordinary Differential Equations I: Nonstiff Problems}[M]. 2nd ed. Berlin: Springer, 1993.
+
+  \bibitem{sherman1950}
+  Sherman J, Morrison W J. Adjustment of an inverse matrix corresponding to a change in one element of a given matrix[J]. \emph{The Annals of Mathematical Statistics}, 1950, 21(1): 124--127.
+\end{thebibliography}
 
 \clearpage
 \begin{appendices}

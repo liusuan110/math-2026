@@ -125,7 +125,7 @@ def plot_optimization_curves(models_dir: Path, output_dir: Path) -> None:
         arrowprops={"arrowstyle": "->", "color": GRAY, "lw": 0.8},
         fontsize=8.5,
     )
-    axes[1].set_xlabel(r"Power exponent $p$ at $a=100$ kN")
+    axes[1].set_xlabel(r"Power exponent $p$ at $a/a_{\max}=1$")
     axes[1].set_ylabel(r"Mean power $\bar P$ (W)")
     axes[1].set_title("(b) Upper-bound exponent optimization", loc="left", pad=4)
     axes[1].set_xlim(0.0, 1.0)
@@ -146,7 +146,7 @@ def plot_power_surface(models_dir: Path, output_dir: Path) -> None:
     final_report = load_json(models_dir / "q2_nonlinear_final_validation.json")
     final = final_report["final_result"]
 
-    coefficient = coarse["coefficient"] / 1000.0
+    coefficient = coarse["coefficient"] / 100000.0
     exponent = coarse["exponent"]
     coefficient_mesh, exponent_mesh = np.meshgrid(coefficient, exponent)
     mean_power = coarse["mean_power"]
@@ -182,7 +182,7 @@ def plot_power_surface(models_dir: Path, output_dir: Path) -> None:
         label="Coarse grid",
     )
     axis.plot(
-        ridge["coefficient"] / 1000.0,
+        ridge["coefficient"] / 100000.0,
         ridge["exponent"],
         color=VERMILLION,
         linestyle="--",
@@ -190,7 +190,7 @@ def plot_power_surface(models_dir: Path, output_dir: Path) -> None:
         label="Optimized ridge",
     )
     axis.scatter(
-        final["coefficient"] / 1000.0,
+        final["coefficient"] / 100000.0,
         final["exponent"],
         marker="*",
         s=85,
@@ -201,15 +201,15 @@ def plot_power_surface(models_dir: Path, output_dir: Path) -> None:
         label="Final optimum",
     )
     axis.annotate(
-        r"$(a^*,p^*)=(100$ kN$,,0.41572)$",
-        xy=(final["coefficient"] / 1000.0, final["exponent"]),
-        xytext=(58, 0.58),
+        r"$(a^*/a_{\max},p^*)=(1,0.41572)$",
+        xy=(final["coefficient"] / 100000.0, final["exponent"]),
+        xytext=(0.56, 0.58),
         arrowprops={"arrowstyle": "->", "color": BLACK, "lw": 0.8},
         fontsize=8.5,
     )
-    axis.set_xlabel(r"Power-law coefficient $a$ (kN)")
+    axis.set_xlabel(r"Normalized power-law coefficient $a/a_{\max}$")
     axis.set_ylabel(r"Power exponent $p$")
-    axis.set_xlim(0.0, 102.5)
+    axis.set_xlim(0.0, 1.025)
     axis.set_ylim(0.0, 1.0)
     axis.set_title("Mean PTO power over the power-law parameter domain", loc="left", pad=5)
     axis.legend(loc="upper left", ncol=3)

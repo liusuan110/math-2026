@@ -1,0 +1,235 @@
+% 2022 A 题模拟赛论文初稿：问题一
+% 在本目录执行：latexmk -xelatex main.tex
+\documentclass[withoutpreface]{../../../templates/CUMCM2026-Complete-LaTeX/cumcmthesis}
+
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{siunitx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\graphicspath{{../figures/final/}}
+\sisetup{detect-all}
+
+\title{波浪能装置浮子--振子垂荡响应的耦合动力学建模}
+\tihao{A}
+\baominghao{}
+\schoolname{}
+\membera{}
+\memberb{}
+\memberc{}
+\supervisor{}
+\yearinput{2026}
+\monthinput{8}
+\dayinput{16}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+针对波浪能装置中浮子与振子的垂荡响应计算问题，本文以静水平衡位置为基准，综合考虑浮子附加质量、兴波阻尼、静水恢复力及 PTO 弹簧阻尼作用，建立了二自由度耦合动力学模型。针对常量阻尼和幂律阻尼两种工况，将二阶运动方程化为四维一阶状态方程，采用 DOP853 自适应方法对前 $40$ 个波浪周期进行时域积分，并以 \SI{0.2}{s} 为间隔输出浮子和振子的位移与速度。
+
+结果表明，两种工况在初始阶段均出现自由振动与强迫振动叠加形成的包络，随着兴波阻尼和 PTO 阻尼耗散能量，系统逐渐趋于以入射波浪频率为主的周期响应。幂律阻尼在本题相对速度范围内的等效阻尼较小，因此相对位移和相对速度略大。数值收敛、能量闭合和物理适用范围检验均通过：两工况状态量的收敛误差均低于 $10^{-7}$，最大相对能量残差小于 $10^{-12}$。
+
+\keywords{波浪能\quad 垂荡运动\quad 耦合动力学\quad 非线性阻尼\quad 数值积分}
+\end{abstract}
+
+\section{问题重述}
+
+\subsection{问题背景}
+
+波浪能装置通过浮子与内部振子的相对运动驱动能量输出系统（power take-off，PTO）中的阻尼器做功，将波浪的机械能转化为可利用能量。浮子在微幅周期波中运动时，除受波浪激励外，还会受到附加惯性力、兴波阻尼力和静水恢复力。因此，准确描述浮子、振子与 PTO 之间的耦合关系，是后续优化输出功率的基础。
+
+\subsection{问题一的要求}
+
+问题一只考虑浮子和振子的竖直垂荡运动。已知波浪激励力为 $f\cos(\omega t)$，角频率取 $\omega=1.4005\ \mathrm{s^{-1}}$，角度均采用弧度制。需要分别对常量阻尼系数 $10000\ \mathrm{N\,s/m}$ 和阻尼系数随相对速度绝对值的 $0.5$ 次幂变化两种工况建模，计算前 $40$ 个波浪周期内的位移和速度，并给出 $10$、$20$、$40$、$60$ 和 $100\ \mathrm{s}$ 时的指定结果。
+
+\section{问题分析}
+
+本问属于外周期激励下的二自由度耗散振动问题。模型的关键有三点：一是将附加质量并入浮子的有效惯性；二是根据水线面几何确定静水恢复刚度；三是保证弹簧力与 PTO 阻尼力作为内力，在浮子和振子方程中符号相反。常量阻尼工况为线性系统，幂律阻尼工况为非线性系统，两者可在统一状态方程下通过替换阻尼力函数进行求解和对比。
+
+\section{模型假设}
+
+\begin{enumerate}[leftmargin=3.2em]
+  \item 浮子和振子只沿竖直方向作垂荡运动，忽略其他方向的平动和转动。
+  \item 海水无黏、无旋，附加质量和兴波阻尼采用题目给定的线性系数。
+  \item 位移相对静水平衡位置定义，因此重力、静浮力和弹簧的静态预压缩量在增量方程中相互抵消。
+  \item 浮子运动过程中水线始终位于圆柱壳体段，水线面积可取 $A_w=\pi R^2$。
+  \item 忽略中轴、底座、隔层和 PTO 自身的质量，忽略题目未给出的其他摩擦。
+\end{enumerate}
+
+\section{符号说明}
+
+\begin{table}[H]
+  \centering
+  \caption{问题一主要符号}
+  \label{tab:symbols}
+  \begin{tabularx}{0.92\textwidth}{cXc}
+    \toprule
+    符号 & 含义 & 单位 \\
+    \midrule
+    $x_f,x_o$ & 浮子、振子相对静水平衡位置的垂荡位移 & $\mathrm{m}$ \\
+    $v_f,v_o$ & 浮子、振子的垂荡速度 & $\mathrm{m/s}$ \\
+    $r,v_r$ & 振子相对浮子的位移和速度 & $\mathrm{m},\ \mathrm{m/s}$ \\
+    $m_f,m_o,m_a$ & 浮子质量、振子质量和附加质量 & $\mathrm{kg}$ \\
+    $b,k,k_h$ & 兴波阻尼系数、弹簧刚度和静水恢复刚度 & $\mathrm{N\,s/m},\ \mathrm{N/m}$ \\
+    $D(v_r)$ & PTO 阻尼力函数 & $\mathrm{N}$ \\
+    $f,\omega$ & 波浪激励力幅值和角频率 & $\mathrm{N},\ \mathrm{s^{-1}}$ \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{问题一模型的建立与求解}
+
+\subsection{坐标选取与参数确定}
+
+以浮子和振子的静水平衡位置为坐标原点，规定竖直向上为正方向。记
+\begin{equation}
+  r=x_o-x_f,\qquad v_r=v_o-v_f .
+  \label{eq:relative}
+\end{equation}
+附件给出 $m_f=4866\ \mathrm{kg}$、$m_o=2433\ \mathrm{kg}$ 和 $m_a=1335.535\ \mathrm{kg}$，故浮子的垂荡有效质量为
+\begin{equation}
+  M_f=m_f+m_a=6201.535\ \mathrm{kg}.
+  \label{eq:effective-mass}
+\end{equation}
+根据浮子与振子的总质量反算排水体积，所得静态吃水为 $2.000010\ \mathrm{m}$，水线位于圆柱段的 $0$--$3\ \mathrm{m}$ 范围内。因此水线面积为 $\pi R^2$，静水恢复刚度为
+\begin{equation}
+  k_h=\rho g\pi R^2=31557.298205\ \mathrm{N/m}.
+  \label{eq:hydrostatic-stiffness}
+\end{equation}
+题目给定 $b=656.3616\ \mathrm{N\,s/m}$、$f=6250\ \mathrm{N}$、$k=80000\ \mathrm{N/m}$，由 $\omega=1.4005\ \mathrm{s^{-1}}$ 得波浪周期
+\begin{equation}
+  T=\frac{2\pi}{\omega}=4.486387224\ \mathrm{s}.
+\end{equation}
+
+\subsection{浮子--振子耦合动力学方程}
+
+波浪激励力只直接作用于浮子。弹簧力和 PTO 阻尼力是浮子与振子之间的内力，在两个物体的动力学方程中大小相等、方向相反。由牛顿第二定律得
+\begin{align}
+  M_f\ddot x_f={}&f\cos(\omega t)-b\dot x_f-k_hx_f
+  +k(x_o-x_f)+D(\dot x_o-\dot x_f),
+  \label{eq:float-motion}\\
+  m_o\ddot x_o={}&-k(x_o-x_f)-D(\dot x_o-\dot x_f).
+  \label{eq:oscillator-motion}
+\end{align}
+初始时刻两者均静止于静水平衡位置，因而
+\begin{equation}
+  x_f(0)=x_o(0)=\dot x_f(0)=\dot x_o(0)=0.
+  \label{eq:initial-condition}
+\end{equation}
+
+\subsection{阻尼规律与物理约束}
+
+两种工况的 PTO 阻尼力分别写为
+\begin{align}
+  D_1(v_r)&=10000v_r,\label{eq:linear-damping}\\
+  D_2(v_r)&=10000|v_r|^{0.5}v_r.\label{eq:power-damping}
+\end{align}
+两种情况均满足 $D(v_r)v_r\geq 0$，即阻尼器的瞬时耗散功率非负，不会向机械系统注入能量。
+
+\subsection{一阶状态方程与数值方法}
+
+取状态向量 $\boldsymbol y=[x_f,v_f,x_o,v_o]^{\mathsf T}$，将式 \eqref{eq:float-motion}--\eqref{eq:oscillator-motion} 改写为
+\begin{equation}
+\begin{cases}
+  \dot x_f=v_f,\\
+  \displaystyle \dot v_f=\frac{f\cos(\omega t)-bv_f-k_hx_f+kr+D(v_r)}{M_f},\\[0.6em]
+  \dot x_o=v_o,\\
+  \displaystyle \dot v_o=\frac{-kr-D(v_r)}{m_o}.
+\end{cases}
+\label{eq:state-space}
+\end{equation}
+本文采用 DOP853 高阶自适应 Runge--Kutta 方法积分式 \eqref{eq:state-space}，相对容差取 $10^{-10}$，绝对容差取 $10^{-12}$，最大内部步长取 $0.02\ \mathrm{s}$。计算时间覆盖 $40T=179.455489\ \mathrm{s}$，并在 $0$--$179.4\ \mathrm{s}$ 上按 $0.2\ \mathrm{s}$ 间隔输出，共得 $898$ 个时刻。题目指定的五个时刻均位于输出网格上，可直接取值，无需额外插值。
+
+\subsection{求解结果与响应特征}
+
+两种阻尼规律下的位移响应如图 \ref{fig:displacement} 所示。在初始阶段，系统的自由振动与波浪强迫振动叠加，形成明显的振幅包络；随着兴波阻尼和 PTO 阻尼不断耗散机械能，自由振动分量逐渐衰减，系统趋于以入射波浪频率为主的周期响应。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{q1_displacement_response.pdf}
+  \caption{两种阻尼规律下浮子与振子的垂荡位移响应}
+  \label{fig:displacement}
+\end{figure}
+
+速度响应见图 \ref{fig:velocity}。振子与浮子的运动趋势总体一致，但始终存在小幅的振幅差与相位差，由此产生 PTO 阻尼器做功所需的相对速度。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{q1_velocity_response.pdf}
+  \caption{两种阻尼规律下浮子与振子的垂荡速度响应}
+  \label{fig:velocity}
+\end{figure}
+
+常量阻尼工况在题目指定时刻的计算结果如表 \ref{tab:linear-results} 所示，幂律阻尼的相应结果如表 \ref{tab:power-results} 所示。
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{常量阻尼工况的指定时刻响应}
+  \label{tab:linear-results}
+  \begin{tabular}{ccccc}
+    \toprule
+    时间/s & 浮子位移/m & 浮子速度/(m/s) & 振子位移/m & 振子速度/(m/s) \\
+    \midrule
+    10  & -0.190711 & -0.641009 & -0.211679 & -0.693953 \\
+    20  & -0.590684 & -0.240951 & -0.634248 & -0.272776 \\
+    40  &  0.285374 &  0.312971 &  0.296499 &  0.332912 \\
+    60  & -0.314506 & -0.479455 & -0.331436 & -0.515728 \\
+    100 & -0.083615 & -0.604211 & -0.084068 & -0.643002 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{幂律阻尼工况的指定时刻响应}
+  \label{tab:power-results}
+  \begin{tabular}{ccccc}
+    \toprule
+    时间/s & 浮子位移/m & 浮子速度/(m/s) & 振子位移/m & 振子速度/(m/s) \\
+    \midrule
+    10  & -0.205877 & -0.652821 & -0.234572 & -0.699937 \\
+    20  & -0.611108 & -0.254784 & -0.661061 & -0.277021 \\
+    40  &  0.268768 &  0.295302 &  0.280157 &  0.312523 \\
+    60  & -0.327164 & -0.491518 & -0.349606 & -0.525587 \\
+    100 & -0.088408 & -0.609831 & -0.093493 & -0.650076 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+图 \ref{fig:relative} 展示了第 $38$--$40$ 周期的相对运动。在当前相对速度范围内，幂律阻尼的等效阻尼系数小于常量阻尼系数，因而其耗散作用相对较弱，相对位移和相对速度均略大。第 $40$ 周期内，常量阻尼下浮子和振子的位移半峰峰值分别为 $0.435354\ \mathrm{m}$ 和 $0.462033\ \mathrm{m}$；幂律阻尼下分别为 $0.435983\ \mathrm{m}$ 和 $0.463784\ \mathrm{m}$。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{q1_relative_response.pdf}
+  \caption{第 $38$--$40$ 周期内两种阻尼规律的相对运动对比}
+  \label{fig:relative}
+\end{figure}
+
+\subsection{模型检验}
+
+为检验数值结果的可靠性，本文从数值收敛、能量闭合和物理适用范围三个方面进行验证。
+
+\begin{enumerate}[leftmargin=3.2em]
+  \item \textbf{数值收敛性：}将最大内部步长由 $0.02\ \mathrm{s}$ 缩小至 $0.01\ \mathrm{s}$，并进一步收紧积分容差。常量阻尼和幂律阻尼工况四个状态量的最大差分别为 $1.439\times10^{-13}$ 和 $2.422\times10^{-8}$，均低于 $10^{-7}$。
+  \item \textbf{能量闭合：}根据波浪输入功、机械能变化、兴波耗散和 PTO 耗散构建能量平衡式。两工况的最大相对能量残差分别为 $6.841\times10^{-15}$ 和 $2.320\times10^{-13}$，说明方程符号和数值积分保持了能量一致性。
+  \item \textbf{物理范围：}计算过程中圆柱段吃水始终处于 $1.276$--$2.763\ \mathrm{m}$，未超出圆柱段；弹簧长度始终为正。因此线性静水恢复力与结构几何假设在所得响应范围内自洽。
+\end{enumerate}
+
+此外，常量阻尼时域解与复频域解析稳态解的最大相对误差为 $2.952\times10^{-14}$，进一步从独立求解路径验证了线性工况的正确性。
+
+\section{问题一结论}
+
+本文建立的二自由度垂荡耦合模型同时包含浮子有效惯性、兴波阻尼、静水恢复力以及浮子--振子之间的弹簧和 PTO 阻尼耦合。计算得到两种阻尼规律下前 $40$ 个波浪周期的位移和速度序列，并完成了题目指定时刻的结果输出。幂律阻尼工况在当前速度范围内的相对运动略大，这一结论为问题二中以平均输出功率为目标的阻尼参数优化提供了基础。
+
+\appendix
+\section{结果文件说明}
+
+两种阻尼工况的 $898$ 个完整输出时刻已分别写入支撑材料中的 \texttt{result1-1.xlsx} 和 \texttt{result1-2.xlsx}。正文表 \ref{tab:linear-results} 和表 \ref{tab:power-results} 均直接取自这两份官方格式结果表。
+
+\end{document}

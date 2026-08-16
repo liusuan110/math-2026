@@ -148,7 +148,7 @@
         "svg": {
           "relative_path": "figures/final/q3_heave_response.svg",
           "bytes": 169805,
-          "sha256": "00656f50b91ca825626f0ab3dea4eb2a9e9561b4a294030431efd0de80724f91"
+          "sha256": "7b86786c84394ddb899fe535255a10a454b928ec684e54877bca43271c0ab8a7"
         },
         "pdf": {
           "relative_path": "figures/final/q3_heave_response.pdf",
@@ -168,7 +168,7 @@
         "svg": {
           "relative_path": "figures/final/q3_pitch_response.svg",
           "bytes": 183236,
-          "sha256": "d663f36213f332393167934d5e77e8b0fe91c1f6f218bf3dbc0c8378f721a092"
+          "sha256": "1eaaed30b06a4eb4bfce412657629a702247b8bafc3a669c8a6962fb68f73720"
         },
         "pdf": {
           "relative_path": "figures/final/q3_pitch_response.pdf",
@@ -188,7 +188,7 @@
         "svg": {
           "relative_path": "figures/final/q3_pto_and_sensitivity.svg",
           "bytes": 261736,
-          "sha256": "1c83897b3af8e535d09795d92995fc673c29ae6f60b8eedf48aaf1d06af546eb"
+          "sha256": "32854ee276886422009ad144b3b96f68d86d4abb6a712e2082ee709d2b52ec95"
         },
         "pdf": {
           "relative_path": "figures/final/q3_pto_and_sensitivity.pdf",

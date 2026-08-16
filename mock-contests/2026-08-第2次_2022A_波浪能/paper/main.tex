@@ -1,4 +1,4 @@
-% 2022 A 题模拟赛论文工作稿：问题一与问题二
+% 2022 A 题模拟赛论文工作稿：问题一至问题三
 % 在本目录执行：latexmk -xelatex main.tex
 \documentclass[withoutpreface]{../../../templates/CUMCM2026-Complete-LaTeX/cumcmthesis}
 
@@ -12,7 +12,7 @@
 \graphicspath{{../figures/final/}}
 \sisetup{detect-all}
 
-\title{波浪能装置垂荡响应与 PTO 阻尼优化的动力学建模}
+\title{波浪能装置多自由度响应与 PTO 阻尼优化}
 \tihao{A}
 \baominghao{}
 \schoolname{}
@@ -33,7 +33,9 @@
 
 针对问题二，以周期稳态平均输出功率为统一目标，分别建立常量阻尼的复频域解析优化模型和幂律阻尼的周期射击优化模型。通过全域扫描、参数脊线追踪、多起点精修和边界优化，得到常量阻尼最优系数为 $37193.8126\ \mathrm{N\,s/m}$，幂律阻尼最优参数为 $a=100000$、$p=0.415718380$，对应平均功率分别为 $229.333940\ \mathrm{W}$ 和 $229.994333\ \mathrm{W}$。幂律阻尼的最优比例系数取到允许上界，平均功率较常量阻尼提高 $0.287961\%$。零初猜射击、冷启动长时积分和周期能量积分的独立复核结果一致。
 
-\keywords{波浪能\quad 耦合动力学\quad PTO 阻尼\quad 周期射击\quad 参数优化}
+针对问题三，在微幅波和小角度条件下建立包含浮子与振子垂荡、纵摇运动的四自由度线性模型，并由封闭薄壳几何与平行轴定理补全物理转动惯量。高精度时域积分得到前 $40$ 个波浪周期的八状态响应，最大垂荡位移为 $0.915847\ \mathrm{m}$，最大纵摇角为 $0.153758\ \mathrm{rad}$；直线与旋转 PTO 的累计输出分别为 $6935.244394\ \mathrm{J}$ 和 $1.928170\ \mathrm{J}$。严格积分、矩阵指数解和能量闭合验证了结果一致性，壳体口径敏感性说明纵摇峰值规模较稳健，但低阻尼瞬态相位对转动惯量较敏感。
+
+\keywords{波浪能\quad 耦合动力学\quad 垂荡与纵摇\quad PTO 阻尼\quad 参数优化}
 \end{abstract}
 
 \section{问题重述}
@@ -50,6 +52,10 @@
 
 问题二沿用垂荡运动模型，改用 $\omega=2.2143\ \mathrm{s^{-1}}$ 的水动力参数。需分别在常量阻尼系数 $c\in[0,100000]$ 以及幂律阻尼参数 $a\in[0,100000]$、$p\in[0,1]$ 的约束下，确定使 PTO 平均输出功率最大的阻尼参数与最大功率。
 
+\subsection{问题三的要求}
+
+问题三允许浮子同时作垂荡和纵摇运动，振子随中轴转动并沿中轴滑动。在 $\omega=1.7152\ \mathrm{s^{-1}}$、直线阻尼系数 $10000\ \mathrm{N\,s/m}$ 和旋转阻尼系数 $1000\ \mathrm{N\,m\,s}$ 下，需建立垂荡--纵摇动力学模型，计算前 $40$ 个波浪周期内的垂荡位移与速度、纵摇角与角速度，并按 $0.2\ \mathrm{s}$ 间隔输出正式结果。
+
 \section{问题分析}
 
 \subsection{问题一的分析}
@@ -60,14 +66,20 @@
 
 问题二的核心是在同一周期稳态口径下极大化 PTO 平均耗散功率。常量阻尼对应线性定常系统，可利用复频域稳态解将优化化为一维问题；幂律阻尼则使系统呈现速度相关非线性，需直接求解周期轨道并在二维约束域内搜索。为避免初始自由振动影响目标值，本文不使用从零初态起算的全程平均，而使用单个稳定周期的平均功率。
 
+\subsection{问题三的分析}
+
+问题三将运动扩展为浮子和振子的垂荡与纵摇四自由度响应。在微幅波和小角度一阶线性化下，垂荡与纵摇之间的交叉项为二阶小量，因此整体模型可分解为垂荡和纵摇两个耦合二自由度子系统。建模难点在于由壳体几何补全物理转动惯量，并保留振子绕移动铰轴运动所导致的纵摇非对角惯性耦合。
+
 \section{模型假设}
 
 \begin{enumerate}[leftmargin=3.2em]
-  \item 浮子和振子只沿竖直方向作垂荡运动，忽略其他方向的平动和转动。
+  \item 问题一和问题二仅考虑浮子与振子的竖直垂荡；问题三进一步考虑侧视平面内的纵摇。
   \item 海水无黏、无旋，附加质量和兴波阻尼采用题目给定的线性系数。
   \item 位移相对静水平衡位置定义，因此重力、静浮力和弹簧的静态预压缩量在增量方程中相互抵消。
   \item 浮子运动过程中水线始终位于圆柱壳体段，水线面积可取 $A_w=\pi R^2$。
   \item 忽略中轴、底座、隔层和 PTO 自身的质量，忽略题目未给出的其他摩擦。
+  \item 问题三满足微幅波和小角度条件，只保留位移、转角及其导数的一阶项。
+  \item 主模型将浮子视为密度均匀的封闭薄壳，计入圆柱侧面、圆锥侧面和顶部圆盖。
 \end{enumerate}
 
 \section{符号说明}
@@ -90,6 +102,9 @@
     $c$ & 常量阻尼系数 & $\mathrm{N\,s/m}$ \\
     $a,p$ & 幂律阻尼的比例系数和幂指数 & 随 $p$ 变化，无量纲 \\
     $\overline P$ & 周期稳态平均 PTO 输出功率 & $\mathrm{W}$ \\
+    $\theta_f,\theta_o$ & 浮子和振子的绝对纵摇角 & $\mathrm{rad}$ \\
+    $J_{f,C},J_{o,C}$ & 浮子、振子绕自身质心横轴的转动惯量 & $\mathrm{kg\,m^2}$ \\
+    $J_{o,P}$ & 振子绕下部铰轴的等效转动惯量 & $\mathrm{kg\,m^2}$ \\
     \bottomrule
   \end{tabularx}
 \end{table}
@@ -407,10 +422,171 @@
 \end{enumerate}
 最优周期内 PTO 瞬时功率始终非负，吃水和弹簧长度也均满足模型的物理适用范围，说明优化结果同时满足周期稳态、能量耗散和结构几何约束。
 
-\section{结论}
+\section{问题三垂荡--纵摇四自由度模型}
+
+\subsection{坐标与一阶线性化}
+
+以系统的静水平衡位置为原点，规定竖直向上为垂荡正方向，侧视平面内逆时针为纵摇正方向。记浮子和振子的垂荡位移为 $x_f,x_o$，绝对纵摇角为 $\theta_f,\theta_o$。直线 PTO 的相对位移和速度分别为 $x_o-x_f$ 和 $\dot x_o-\dot x_f$，旋转 PTO 的相对转角和角速度分别为 $\theta_o-\theta_f$ 和 $\dot\theta_o-\dot\theta_f$。
+
+根据振子质心的平面几何关系，在微幅波和小角度条件下，垂荡与纵摇之间的交叉项为二阶小量。因此一阶模型可写为垂荡和纵摇两个块对角子系统，但纵摇子系统内部的非对角惯性项仍需保留。
+
+\subsection{壳体几何与转动惯量}
+
+附件仅给出浮子的纵摇附加转动惯量，物理转动惯量需结合实际转轴补全。主模型将浮子视为密度均匀的封闭薄壳，按圆柱侧面、圆锥侧面和顶部圆盖的面积分配总质量，再应用平行轴定理。得浮子质心到下部铰轴的距离和绕质心的转动惯量为
+\begin{equation}
+  a_f=1.407925157\ \mathrm{m},\qquad
+  J_{f,C}=8398.776060\ \mathrm{kg\,m^2}.
+  \label{eq:q3-float-inertia}
+\end{equation}
+弹簧的静平衡长度为
+\begin{equation}
+  l_e=l_0-\frac{m_og}{k}=0.2019575\ \mathrm{m},
+  \label{eq:q3-equilibrium-length}
+\end{equation}
+故振子质心到铰轴的距离 $d=l_e+h_o/2=0.4519575\ \mathrm{m}$。圆柱振子绕自身质心横轴的转动惯量为 $J_{o,C}=202.75\ \mathrm{kg\,m^2}$，由平行轴定理得其绕铰轴的等效转动惯量
+\begin{equation}
+  J_{o,P}=J_{o,C}+m_od^2=699.728161\ \mathrm{kg\,m^2}.
+  \label{eq:q3-oscillator-inertia}
+\end{equation}
+
+\subsection{四自由度动力学方程}
+
+令 $\boldsymbol q_z=[x_f,x_o]^{\mathsf T}$、$\boldsymbol q_\theta=[\theta_f,\theta_o]^{\mathsf T}$。问题三的波浪角频率为 $\omega=1.7152\ \mathrm{s^{-1}}$。垂荡子系统满足
+\begin{equation}
+  \boldsymbol M_z\ddot{\boldsymbol q}_z+
+  \boldsymbol C_z\dot{\boldsymbol q}_z+
+  \boldsymbol K_z\boldsymbol q_z=
+  \begin{bmatrix}3640\cos(1.7152t)\\0\end{bmatrix},
+  \label{eq:q3-heave-system}
+\end{equation}
+其中
+\begin{equation}
+  \boldsymbol M_z=\begin{bmatrix}5894.876&0\\0&2433\end{bmatrix},\quad
+  \boldsymbol C_z=\begin{bmatrix}10683.4558&-10000\\-10000&10000\end{bmatrix},
+  \label{eq:q3-heave-mc}
+\end{equation}
+\begin{equation}
+  \boldsymbol K_z=\begin{bmatrix}111557.298205&-80000\\-80000&80000\end{bmatrix}.
+  \label{eq:q3-heave-k}
+\end{equation}
+纵摇子系统满足
+\begin{equation}
+  \boldsymbol M_\theta\ddot{\boldsymbol q}_\theta+
+  \boldsymbol C_\theta\dot{\boldsymbol q}_\theta+
+  \boldsymbol K_\theta\boldsymbol q_\theta=
+  \begin{bmatrix}1690\cos(1.7152t)\\0\end{bmatrix},
+  \label{eq:q3-pitch-system}
+\end{equation}
+其中
+\begin{equation}
+  \boldsymbol M_\theta=
+  \begin{bmatrix}20223.512213&-1548.172239\\-1548.172239&699.728161\end{bmatrix},
+  \label{eq:q3-pitch-m}
+\end{equation}
+\begin{equation}
+  \boldsymbol C_\theta=
+  \begin{bmatrix}1654.3383&-1000\\-1000&1000\end{bmatrix},\quad
+  \boldsymbol K_\theta=
+  \begin{bmatrix}292460.422695&-250000\\-250000&239223.796545\end{bmatrix}.
+  \label{eq:q3-pitch-ck}
+\end{equation}
+式 \eqref{eq:q3-pitch-m} 中的非对角项对应移动铰轴对浮子和振子纵摇加速度的惯性耦合，不能在四自由度模型中略去。
+
+\subsection{数值方法与正式输出网格}
+
+初始时刻的四个位移与四个速度状态均为零。采用 DOP853 自适应积分方法，相对容差取 $10^{-10}$，最大内部步长取 $0.01\ \mathrm{s}$。波浪周期为 $T=3.663237702\ \mathrm{s}$，积分至精确的第 $40$ 周期终点 $40T=146.529508\ \mathrm{s}$。正式结果在 $0$--$146.4\ \mathrm{s}$ 上按 $0.2\ \mathrm{s}$ 间隔输出，共 $733$ 个时刻。其中 $0.2\ \mathrm{s}$ 是题目要求的输出间隔，不是积分器的内部步长。
+
+\subsection{响应结果与指定时刻数值}
+
+浮子与振子的垂荡位移和速度如图 \ref{fig:q3-heave} 所示，纵摇角与角速度如图 \ref{fig:q3-pitch} 所示。两类运动在初始阶段均包含明显的自由振动包络，随后逐渐转为以波浪频率为主的受迫响应。浮子与振子的同类状态总体接近，但仍保留了产生 PTO 输出所需的相对速度和相对角速度。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{q3_heave_response.pdf}
+  \caption{情形 3 下浮子与振子的垂荡位移和速度响应}
+  \label{fig:q3-heave}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{q3_pitch_response.pdf}
+  \caption{情形 3 下浮子与振子的纵摇角和角速度响应}
+  \label{fig:q3-pitch}
+\end{figure}
+
+题目指定的 $10$、$20$、$40$、$60$ 和 $100\ \mathrm{s}$ 时刻的垂荡结果见表 \ref{tab:q3-heave-results}，纵摇结果见表 \ref{tab:q3-pitch-results}。
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{问题三指定时刻的垂荡响应}
+  \label{tab:q3-heave-results}
+  \begin{tabular}{ccccc}
+    \toprule
+    时间/s & 浮子位移/m & 浮子速度/(m/s) & 振子位移/m & 振子速度/(m/s) \\
+    \midrule
+    10  & -0.528276 &  0.969851 & -0.598729 &  1.038201 \\
+    20  & -0.704815 & -0.269306 & -0.772294 & -0.319026 \\
+    40  &  0.369361 &  0.757580 &  0.392653 &  0.844962 \\
+    60  & -0.320675 & -0.721762 & -0.341426 & -0.799321 \\
+    100 & -0.050154 & -0.946690 & -0.042612 & -1.036526 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{问题三指定时刻的纵摇响应}
+  \label{tab:q3-pitch-results}
+  \begin{tabular}{ccccc}
+    \toprule
+    时间/s & 浮子角/rad & 浮子角速度/(rad/s) & 振子角/rad & 振子角速度/(rad/s) \\
+    \midrule
+    10  &  0.054994 & -0.197808 &  0.057153 & -0.204933 \\
+    20  &  0.086335 & -0.045551 &  0.089398 & -0.047403 \\
+    40  & -0.108234 & -0.076354 & -0.112148 & -0.079135 \\
+    60  &  0.047511 &  0.119844 &  0.049093 &  0.124173 \\
+    100 &  0.038079 &  0.118554 &  0.039434 &  0.122668 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+全过程浮子和振子的最大垂荡位移绝对值分别为 $0.831274\ \mathrm{m}$ 和 $0.915847\ \mathrm{m}$，最大纵摇角绝对值分别为 $0.148295\ \mathrm{rad}$ 和 $0.153758\ \mathrm{rad}$。最大纵摇角约为 $8.81^\circ$，未超过本文设定的 $0.2\ \mathrm{rad}$ 小角度预警线。
+
+\subsection{PTO 输出与能量特征}
+
+直线与旋转 PTO 的瞬时输出功率分别为
+\begin{equation}
+  P_z=10000(\dot x_o-\dot x_f)^2\geq0,
+  \qquad
+  P_\theta=1000(\dot\theta_o-\dot\theta_f)^2\geq0.
+  \label{eq:q3-pto-power}
+\end{equation}
+至精确第 $40$ 周期终点，直线 PTO 和旋转 PTO 的累计输出能量分别为 $6935.244394\ \mathrm{J}$ 和 $1.928170\ \mathrm{J}$，瞬时功率最大值分别为 $245.428736\ \mathrm{W}$ 和 $0.069767\ \mathrm{W}$。旋转 PTO 输出比直线 PTO 小三个数量级以上，说明在题给阻尼参数下，装置能量输出主要来自垂荡方向的直线 PTO。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{q3_pto_and_sensitivity.pdf}
+  \caption{两类 PTO 输出与浮子壳体口径敏感性}
+  \label{fig:q3-pto-sensitivity}
+\end{figure}
+
+\subsection{数值验证与模型敏感性}
+
+问题三的结果采用三条数值路线和能量恒等式交叉验证。主积分与收紧容差和步长的参考积分之间，全局最大归一化差为 $1.24\times10^{-13}$；与常系数线性系统的矩阵指数解之间，最大归一化差为 $6.51\times10^{-14}$。将波浪输入功、机械能变化、垂荡与纵摇兴波耗散以及两类 PTO 输出纳入能量恒等式，精确 $40T$ 终点的相对残差为 $1.12\times10^{-14}$。
+
+全过程弹簧长度保持在 $0.114923$--$0.288675\ \mathrm{m}$，始终为正；最大纵摇角也低于小角度预警线，因此结构几何和一阶线性化在主响应范围内自洽。
+
+由于题面未明确薄壳是否包含顶部圆盖，另以“不计顶部圆盖”的侧壳口径进行敏感性计算。图 \ref{fig:q3-pto-sensitivity}(d) 中 $\Delta\theta_f$ 表示“替代口径减主口径”。两种口径下四个垂荡状态完全不变，纵摇绝对峰值变化约 $1\%$--$2\%$；但由于低阻尼模态存在瞬态相位累积，浮子和振子纵摇角的最大逐时差分别达到 $0.061615\ \mathrm{rad}$ 和 $0.064300\ \mathrm{rad}$。因此纵摇峰值规模对壳体口径较稳健，而低阻尼纵摇瞬态的相位对转动惯量口径较敏感。主结果始终采用计入顶部圆盖的封闭薄壳口径，替代口径不混入正式结果表。
+
+\section{阶段性结论}
 
 本文建立了波浪周期激励下浮子--振子系统的二自由度垂荡耦合模型，完成了常量与幂律阻尼下的时域响应计算，并通过收敛、能量和几何范围检验验证了模型可靠性。在此基础上，将平均输出功率统一定义为周期稳态口径，分别得到常量阻尼的唯一内部最优点和幂律阻尼的边界最优点。幂律阻尼的最大平均功率较常量阻尼提高 $0.287961\%$，但比例系数已取到允许上界，说明参数域的边界对最优解具有决定作用。
 
+对垂荡--纵摇联合运动，本文通过壳体几何和平行轴定理补全转动惯量，建立了四自由度线性动力学模型。题给阻尼参数下，装置能量输出主要来自垂荡方向的直线 PTO，旋转 PTO 输出较小。数值积分、矩阵指数解与能量闭合结果一致，并且主响应满足小角度与结构几何范围。壳体敏感性分析同时表明，峰值规模较稳健，但低阻尼纵摇瞬态的相位结论应对转动惯量口径保持谨慎。
+
+\clearpage
 \appendix
 \section{结果文件说明}
 
@@ -419,6 +595,6 @@
   \item \path{result1-1.xlsx}：常量阻尼完整结果；
   \item \path{result1-2.xlsx}：幂律阻尼完整结果。
 \end{itemize}
-正文表 \ref{tab:linear-results} 和表 \ref{tab:power-results} 均直接取自上述文件。问题二的最终参数、功率、周期指标和验收状态汇总于支撑材 \path{q2_final_summary.json}。
+正文表 \ref{tab:linear-results} 和表 \ref{tab:power-results} 均直接取自上述文件。问题二的最终参数、功率、周期指标和验收状态汇总于支撑材 \path{q2_final_summary.json}。问题三的 $733\times9$ 正式结果位于 \path{result3.xlsx}，正文表 \ref{tab:q3-heave-results} 和表 \ref{tab:q3-pitch-results} 的指定时刻数值均取自该工作簿；问题三最终汇总为 \path{q3_final_summary.json}。
 
 \end{document}

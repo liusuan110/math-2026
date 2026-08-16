@@ -1,0 +1,241 @@
+{
+  "status": "passed",
+  "model": "CUMCM 2022 A, question 1",
+  "time_grid": {
+    "start_s": 0.0,
+    "end_s": 179.4,
+    "step_s": 0.2,
+    "points": 898,
+    "forty_period_endpoint_s": 179.45548895907422
+  },
+  "cases": {
+    "constant": {
+      "solver": {
+        "standard_nfev": 110408,
+        "reference_nfev": 218072,
+        "output_points": 898
+      },
+      "convergence": {
+        "per_state_max_absolute_difference": {
+          "float_displacement": 8.103240300982861e-14,
+          "float_velocity": 1.3269940701832184e-13,
+          "oscillator_displacement": 8.809619700400617e-14,
+          "oscillator_velocity": 1.438849039914203e-13
+        },
+        "overall_max_absolute_difference": 1.438849039914203e-13
+      },
+      "energy_balance": {
+        "max_absolute_residual_J": 9.185896487906575e-11,
+        "max_relative_residual": 6.840559505197057e-15,
+        "final_mechanical_energy_J": 2988.8612627235048,
+        "wave_input_work_J": 29137.847379252864,
+        "radiation_loss_J": 24320.019288099647,
+        "pto_loss_J": 1828.966828429686,
+        "minimum_radiation_loss_J": 0.0,
+        "minimum_pto_loss_J": 0.0
+      },
+      "response": {
+        "state_max_absolute": {
+          "float_displacement": 0.7508944061047826,
+          "float_velocity": 1.2202979192434482,
+          "oscillator_displacement": 0.815245058327876,
+          "oscillator_velocity": 1.327947785985072
+        },
+        "relative_displacement_max_absolute_m": 0.06435065222309333,
+        "relative_velocity_max_absolute_m_per_s": 0.10946096866106236,
+        "physical_regime": {
+          "cylinder_draft_min_m": 1.2824041209586556,
+          "cylinder_draft_max_m": 2.7509046752971287,
+          "cylinder_height_m": 3.0,
+          "spring_length_min_m": 0.13760684777690663,
+          "spring_length_max_m": 0.2650463145818968
+        },
+        "pto_power_min_W": 0.0,
+        "pto_power_max_W": 119.81703660218076,
+        "pto_power_mean_over_full_interval_W": 10.18952707180697,
+        "key_times": {
+          "10.0": {
+            "float_displacement": -0.19071132901096347,
+            "float_velocity": -0.6410085516875405,
+            "oscillator_displacement": -0.2116788404309805,
+            "oscillator_velocity": -0.693953449754582
+          },
+          "20.0": {
+            "float_displacement": -0.59068433621546,
+            "float_velocity": -0.24095144488713816,
+            "oscillator_displacement": -0.6342484533088463,
+            "oscillator_velocity": -0.2727756513189159
+          },
+          "40.0": {
+            "float_displacement": 0.2853744142071092,
+            "float_velocity": 0.31297134001081395,
+            "oscillator_displacement": 0.296499145326326,
+            "oscillator_velocity": 0.33291242312229763
+          },
+          "60.0": {
+            "float_displacement": -0.31450556305268085,
+            "float_velocity": -0.47945501192638257,
+            "oscillator_displacement": -0.3314359473669522,
+            "oscillator_velocity": -0.5157279684002157
+          },
+          "100.0": {
+            "float_displacement": -0.08361470379928505,
+            "float_velocity": -0.6042114975373782,
+            "oscillator_displacement": -0.08406805433090056,
+            "oscillator_velocity": -0.6430019465134403
+          }
+        }
+      },
+      "cycle_39_to_40": {
+        "per_state_max_absolute_difference": {
+          "float_displacement": 0.0004457349324633597,
+          "float_velocity": 0.0008094953163531038,
+          "oscillator_displacement": 0.0004968734055848523,
+          "oscillator_velocity": 0.0009021242894987624
+        },
+        "per_state_relative_to_cycle_40_amplitude": {
+          "float_displacement": 0.001023811068018899,
+          "float_velocity": 0.0013273439395500946,
+          "oscillator_displacement": 0.0010753715532951019,
+          "oscillator_velocity": 0.0013937995325997746
+        },
+        "cycle_40_max_absolute": {
+          "float_displacement": 0.4353683471364188,
+          "float_velocity": 0.6098610105738559,
+          "oscillator_displacement": 0.4620481210074385,
+          "oscillator_velocity": 0.6472410618592198
+        },
+        "cycle_40_half_peak_to_peak": {
+          "float_displacement": 0.4353535700318434,
+          "float_velocity": 0.6097767933392622,
+          "oscillator_displacement": 0.4620329892909204,
+          "oscillator_velocity": 0.6471493670166741
+        },
+        "overall_max_relative_difference": 0.0013937995325997746
+      }
+    },
+    "power": {
+      "solver": {
+        "standard_nfev": 116876,
+        "reference_nfev": 231392,
+        "output_points": 898
+      },
+      "convergence": {
+        "per_state_max_absolute_difference": {
+          "float_displacement": 1.3650981456336808e-09,
+          "float_velocity": 9.281558910334553e-09,
+          "oscillator_displacement": 3.43078554454479e-09,
+          "oscillator_velocity": 2.422297779025584e-08
+        },
+        "overall_max_absolute_difference": 2.422297779025584e-08
+      },
+      "energy_balance": {
+        "max_absolute_residual_J": 1.1544159406184917e-08,
+        "max_relative_residual": 2.319830308383405e-13,
+        "final_mechanical_energy_J": 2999.4117090619984,
+        "wave_input_work_J": 28167.523551990216,
+        "radiation_loss_J": 24714.125894841232,
+        "pto_loss_J": 453.98594808677024,
+        "minimum_radiation_loss_J": 0.0,
+        "minimum_pto_loss_J": 0.0
+      },
+      "response": {
+        "state_max_absolute": {
+          "float_displacement": 0.7627349403944114,
+          "float_velocity": 1.2384939135426478,
+          "oscillator_displacement": 0.8303568291750514,
+          "oscillator_velocity": 1.3511935089166303
+        },
+        "relative_displacement_max_absolute_m": 0.06762188878064002,
+        "relative_velocity_max_absolute_m_per_s": 0.13353659581196126,
+        "physical_regime": {
+          "cylinder_draft_min_m": 1.276250957982479,
+          "cylinder_draft_max_m": 2.7627452095867575,
+          "cylinder_height_m": 3.0,
+          "spring_length_min_m": 0.13433561121935994,
+          "spring_length_max_m": 0.26727436114220476
+        },
+        "pto_power_min_W": 0.0,
+        "pto_power_max_W": 65.16295222566949,
+        "pto_power_mean_over_full_interval_W": 2.5352914285913695,
+        "key_times": {
+          "10.0": {
+            "float_displacement": -0.2058772490359923,
+            "float_velocity": -0.6528211687403856,
+            "oscillator_displacement": -0.23457207525708193,
+            "oscillator_velocity": -0.6999367919786462
+          },
+          "20.0": {
+            "float_displacement": -0.6111075583489002,
+            "float_velocity": -0.2547839249033914,
+            "oscillator_displacement": -0.6610612500171693,
+            "oscillator_velocity": -0.2770214114657778
+          },
+          "40.0": {
+            "float_displacement": 0.2687677267427302,
+            "float_velocity": 0.29530166782412176,
+            "oscillator_displacement": 0.28015742557558326,
+            "oscillator_velocity": 0.3125228992995397
+          },
+          "60.0": {
+            "float_displacement": -0.3271642173292005,
+            "float_velocity": -0.49151796296177624,
+            "oscillator_displacement": -0.3496058715962982,
+            "oscillator_velocity": -0.5255870900869567
+          },
+          "100.0": {
+            "float_displacement": -0.08840817550198432,
+            "float_velocity": -0.6098305826836097,
+            "oscillator_displacement": -0.09349255743686283,
+            "oscillator_velocity": -0.6500764336601316
+          }
+        }
+      },
+      "cycle_39_to_40": {
+        "per_state_max_absolute_difference": {
+          "float_displacement": 0.0012003118168239513,
+          "float_velocity": 0.0021933935285750605,
+          "oscillator_displacement": 0.001348240283304214,
+          "oscillator_velocity": 0.0024457918920204325
+        },
+        "per_state_relative_to_cycle_40_amplitude": {
+          "float_displacement": 0.002752453083896069,
+          "float_velocity": 0.0035905217237452393,
+          "oscillator_displacement": 0.002906305513141858,
+          "oscillator_velocity": 0.0037615189056110954
+        },
+        "cycle_40_max_absolute": {
+          "float_displacement": 0.4360880204813236,
+          "float_velocity": 0.6108843497783248,
+          "oscillator_displacement": 0.4639017739902714,
+          "oscillator_velocity": 0.6502139038493254
+        },
+        "cycle_40_half_peak_to_peak": {
+          "float_displacement": 0.4359829923414529,
+          "float_velocity": 0.6107647835112933,
+          "oscillator_displacement": 0.46378437495947966,
+          "oscillator_velocity": 0.6500845580296857
+        },
+        "overall_max_relative_difference": 0.0037615189056110954
+      }
+    }
+  },
+  "constant_frequency_domain_validation": {
+    "displacement_amplitude_m": {
+      "float": 0.4351765545875905,
+      "oscillator": 0.461884000982291
+    },
+    "velocity_amplitude_m_per_s": {
+      "float": 0.6094647646999206,
+      "oscillator": 0.6468685433756985
+    },
+    "per_state_max_relative_error": {
+      "float_displacement": 2.4810745674166492e-14,
+      "float_velocity": 2.8691129911783055e-14,
+      "oscillator_displacement": 2.5659323091219063e-14,
+      "oscillator_velocity": 2.9520427693954585e-14
+    },
+    "overall_max_absolute_error": 1.9095836023552692e-14,
+    "overall_max_relative_error": 2.9520427693954585e-14
+  }
+}

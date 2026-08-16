@@ -12,6 +12,22 @@
 \graphicspath{{../figures/final/}}
 \sisetup{detect-all}
 
+% 按完整模版格式排版附录代码
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{teal},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  framesep=3pt,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false
+}
+
 \title{波浪能装置多自由度响应与 PTO 阻尼优化}
 \tihao{A}
 \baominghao{}
@@ -748,8 +764,9 @@
 在垂荡与纵摇联合优化中，本文利用一阶模型的块对角结构将二维总功率目标严格分解，并以秩一更新得到解析最优条件。最优直线阻尼为 $59152.916113\ \mathrm{N\,s/m}$，最优旋转阻尼取上边界 $100000\ \mathrm{N\,m\,s}$，最大总平均功率为 $318.679256\ \mathrm{W}$。解析推导、穷举扫描、二维差分进化与周期时域能量闭合相互一致，使最终结果同时具备全局最优性、数值可复现性和物理自洽性。
 
 \clearpage
-\appendix
-\section{结果文件说明}
+\begin{appendices}
+
+\section{支撑材料与结果文件说明}
 
 问题一两种阻尼工况的 $898$ 个完整输出时刻已分别写入下列官方格式结果表：
 \begin{itemize}[leftmargin=3.2em]
@@ -757,5 +774,46 @@
   \item \path{result1-2.xlsx}：幂律阻尼完整结果。
 \end{itemize}
 正文表 \ref{tab:linear-results} 和表 \ref{tab:power-results} 均直接取自上述文件。问题二的最终参数、功率、周期指标和验收状态汇总于支撑材 \path{q2_final_summary.json}。问题三的 $733\times9$ 正式结果位于 \path{result3.xlsx}，正文表 \ref{tab:q3-heave-results} 和表 \ref{tab:q3-pitch-results} 的指定时刻数值均取自该工作簿；问题三最终汇总为 \path{q3_final_summary.json}。问题四无额外官方结果表，其解析最优解、独立搜索结果、周期响应及验收状态汇总于 \path{q4_final_summary.json}。
+
+代码附录按“每问主求解入口”给出，完整工程还包含以下支撑模块：
+\begin{itemize}[leftmargin=3.2em]
+  \item \path{code/common/q1_dynamics.py}：问题一统一动力学与能量计算；
+  \item \path{code/common/q2_power.py}：问题二频域功率和周期射击计算；
+  \item \path{code/common/q3_dynamics.py}：问题三和问题四的四自由度动力学；
+  \item \path{code/common/q4_power.py}：问题四频域功率与解析最优条件；
+  \item \path{code/q1}–\path{code/q4} 中的 \path{verify_*.py} 和绘图脚本：回归测试、交付核验与正式图生成。
+\end{itemize}
+
+\section{问题一核心求解代码}
+\lstinputlisting[
+  language=Python,
+  caption={问题一两类阻尼工况的时域求解与结果导出}
+]{../code/q1/solve_q1.py}
+
+\section{问题二常量阻尼优化代码}
+\lstinputlisting[
+  language=Python,
+  caption={问题二常量阻尼的全区间扫描与频域优化}
+]{../code/q2/optimize_q2_constant.py}
+
+\section{问题二幂律阻尼优化代码}
+\lstinputlisting[
+  language=Python,
+  caption={问题二幂律阻尼的边界精修与周期独立验证}
+]{../code/q2/validate_q2_nonlinear_final.py}
+
+\section{问题三核心求解与验证代码}
+\lstinputlisting[
+  language=Python,
+  caption={问题三四自由度响应、能量闭合与壳体敏感性验证}
+]{../code/q3/validate_q3_full.py}
+
+\section{问题四联合阻尼优化代码}
+\lstinputlisting[
+  language=Python,
+  caption={问题四解析优化、二维独立搜索与周期时域复核}
+]{../code/q4/optimize_q4.py}
+
+\end{appendices}
 
 \end{document}

@@ -4,6 +4,8 @@
 
 本稿件直接使用仓库中的 `templates/CUMCM2026-Complete-LaTeX/cumcmthesis.cls`，正文只引用 `../figures/final/` 中的论文正式图。
 
+论文末尾按完整模版的 `lstinputlisting` 写法附上四问核心求解代码：问题一时域求解、问题二常量与幂律阻尼优化、问题三四自由度验证以及问题四联合阻尼优化；代码直接引用 `../code/` 中的稳定脚本，不维护论文专用副本。
+
 在本目录编译：
 
 ```bash

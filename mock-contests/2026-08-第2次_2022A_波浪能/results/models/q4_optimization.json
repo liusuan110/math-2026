@@ -1,0 +1,150 @@
+{
+  "status": "passed",
+  "model": "CUMCM 2022 A, question 4",
+  "parameter_case": 4,
+  "shell_convention": "sealed_with_top",
+  "wave_period_s": 3.172364590113898,
+  "optimization_bounds": [
+    0.0,
+    100000.0
+  ],
+  "analytic_unconstrained_damping": {
+    "linear_N_s_per_m": 59152.916112966275,
+    "rotational_N_m_s": 120114.39045286643
+  },
+  "final_result": {
+    "linear_damping_N_s_per_m": 59152.916112966275,
+    "rotational_damping_N_m_s": 100000.0,
+    "heave_mean_power_W": 318.3364395916546,
+    "pitch_mean_power_W": 0.3428168749606963,
+    "maximum_total_mean_power_W": 318.6792564666153,
+    "total_energy_per_period_J": 1010.9667888185159
+  },
+  "heave": {
+    "damping": 59152.916112966275,
+    "mean_power_W": 318.3364395916546,
+    "relative_displacement_amplitude": 0.052380943982649836,
+    "relative_velocity_amplitude": 0.10374569765203626,
+    "dynamic_residual": 7.275957614183426e-12,
+    "displacement_phasor_real": [
+      -0.5433208600653197,
+      -0.5938272868328663
+    ],
+    "displacement_phasor_imag": [
+      -0.5174691982126937,
+      -0.5035816445156618
+    ]
+  },
+  "pitch": {
+    "damping": 100000.0,
+    "mean_power_W": 0.3428168749606963,
+    "relative_displacement_amplitude": 0.0013220543788482605,
+    "relative_velocity_amplitude": 0.0026184609027468646,
+    "dynamic_residual": 4.067383956680332e-12,
+    "displacement_phasor_real": [
+      -0.05454719000075872,
+      -0.05563063051665006
+    ],
+    "displacement_phasor_imag": [
+      -0.004756429735112231,
+      -0.003998812134236325
+    ]
+  },
+  "bounded_optimizer": {
+    "heave": {
+      "damping": 59152.9204596764,
+      "mean_power_W": 318.3364395916547,
+      "relative_displacement_amplitude": 0.05238094205810594,
+      "relative_velocity_amplitude": 0.10374569384028463,
+      "dynamic_residual": 2.9103830456733704e-11,
+      "displacement_phasor_real": [
+        -0.5433208669272617,
+        -0.5938272914554351
+      ],
+      "displacement_phasor_imag": [
+        -0.5174692097470975,
+        -0.503581655164862
+      ]
+    },
+    "pitch": {
+      "damping": 100000.0,
+      "mean_power_W": 0.3428168749606963,
+      "relative_displacement_amplitude": 0.0013220543788482605,
+      "relative_velocity_amplitude": 0.0026184609027468646,
+      "dynamic_residual": 4.067383956680332e-12,
+      "displacement_phasor_real": [
+        -0.05454719000075872,
+        -0.05563063051665006
+      ],
+      "displacement_phasor_imag": [
+        -0.004756429735112231,
+        -0.003998812134236325
+      ]
+    }
+  },
+  "joint_differential_evolution": {
+    "linear_damping": 59152.89507044538,
+    "rotational_damping": 99999.99994284225,
+    "mean_power_W": 318.67925646656266,
+    "evaluations": 1554
+  },
+  "periodic_time_domain_validation": {
+    "sample_count": 8001,
+    "state_closure_max_absolute": 1.7763568394002505e-15,
+    "mean_power_components_W": [
+      911.9915803671508,
+      583.5751151108027,
+      318.33643959164897,
+      9.737208789737899,
+      0.3428168749606873
+    ],
+    "total_pto_mean_power_W": 318.6792564666097,
+    "mechanical_energy_change_J": -3.637978807091713e-11,
+    "mean_energy_balance_residual_W": 5.921374501838272e-13,
+    "minimum_spring_length_m": 0.14957655794798547,
+    "maximum_spring_length_m": 0.25433844205201517,
+    "minimum_cylinder_draft_m": 1.2496957165559297,
+    "maximum_cylinder_draft_m": 2.7503248218287637,
+    "maximum_absolute_pitch_rad": 0.05577416332175143,
+    "maximum_instantaneous_linear_pto_power_W": 636.6728322508623,
+    "maximum_instantaneous_rotational_pto_power_W": 0.6856337496888928
+  },
+  "neighbor_total_powers_W": {
+    "linear_minus_1": 318.6792564310029,
+    "linear_plus_1": 318.6792564310104,
+    "rotational_minus_1": 318.6792558455503,
+    "linear_minus_10": 318.6792529053964,
+    "linear_plus_10": 318.6792529066042,
+    "rotational_minus_10": 318.6792502542451,
+    "linear_minus_100": 318.678899802587,
+    "linear_plus_100": 318.6789010064584,
+    "rotational_minus_100": 318.67919417077144,
+    "linear_minus_1000": 318.6430421550422,
+    "linear_plus_1000": 318.64424609762716,
+    "rotational_minus_1000": 318.6786161768695
+  },
+  "checks": {
+    "scan_heave_peak_near_final": true,
+    "scan_pitch_peak_at_upper_boundary": true,
+    "bounded_heave_matches_analytic": true,
+    "bounded_pitch_at_upper_boundary": true,
+    "joint_power_matches_separable_global": true,
+    "joint_linear_near_final": true,
+    "joint_rotational_at_boundary": true,
+    "all_neighbor_powers_lower": true,
+    "phasor_residuals_small": true,
+    "periodic_state_closure": true,
+    "time_frequency_power_agreement": true,
+    "time_heave_power_agreement": true,
+    "time_pitch_power_agreement": true,
+    "periodic_mechanical_energy_closure": true,
+    "periodic_energy_balance": true,
+    "instantaneous_pto_nonnegative": true,
+    "spring_length_positive": true,
+    "waterline_in_cylinder": true,
+    "small_angle_range": true
+  },
+  "passed_count": 19,
+  "total_count": 19,
+  "failed": []
+}

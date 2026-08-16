@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "checks": {
+    "summary_status_passed": true,
+    "final_result_matches_source": true,
+    "all_optimization_checks_passed": true,
+    "nine_formal_figure_files_present": true,
+    "formal_figure_hashes_match": true,
+    "formal_figure_signatures_pass": true,
+    "handoff_files_complete": true,
+    "handoff_contains_final_damping": true,
+    "handoff_contains_final_power": true,
+    "handoff_contains_global_proof": true,
+    "handoff_contains_all_q4_figures": true
+  },
+  "passed_count": 11,
+  "total_count": 11,
+  "failed": []
+}

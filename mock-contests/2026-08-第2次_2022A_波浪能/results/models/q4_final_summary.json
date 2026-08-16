@@ -1,0 +1,117 @@
+{
+  "status": "passed",
+  "model": "CUMCM 2022 A, question 4",
+  "parameter_case": 4,
+  "shell_convention": "sealed_with_top",
+  "wave_period_s": 3.172364590113898,
+  "optimization_bounds": [
+    0.0,
+    100000.0
+  ],
+  "final_result": {
+    "linear_damping_N_s_per_m": 59152.916112966275,
+    "rotational_damping_N_m_s": 100000.0,
+    "heave_mean_power_W": 318.3364395916546,
+    "pitch_mean_power_W": 0.3428168749606963,
+    "maximum_total_mean_power_W": 318.6792564666153,
+    "total_energy_per_period_J": 1010.9667888185159
+  },
+  "analytic_unconstrained_damping": {
+    "linear_N_s_per_m": 59152.916112966275,
+    "rotational_N_m_s": 120114.39045286643
+  },
+  "periodic_time_domain_validation": {
+    "sample_count": 8001,
+    "state_closure_max_absolute": 1.7763568394002505e-15,
+    "mean_power_components_W": [
+      911.9915803671508,
+      583.5751151108027,
+      318.33643959164897,
+      9.737208789737899,
+      0.3428168749606873
+    ],
+    "total_pto_mean_power_W": 318.6792564666097,
+    "mechanical_energy_change_J": -3.637978807091713e-11,
+    "mean_energy_balance_residual_W": 5.921374501838272e-13,
+    "minimum_spring_length_m": 0.14957655794798547,
+    "maximum_spring_length_m": 0.25433844205201517,
+    "minimum_cylinder_draft_m": 1.2496957165559297,
+    "maximum_cylinder_draft_m": 2.7503248218287637,
+    "maximum_absolute_pitch_rad": 0.05577416332175143,
+    "maximum_instantaneous_linear_pto_power_W": 636.6728322508623,
+    "maximum_instantaneous_rotational_pto_power_W": 0.6856337496888928
+  },
+  "joint_differential_evolution": {
+    "linear_damping": 59152.89507044538,
+    "rotational_damping": 99999.99994284225,
+    "mean_power_W": 318.67925646656266,
+    "evaluations": 1554
+  },
+  "acceptance": {
+    "passed_count": 19,
+    "total_count": 19,
+    "all_passed": true
+  },
+  "formal_figures": [
+    {
+      "base_name": "q4_optimization_curves",
+      "formats": {
+        "png": {
+          "relative_path": "figures/final/q4_optimization_curves.png",
+          "bytes": 205955,
+          "sha256": "49a33770cd31fa0aee09c4e09ba8cd7463ace43926cf720608b16bea43ee7b65"
+        },
+        "svg": {
+          "relative_path": "figures/final/q4_optimization_curves.svg",
+          "bytes": 129108,
+          "sha256": "fea116d6e51524b18bae5cd2a314775fa1eb6dc107dd0ac4d685d3b73c03b183"
+        },
+        "pdf": {
+          "relative_path": "figures/final/q4_optimization_curves.pdf",
+          "bytes": 36119,
+          "sha256": "0341b1bd6fef4ab4d2b95cdaad3922a502f81c7e5d78370f86eef7b79ad42498"
+        }
+      }
+    },
+    {
+      "base_name": "q4_total_power_surface",
+      "formats": {
+        "png": {
+          "relative_path": "figures/final/q4_total_power_surface.png",
+          "bytes": 136548,
+          "sha256": "54e9707481e7df429ae883b3e5870b11ab99d191e4b871e0c59bf954757d892c"
+        },
+        "svg": {
+          "relative_path": "figures/final/q4_total_power_surface.svg",
+          "bytes": 171013,
+          "sha256": "c35eb48f5cbe0879f0fc32a72ae076e37987a4e9ed1268cdb439c26df1b857ed"
+        },
+        "pdf": {
+          "relative_path": "figures/final/q4_total_power_surface.pdf",
+          "bytes": 52475,
+          "sha256": "2c4da5343d1bc7853619dfe99436ab07a7a7f7eb11dd6dcfe6732cc363639e12"
+        }
+      }
+    },
+    {
+      "base_name": "q4_optimal_period_response",
+      "formats": {
+        "png": {
+          "relative_path": "figures/final/q4_optimal_period_response.png",
+          "bytes": 314575,
+          "sha256": "81bdf35596076a997093342178caba3af897438e8a2e9ec2ec040e19264ab7b7"
+        },
+        "svg": {
+          "relative_path": "figures/final/q4_optimal_period_response.svg",
+          "bytes": 173220,
+          "sha256": "bfbdcdc995105a8ff5d79e34265a60eb48149becc68c247e7008fc9102e57f07"
+        },
+        "pdf": {
+          "relative_path": "figures/final/q4_optimal_period_response.pdf",
+          "bytes": 33179,
+          "sha256": "f7e5b4496178922f1704fb5fceb5de503c1ca633b125e4268adaf78318c9e6be"
+        }
+      }
+    }
+  ]
+}

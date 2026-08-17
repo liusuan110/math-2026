@@ -196,23 +196,31 @@ refs/
 
 ## 环境配置
 
-推荐使用仓库自带虚拟环境：
+推荐使用仓库自带虚拟环境。`.venv` 不进版本库，两台机器各自创建。
+
+Windows：
 
 ```powershell
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 .venv\Scripts\python.exe -m pip install -r MathModel-Figure-Toolkit\requirements.txt
 ```
 
-环境自检：
+macOS：
 
-```powershell
-.venv\Scripts\python.exe tools\verify_env.py
+```bash
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+环境自检（Windows 用 `.venv\Scripts\python.exe tools\verify_env.py`）：
+
+```bash
+.venv/bin/python tools/verify_env.py
 ```
 
 正常结果应显示：
 
 ```text
-通过 18 / 失败 0
+通过 25 / 失败 0
 ```
 
 MATLAB 路径：

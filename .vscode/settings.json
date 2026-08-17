@@ -1,6 +1,8 @@
 {
   "files.encoding": "utf8",
-  "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+  // 不写死解释器路径：Windows 的 .venv\Scripts\python.exe 和 macOS 的 .venv/bin/python
+  // 路径不同，且 .venv 已被 gitignore、每台机器各自创建。
+  // Python 扩展会自动发现工作区根目录下的 .venv，两个平台都能选中。
   "python.terminal.activateEnvironment": true,
   "jupyter.notebookFileRoot": "${workspaceFolder}",
   "terminal.integrated.env.windows": {
@@ -8,6 +10,15 @@
     "MPLBACKEND": "Agg",
     "MPLCONFIGDIR": "${workspaceFolder}\\.matplotlib-cache"
   },
+  "terminal.integrated.env.osx": {
+    "LANG": "en_US.UTF-8",
+    "LC_ALL": "en_US.UTF-8",
+    "PYTHONUTF8": "1",
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "${workspaceFolder}/.matplotlib-cache"
+  },
+  // 下面的 LaTeX 配置是 macOS 专用（绝对路径指向 /Library/TeX/texbin）。
+  // 按分工，论文编译只在 Mac 端进行；Windows 端如需编译要另配。
   "latex-workshop.latex.autoBuild.run": "onFileChange",
   "latex-workshop.latex.env": {
     "PATH": "/Library/TeX/texbin:${env:PATH}"

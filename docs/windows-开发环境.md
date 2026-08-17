@@ -22,7 +22,7 @@ D:\Python312\python.exe -m venv .venv
 ## 常用命令
 
 ```bat
-:: 环境自检：应输出 通过 18 / 失败 0
+:: 环境自检：应输出 通过 25 / 失败 0
 .venv\Scripts\python.exe tools\verify_env.py
 
 :: 跑某个模型演示

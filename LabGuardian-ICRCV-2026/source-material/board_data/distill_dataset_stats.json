@@ -1,0 +1,271 @@
+{
+  "dataset_path": "datasets\\distill\\train_sft_alpaca.jsonl",
+  "totals": {
+    "candidate_total": 4990,
+    "teacher_trainable": 3466,
+    "sft_kept": 3450,
+    "sft_skipped_after_trainable": 16,
+    "filtered_before_trainable": 1524,
+    "sft_kept_expected": 3450,
+    "matches_expected": true
+  },
+  "funnel": [
+    {
+      "stage": "candidate_questions_with_teacher_output",
+      "count": 4990,
+      "pct_of_candidates": 100.0
+    },
+    {
+      "stage": "high_purity_teacher_rows",
+      "count": 3466,
+      "pct_of_candidates": 69.46
+    },
+    {
+      "stage": "final_sft_rows",
+      "count": 3450,
+      "pct_of_candidates": 69.14
+    }
+  ],
+  "intents": [
+    {
+      "key": "diagnostic",
+      "label": "diagnostic",
+      "count": 1625,
+      "pct": 47.1
+    },
+    {
+      "key": "lab_guidance",
+      "label": "lab_guidance",
+      "count": 975,
+      "pct": 28.26
+    },
+    {
+      "key": "concept_tutor",
+      "label": "concept_tutor",
+      "count": 436,
+      "pct": 12.64
+    },
+    {
+      "key": "mixed",
+      "label": "mixed",
+      "count": 414,
+      "pct": 12.0
+    }
+  ],
+  "scenes": [
+    {
+      "key": "exp_first_order_rc",
+      "label": "RC",
+      "count": 680,
+      "pct": 19.71
+    },
+    {
+      "key": "exp_common_emitter_amplifier",
+      "label": "Common-emitter",
+      "count": 653,
+      "pct": 18.93
+    },
+    {
+      "key": "exp_differential_amplifier",
+      "label": "Differential",
+      "count": 473,
+      "pct": 13.71
+    },
+    {
+      "key": "exp_ua741_inverting_amplifier",
+      "label": "UA741 inverting",
+      "count": 619,
+      "pct": 17.94
+    },
+    {
+      "key": "exp_ua741_integrator",
+      "label": "UA741 integrator",
+      "count": 552,
+      "pct": 16.0
+    },
+    {
+      "key": "exp_ua741_summing_amplifier",
+      "label": "UA741 summing",
+      "count": 473,
+      "pct": 13.71
+    }
+  ],
+  "risk_levels": [
+    {
+      "key": "danger",
+      "label": "danger",
+      "count": 190,
+      "pct": 5.51
+    },
+    {
+      "key": "warning",
+      "label": "warning",
+      "count": 2824,
+      "pct": 81.86
+    },
+    {
+      "key": "safe",
+      "label": "safe",
+      "count": 436,
+      "pct": 12.64
+    }
+  ],
+  "top_pack_ids": [
+    {
+      "key": "pcm_unknown_v1",
+      "count": 1508,
+      "pct": 43.71
+    },
+    {
+      "key": "pcm_wiring_mismatch_v1",
+      "count": 715,
+      "pct": 20.72
+    },
+    {
+      "key": "pcm_missing_component_v1",
+      "count": 420,
+      "pct": 12.17
+    },
+    {
+      "key": "pcm_polarity_error_v1",
+      "count": 414,
+      "pct": 12.0
+    },
+    {
+      "key": "pcm_incomplete_circuit_v1",
+      "count": 203,
+      "pct": 5.88
+    },
+    {
+      "key": "pcm_short_circuit_v1",
+      "count": 190,
+      "pct": 5.51
+    }
+  ],
+  "top_allowed_tools": [
+    {
+      "key": "fault_case_lookup_tool",
+      "count": 3450,
+      "pct": 100.0
+    },
+    {
+      "key": "circuit_lookup_tool",
+      "count": 2889,
+      "pct": 83.74
+    },
+    {
+      "key": "board_schema_lookup_tool",
+      "count": 1583,
+      "pct": 45.88
+    },
+    {
+      "key": "teaching_concept_lookup_tool",
+      "count": 1411,
+      "pct": 40.9
+    },
+    {
+      "key": "safety_rule_lookup_tool",
+      "count": 1089,
+      "pct": 31.57
+    },
+    {
+      "key": "netlist_trace_tool",
+      "count": 885,
+      "pct": 25.65
+    },
+    {
+      "key": "datasheet_lookup_tool",
+      "count": 469,
+      "pct": 13.59
+    },
+    {
+      "key": "heatmap_overlay_tool",
+      "count": 114,
+      "pct": 3.3
+    }
+  ],
+  "error_codes": [
+    {
+      "key": "COMPONENT_MISSING",
+      "count": 420,
+      "pct": 12.17
+    },
+    {
+      "key": "FLOATING_PIN",
+      "count": 414,
+      "pct": 12.0
+    },
+    {
+      "key": "POLARITY_REVERSED",
+      "count": 414,
+      "pct": 12.0
+    },
+    {
+      "key": "PARAMETRIC_INVARIANT_VIOLATED",
+      "count": 373,
+      "pct": 10.81
+    },
+    {
+      "key": "NODE_MISMATCH",
+      "count": 301,
+      "pct": 8.72
+    },
+    {
+      "key": "MULTIPLE_INPUTS_SHORTED",
+      "count": 238,
+      "pct": 6.9
+    },
+    {
+      "key": "PARAMETRIC_MISMATCH",
+      "count": 204,
+      "pct": 5.91
+    },
+    {
+      "key": "MULTIPLE_DISCONNECTED_SUBGRAPHS",
+      "count": 203,
+      "pct": 5.88
+    },
+    {
+      "key": "COMPONENT_SHORTED_SAME_NET",
+      "count": 190,
+      "pct": 5.51
+    }
+  ],
+  "error_tags": [
+    {
+      "key": "missing_required_component",
+      "label": "MISSING_COMPONENT",
+      "count": 420,
+      "pct": 27.49
+    },
+    {
+      "key": "floating_connection",
+      "label": "FLOATING_CONNECTION",
+      "count": 414,
+      "pct": 27.09
+    },
+    {
+      "key": "wrong_node_connection",
+      "label": "WRONG_NODE_CONNECTION",
+      "count": 301,
+      "pct": 19.7
+    },
+    {
+      "key": "incomplete_circuit",
+      "label": "INCOMPLETE_CIRCUIT",
+      "count": 203,
+      "pct": 13.29
+    },
+    {
+      "key": "scope_ground_or_short_risk",
+      "label": "SHORT_RISK",
+      "count": 190,
+      "pct": 12.43
+    }
+  ],
+  "output_length": {
+    "min_chars": 84,
+    "mean_chars": 284.45,
+    "max_chars": 693
+  }
+}

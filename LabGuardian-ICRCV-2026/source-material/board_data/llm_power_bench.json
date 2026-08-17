@@ -1,0 +1,61 @@
+{
+  "idle": {
+    "pkg_watt": {
+      "avg": 4.3,
+      "peak": 4.39,
+      "n": 24
+    },
+    "gfx_watt": {
+      "avg": 0.0,
+      "peak": 0.0,
+      "n": 24
+    }
+  },
+  "models": [
+    {
+      "model": "student-1.5B-int4 @GPU",
+      "model_dir": "/home/bupt/models/labguardian-student-1p5-int4-ov",
+      "device": "GPU",
+      "size_mb": 941.5,
+      "load_s": 6.3,
+      "tokens_per_s": 23.1,
+      "per_call_128tok_s": 5.54,
+      "gen_calls_in_window": 1,
+      "pkg_watt": {
+        "avg": 9.17,
+        "peak": 24.23,
+        "n": 14
+      },
+      "gfx_watt": {
+        "avg": 3.08,
+        "peak": 7.81,
+        "n": 14
+      }
+    },
+    {
+      "model": "student-1.5B-int4 @CPU",
+      "model_dir": "/home/bupt/models/labguardian-student-1p5-int4-ov",
+      "device": "CPU",
+      "size_mb": 941.5,
+      "load_s": 2.2,
+      "tokens_per_s": 28.7,
+      "per_call_128tok_s": 4.46,
+      "gen_calls_in_window": 1,
+      "pkg_watt": {
+        "avg": 43.15,
+        "peak": 103.88,
+        "n": 6
+      },
+      "gfx_watt": {
+        "avg": 0.0,
+        "peak": 0.0,
+        "n": 6
+      }
+    },
+    {
+      "model": "gemma-3-4b-int4 @GPU",
+      "device": "GPU",
+      "error": "RuntimeError: Check 'num_inputs == 4 || num_inputs == 3' failed at /home/jenkins/agent/workspace/private-ci/ie/build-linux-manylinux2014/b/repos/openvino.genai/src/cpp/src/llm/pipeline_stateful.cpp:298:\nModel shoul"
+    }
+  ]
+}

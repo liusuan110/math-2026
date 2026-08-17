@@ -1,0 +1,922 @@
+{
+  "model_label": "teacher_eval_local",
+  "summary": {
+    "total_answers": 30,
+    "valid_scores": 30,
+    "parse_failures": 0,
+    "correctness_mean": 4.73,
+    "correctness_min": 3,
+    "correctness_max": 5,
+    "pedagogy_mean": 2.93,
+    "pedagogy_min": 2,
+    "pedagogy_max": 3,
+    "conciseness_mean": 4.9,
+    "conciseness_min": 4,
+    "conciseness_max": 5,
+    "format_mean": 4.7,
+    "format_min": 3,
+    "format_max": 5,
+    "groundedness_mean": 3.43,
+    "groundedness_min": 3,
+    "groundedness_max": 5,
+    "overall_mean": 3.93,
+    "overall_min": 3,
+    "overall_max": 4,
+    "pass_rate_pct": 100.0,
+    "full_score_rate_pct": 0.0,
+    "by_intent": {
+      "concept_tutor": {
+        "count": 8,
+        "mean_overall": 4.0,
+        "pass_rate_pct": 100.0
+      },
+      "diagnostic": {
+        "count": 13,
+        "mean_overall": 3.85,
+        "pass_rate_pct": 100.0
+      },
+      "lab_guidance": {
+        "count": 5,
+        "mean_overall": 4.0,
+        "pass_rate_pct": 100.0
+      },
+      "mixed": {
+        "count": 4,
+        "mean_overall": 4.0,
+        "pass_rate_pct": 100.0
+      }
+    }
+  },
+  "results": [
+    {
+      "qid": "rc_01",
+      "intent": "concept_tutor",
+      "topology": "rc_first_order",
+      "source": "eval_questions",
+      "scene_id": "exp_first_order_rc",
+      "risk_level": "safe",
+      "question": "一阶 RC 电路里，τ 为什么等于 RC？请只答 2 点：1. 物理含义 2. 为什么 Ω·F = s。",
+      "expected_points": [
+        "点出 τ=RC",
+        "说明单位 Ω·F = s",
+        "提到充放电或指数响应"
+      ],
+      "latency_s": 1.565887689590454,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. τ=RC的物理含义是电容充电至稳态电压63.2%所需时间。  \n2. 单位推导：Ω·F = (V/A)·(C/V) = C/A = s，因电流定义1A=1C/s。  \n3. 实验时测量电容电压从0升至0.632倍电源电压的时间，即为τ值。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确，结构清晰简洁，但教学引导性不足且未引用上下文或给出安全提示。",
+        "key_strength": "单位推导简洁准确，物理含义解释到位。",
+        "key_weakness": "缺乏教学引导性，直接给出答案而非启发学生思考。"
+      }
+    },
+    {
+      "qid": "rc_02",
+      "intent": "diagnostic",
+      "topology": "rc_first_order",
+      "source": "eval_questions",
+      "scene_id": "exp_first_order_rc",
+      "risk_level": "warning",
+      "question": "RC 微分电路输出几乎跟输入一样、没有尖峰。只能二选一回答：`τ 太大` 或 `τ 太小`。然后再给出一句调整方向。",
+      "expected_points": [
+        "指出 τ 相对周期过大",
+        "提到应满足 τ << T",
+        "给出调小 R 或 C 的方向"
+      ],
+      "latency_s": 0.8052003383636475,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. τ 太大  \n2. 因为 τ 远大于输入周期 T，电路失去微分特性，输出接近输入。  \n3. 减小 R 或减小 C，使 τ 下降，满足 τ << T。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 4,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确，结构清晰简洁，但教学性偏解释而非引导，且未明确引用上下文中的具体参数。",
+        "key_strength": "回答精准、无冗余，直接命中问题核心并给出可操作调整方向。",
+        "key_weakness": "缺乏启发式引导，直接给出结论，教学互动感不足。"
+      }
+    },
+    {
+      "qid": "rc_03",
+      "intent": "lab_guidance",
+      "topology": "rc_first_order",
+      "source": "eval_questions",
+      "scene_id": "exp_first_order_rc",
+      "risk_level": "warning",
+      "question": "我做一阶 RC 实验，仪器有信号发生器、示波器、数字万用表。我应该按什么顺序连线和测量？",
+      "expected_points": [
+        "先测元件标称值",
+        "先接输入再接双通道示波器",
+        "提到先低频后高频或探头衰减"
+      ],
+      "latency_s": 1.3900337219238281,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 先测电阻电容标称值，再连接电路。\n2. 万用表确认元件值准确，避免误差影响实验结果。\n3. 信号源接RC输入，示波器CH1测输入、CH2测输出，先低频后高频观察波形。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁清晰，但缺乏引导性和安全提醒，教学性一般。",
+        "key_strength": "步骤明确、逻辑清晰，直接给出了正确的操作顺序。",
+        "key_weakness": "缺少对实验原理的启发式引导以及断电、探头衰减等安全与操作细节提醒。"
+      }
+    },
+    {
+      "qid": "ce_01",
+      "intent": "concept_tutor",
+      "topology": "common_emitter",
+      "source": "eval_questions",
+      "scene_id": "exp_common_emitter_amplifier",
+      "risk_level": "safe",
+      "question": "共射放大器里 C_E 的作用是什么？去掉后最明显的两个变化是什么？请只答 3 点。",
+      "expected_points": [
+        "说明 C_E 旁路 R_E 的交流作用",
+        "指出去掉后增益下降",
+        "提到线性度变好或更稳定"
+      ],
+      "latency_s": 1.0210037231445312,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. C_E 旁路 R_E 的交流通路，避免负反馈导致增益下降。\n2. 去掉后增益从约100倍降至约10倍，但线性度提升。\n3. 若需高增益则保留C_E，若需低失真则去掉C_E。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但教学引导性不足，且未引用上下文或给出安全提示。",
+        "key_strength": "回答精准、无冗余，三点内容完全覆盖核心要点。",
+        "key_weakness": "缺乏教学引导和上下文引用，更像直接陈述而非启发学生思考。"
+      }
+    },
+    {
+      "qid": "ce_02",
+      "intent": "diagnostic",
+      "topology": "common_emitter",
+      "source": "eval_questions",
+      "scene_id": "exp_common_emitter_amplifier",
+      "risk_level": "warning",
+      "question": "我搭的共射放大器，输入 10mV 正弦波，输出却几乎是 0。三极管 V_CE 测得是 11V（VCC=12V），是什么问题？",
+      "expected_points": [
+        "识别 V_CE≈VCC 为截止",
+        "优先检查基极偏置",
+        "提到 V_B 或 V_BE 应接近导通值"
+      ],
+      "latency_s": 1.335599660873413,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 三极管处于截止区，无静态电流。\n2. 基极电压V_B可能低于0.7V，或BE结开路、偏置电阻异常。\n3. 用万用表测V_B是否约0.7V，检查R_B1/R_B2阻值及NPN/PNP极性。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 4,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但教学引导性不足，缺少安全提醒。",
+        "key_strength": "诊断精准，直接点出截止区及基极偏置问题，逻辑清晰。",
+        "key_weakness": "以直接给出结论为主，缺乏启发学生自主排查的引导过程。"
+      }
+    },
+    {
+      "qid": "ce_03",
+      "intent": "lab_guidance",
+      "topology": "common_emitter",
+      "source": "eval_questions",
+      "scene_id": "exp_common_emitter_amplifier",
+      "risk_level": "warning",
+      "question": "做共射放大器实验，万用表先测哪几个直流电压可以快速判断静态工作点是否正常？",
+      "expected_points": [
+        "先量 V_B、V_E、V_C",
+        "提到 V_CE 应接近 VCC/2",
+        "指出截止/饱和两种异常"
+      ],
+      "latency_s": 1.1759321689605713,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 先测V_B、V_E和V_C三个直流电压。\n2. 通过V_CE = V_C - V_E是否接近VCC/2，可快速判断三极管是否在放大区中点。\n3. 若V_CE接近0或VCC，说明偏置错误，需调整电阻。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁清晰，但缺乏引导性和安全提醒，未引用上下文。",
+        "key_strength": "回答精准、无冗余，直接给出关键测量点和判断依据。",
+        "key_weakness": "缺少教学引导（如追问或启发）以及安全操作提示。"
+      }
+    },
+    {
+      "qid": "ce_04",
+      "intent": "mixed",
+      "topology": "common_emitter",
+      "source": "eval_questions",
+      "scene_id": "exp_common_emitter_amplifier",
+      "risk_level": "warning",
+      "question": "我的共射放大器输出失真严重（顶部削平），是什么原因？应该怎么调？",
+      "expected_points": [
+        "识别顶部削平与偏置或输入过大有关",
+        "优先检查静态工作点",
+        "给出减小输入或调整偏置的办法"
+      ],
+      "latency_s": 1.2200920581817627,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 结论：这是输出正半周饱和失真。\n2. 原因：静态工作点偏VCC太近、输入信号过大或V_CE不在VCC/2。\n3. 操作建议：减小输入幅度；调整R_B1使V_C落在VCC/2；或适当减小R_C。",
+      "auto_scores": {
+        "correctness": 4,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 4,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实基本正确，但将顶部削平误判为饱和失真（应为截止失真），教学上以解释为主缺乏引导，简洁性优秀。",
+        "key_strength": "回答结构清晰，直接给出了原因和操作建议，信息密度高。",
+        "key_weakness": "将顶部削平错误地归为饱和失真，需纠正为截止失真，并补充安全提醒或上下文引用。"
+      }
+    },
+    {
+      "qid": "diff_01",
+      "intent": "concept_tutor",
+      "topology": "differential_amplifier",
+      "source": "eval_questions",
+      "scene_id": "exp_differential_amplifier",
+      "risk_level": "safe",
+      "question": "差模增益 A_d、共模增益 A_c、CMRR 分别表示什么？请各用一句话回答。",
+      "expected_points": [
+        "区分差模与共模",
+        "解释 A_d 和 A_c",
+        "说明高 CMRR 用于抑制共模干扰"
+      ],
+      "latency_s": 1.6827812194824219,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 差模增益A_d是差分放大器对差模信号的放大倍数，共模增益A_c是对共模信号的放大倍数，CMRR是差模增益与共模增益的比值（以dB表示）。\n2. 高CMRR意味着放大器能有效放大有用差模信号，同时抑制共模干扰（如电源噪声）。\n3. 设计时应提高A_d并降低A_c，以提升CMRR，增强抗干扰能力。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁清晰，但缺乏引导性和对上下文的引用。",
+        "key_strength": "定义准确、逻辑清晰，三句话分别对应三个概念，信息密度高。",
+        "key_weakness": "教学性不足，直接给出结论而非启发学生思考，且未引用任何实验上下文或安全提醒。"
+      }
+    },
+    {
+      "qid": "diff_02",
+      "intent": "diagnostic",
+      "topology": "differential_amplifier",
+      "source": "eval_questions",
+      "scene_id": "exp_differential_amplifier",
+      "risk_level": "warning",
+      "question": "我做差分对，两路相同输入信号，本应输出 0，但实际测出来有几十 mV 偏移。问题在哪？",
+      "expected_points": [
+        "指出输出偏移与失配有关",
+        "提到电阻或管子不匹配",
+        "提到尾电流源不理想会影响 CMRR"
+      ],
+      "latency_s": 1.0819334983825684,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 结论：差分对存在失配，导致共模输入下输出非零。  \n2. 原因：两个集电极电阻阻值不匹配，或三极管β不一致，或尾电流源不理想。  \n3. 操作建议：选用配对管，并用恒流源替代单电阻作为尾电流源。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但缺乏引导性和对上下文的明确引用。",
+        "key_strength": "回答精准、结构清晰，直接命中失配、电阻/β不匹配、尾电流源不理想三个核心原因。",
+        "key_weakness": "教学性不足，直接给出结论和操作建议，没有引导学生自己分析或思考验证方法。"
+      }
+    },
+    {
+      "qid": "diff_03",
+      "intent": "lab_guidance",
+      "topology": "differential_amplifier",
+      "source": "eval_questions",
+      "scene_id": "exp_differential_amplifier",
+      "risk_level": "warning",
+      "question": "差分放大器实验里我有两台信号源，怎么生成差模信号？怎么生成共模信号？",
+      "expected_points": [
+        "说明差模要反相信号",
+        "说明共模要同相同幅",
+        "提到 A_d 或 A_c 的测法"
+      ],
+      "latency_s": 1.1540443897247314,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 差模信号：将两台信号源反相连接，一路接+V_in，另一路接-V_in或反相输出端口。\n2. 共模信号：将同一路信号源同时接两个输入端，并串联相同电阻隔离，确保同相同幅。\n3. 操作建议：测增益时，差模用V_out/V_id，共模用V_out/V_ic。",
+      "auto_scores": {
+        "correctness": 4,
+        "pedagogy": 3,
+        "conciseness": 4,
+        "format": 4,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实基本正确，但共模信号生成描述不够精确（未强调两信号源同幅同相），教学引导性偏弱，安全提示缺失。",
+        "key_strength": "清晰区分了差模与共模信号的连接方式，并给出了增益计算公式。",
+        "key_weakness": "共模信号生成方法描述不够严谨，且未提及实验中的安全注意事项（如信号源共地问题）。"
+      }
+    },
+    {
+      "qid": "ua_inv_01",
+      "intent": "concept_tutor",
+      "topology": "ua741_inverting",
+      "source": "eval_questions",
+      "scene_id": "exp_ua741_inverting_amplifier",
+      "risk_level": "safe",
+      "question": "UA741 反相放大器里，负号表示什么？请直接写出虚地条件下的关键等式 `(Vin-0)/Rin=(0-Vout)/Rf` 和结论 `Av=-Rf/Rin`。",
+      "expected_points": [
+        "解释负号表示反相",
+        "提到虚短或虚地",
+        "给出 (Vin-0)/Rin=(0-Vout)/Rf 或 Av=-Rf/Rin"
+      ],
+      "latency_s": 1.4212677478790283,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 结论：负号表示输出与输入反相，即180°相移。  \n2. 原因：由虚地条件推导出等式(Vin-0)/Rin=(0-Vout)/Rf，解得Av=-Rf/Rin。  \n3. 操作建议：设计电路时注意输入输出相位关系，确保反馈网络正确连接。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁清晰，但教学引导性不足且未明确引用上下文或给出安全提醒。",
+        "key_strength": "回答高度精炼，直接命中核心结论与推导，无冗余信息。",
+        "key_weakness": "缺乏启发式引导，直接给出答案，且未提及任何安全操作或实验注意事项。"
+      }
+    },
+    {
+      "qid": "ua_inv_02",
+      "intent": "diagnostic",
+      "topology": "ua741_inverting",
+      "source": "eval_questions",
+      "scene_id": "exp_ua741_inverting_amplifier",
+      "risk_level": "warning",
+      "question": "我搭 UA741 反相放大器，期望增益 -10，但实测输出是 0V 不动。怎么排查？",
+      "expected_points": [
+        "先查电源脚 pin7/pin4",
+        "检查 V+ 是否接地",
+        "检查 R_f 是否从输出回到反相端"
+      ],
+      "latency_s": 1.4909672737121582,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 结论：电源或接地问题导致无输出。\n2. 原因：UA741的pin7和pin4未正确供电，或pin3未接地，使运放无法工作。\n3. 操作建议：用万用表测pin7对地+15V、pin4对地-15V，并确认pin3直接连GND。",
+      "auto_scores": {
+        "correctness": 4,
+        "pedagogy": 2,
+        "conciseness": 4,
+        "format": 3,
+        "groundedness": 3,
+        "overall": 3,
+        "brief_reason": "技术事实基本正确，但教学性不足（直接给结论而非引导排查），且未引用上下文中的反馈电阻检查。",
+        "key_strength": "准确指出了电源和接地这两个最关键的排查点。",
+        "key_weakness": "缺乏教学引导，直接给出结论而非启发学生自己排查。"
+      }
+    },
+    {
+      "qid": "ua_inv_03",
+      "intent": "lab_guidance",
+      "topology": "ua741_inverting",
+      "source": "eval_questions",
+      "scene_id": "exp_ua741_inverting_amplifier",
+      "risk_level": "warning",
+      "question": "做 UA741 反相放大器，怎样选 R_in 和 R_f 才合理？是不是越大越好？",
+      "expected_points": [
+        "指出电阻不能一味做大",
+        "给出 R_in 常用范围",
+        "提到偏置电流补偿或 V+ 端补偿电阻"
+      ],
+      "latency_s": 1.224372148513794,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 不是越大越好，R_in和R_f需在合理范围内选择。  \n2. R_in太小会过载信号源，太大则输入偏置电流引入误差。  \n3. 建议R_in取1kΩ~100kΩ（UA741典型10kΩ），R_f按增益公式计算，并在同相端加补偿电阻。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 4,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实准确且简洁，但教学引导性不足，安全提示和上下文引用略欠缺。",
+        "key_strength": "回答精准、无冗余，直接点出核心问题并给出具体数值范围。",
+        "key_weakness": "缺乏启发式引导和互动感，未提及断电等安全操作提醒。"
+      }
+    },
+    {
+      "qid": "ua_sum_01",
+      "intent": "concept_tutor",
+      "topology": "ua741_summing",
+      "source": "eval_questions",
+      "scene_id": "exp_ua741_summing_amplifier",
+      "risk_level": "safe",
+      "question": "为什么加法器更常用反相结构？请只答 2 到 3 点，并顺带说明同相结构哪里更难调。",
+      "expected_points": [
+        "说明反相结构靠虚地叠加电流",
+        "指出各输入通道互不影响",
+        "说明同相结构耦合更强更难调"
+      ],
+      "latency_s": 1.225517749786377,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 反相加法器更常用，因其各输入通道互不影响，系数可独立设置。  \n2. 同相加法器各通道阻抗互相耦合，公式复杂，调试困难。  \n3. 设计时优先选反相结构，避免同相结构的耦合问题。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但缺乏引导性和对上下文的明确引用。",
+        "key_strength": "回答高度精炼，直接命中核心要点，无冗余信息。",
+        "key_weakness": "教学性不足，直接给出结论而非启发学生思考，且未引用学生问题中的具体上下文。"
+      }
+    },
+    {
+      "qid": "ua_sum_02",
+      "intent": "diagnostic",
+      "topology": "ua741_summing",
+      "source": "eval_questions",
+      "scene_id": "exp_ua741_summing_amplifier",
+      "risk_level": "warning",
+      "question": "我搭了 3 路输入的加法器 (V_out = -(V1+V2+V3))，但是只在 V1 输入信号，V_out 振幅几乎是 V1 的一半，不是 1 倍，为什么？",
+      "expected_points": [
+        "先查 R_f 是否等于各输入电阻",
+        "指出未用输入不能悬空",
+        "提到未用通道要接地"
+      ],
+      "latency_s": 1.863081455230713,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 结论：输出振幅减半是因为反馈电阻与输入电阻不匹配，导致增益为-1/2而非-1。  \n2. 原因：若R_f等于各R_in，则V_out=-V1；但若R_f等于R1而R2、R3并联，等效输入电阻减半，增益变为-1/2。  \n3. 操作建议：检查R_f是否等于R1、R2、R3的阻值，并确保未用的V2、V3输入端短接到GND。",
+      "auto_scores": {
+        "correctness": 3,
+        "pedagogy": 2,
+        "conciseness": 4,
+        "format": 4,
+        "groundedness": 3,
+        "overall": 3,
+        "brief_reason": "技术事实基本正确，但未指出未用输入悬空才是核心问题，且教学上直接给结论缺乏引导。",
+        "key_strength": "结构清晰，分点明确，便于学生快速抓住要点。",
+        "key_weakness": "教学性不足，直接给出结论和原因，没有引导学生自己排查问题。"
+      }
+    },
+    {
+      "qid": "ua_int_01",
+      "intent": "concept_tutor",
+      "topology": "ua741_integrator",
+      "source": "eval_questions",
+      "scene_id": "exp_ua741_integrator",
+      "risk_level": "safe",
+      "question": "积分器里反馈电容 C 和并联 R_leak 各起什么作用？请只答 3 点。",
+      "expected_points": [
+        "写出积分关系或 1/RC",
+        "指出 C 是反馈元件",
+        "说明 R_leak 用于泄放偏置电流防漂移"
+      ],
+      "latency_s": 1.2148356437683105,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 反馈电容C实现积分运算，将输入电流转换为输出电压随时间的变化。\n2. 并联电阻R_leak提供直流通路，防止输入偏置电流持续给C充电导致输出漂移饱和。\n3. 选择R_leak时需远大于最低工作频率下的电容阻抗，确保对积分功能影响最小。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但缺乏引导性和对上下文的明确引用。",
+        "key_strength": "三点回答精准、无冗余，信息密度高。",
+        "key_weakness": "教学性不足，直接给出结论，未体现启发式引导过程。"
+      }
+    },
+    {
+      "qid": "ua_int_02",
+      "intent": "diagnostic",
+      "topology": "ua741_integrator",
+      "source": "eval_questions",
+      "scene_id": "exp_ua741_integrator",
+      "risk_level": "warning",
+      "question": "我做积分器，输入 1kHz 方波，期望输出三角波，但实际看到的是一个慢慢往上漂、最后撞到 +VCC 的斜坡。问题在哪？",
+      "expected_points": [
+        "识别为积分器漂移到饱和",
+        "优先检查 R_leak",
+        "提到电容漏电或器件问题"
+      ],
+      "latency_s": 1.4857633113861084,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 结论：积分器输出漂移到饱和，原因是输入失调与偏置电流持续积分。\n2. 原因：未接泄放电阻R_leak，或R_leak阻值过大，或积分电容漏电。\n3. 操作建议：在电容两端并联R_leak=100kΩ（若R=10kΩ），并改用陶瓷或聚酯电容。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 4,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但教学性偏解释而非引导，安全提示略欠缺。",
+        "key_strength": "诊断精准，直接点出核心原因并给出具体参数建议。",
+        "key_weakness": "缺乏启发式引导，直接给出结论而非引导学生自己发现。"
+      }
+    },
+    {
+      "qid": "mixed_01",
+      "intent": "mixed",
+      "topology": "common_emitter",
+      "source": "eval_questions",
+      "scene_id": "exp_common_emitter_amplifier",
+      "risk_level": "warning",
+      "question": "共射放大器里 C_in 太小会出现什么现象？选 C_in 时最少要看哪两个量？",
+      "expected_points": [
+        "指出 C_in 太小会抬高低频截止",
+        "写出高通截止频率公式或提到截止频率",
+        "提到阻抗和目标频率"
+      ],
+      "latency_s": 1.2244575023651123,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 低频信号被衰减，输出波形变“瘦”或失真。  \n2. 因C_in与输入阻抗构成高通滤波器，太小会抬高下限截止频率。  \n3. 选C_in时最少看输入阻抗和所需下限截止频率。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 4,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但教学引导性不足，且未引用上下文或给出安全提示。",
+        "key_strength": "回答精准、无冗余，直接命中核心知识点。",
+        "key_weakness": "缺乏启发式引导和上下文引用，更像标准答案而非教学对话。"
+      }
+    },
+    {
+      "qid": "mixed_02",
+      "intent": "diagnostic",
+      "topology": "ua741_inverting",
+      "source": "eval_questions",
+      "scene_id": "exp_ua741_inverting_amplifier",
+      "risk_level": "warning",
+      "question": "UA741 反相放大器输出始终在 +12V，跟着输入完全不变。万用表测 pin6 = +VCC，怎么回事？",
+      "expected_points": [
+        "识别输出钉在 +VCC 为饱和",
+        "优先查反馈是否开路或 V+ 是否错误",
+        "提到输入偏置或极性问题"
+      ],
+      "latency_s": 1.4627900123596191,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 结论：运放输出正向饱和，钉在+12V。\n2. 原因：反馈环路开路（R_f未接好或接错引脚），或V+端电压异常（如悬空）。\n3. 操作建议：检查反馈电阻R_f连接，确保从pin6到pin2；用万用表测pin7（+VCC）和pin4（-VCC）电压是否正常。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 4,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但教学引导性不足，直接给出结论而非启发学生思考。",
+        "key_strength": "诊断精准，直接点出饱和原因并给出具体检查步骤，实用性强。",
+        "key_weakness": "缺乏教学互动，未引导学生自己排查问题，而是直接给出答案。"
+      }
+    },
+    {
+      "qid": "p0_rc_fault_01",
+      "intent": "diagnostic",
+      "topology": "rc_first_order",
+      "source": "bare_vs_contract",
+      "scene_id": "exp_first_order_rc",
+      "risk_level": "warning",
+      "question": "我搭的一阶 RC 低通滤波器输出端几乎没有信号，怎么排查？",
+      "expected_points": [
+        "先断电",
+        "优先检查 C1 悬空或接触不良",
+        "提到节点连通或接地参考"
+      ],
+      "latency_s": 1.3294479846954346,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 输出端信号缺失，可能是C1悬空或输出节点接错。\n2. 错误码提示FLOATING_PIN，说明C1未正确接入电路。\n3. 先断电，检查C1两端孔位是否插紧，再确认输出端与地是否共参考节点。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 5,
+        "overall": 4,
+        "brief_reason": "技术事实准确、简洁且紧扣上下文，但教学性偏解释而非引导。",
+        "key_strength": "精准引用错误码FLOATING_PIN，结合具体排查步骤，接地气且安全提醒到位。",
+        "key_weakness": "直接给出排查步骤，缺乏启发学生自主思考的引导过程。"
+      }
+    },
+    {
+      "qid": "p0_ce_fault_01",
+      "intent": "mixed",
+      "topology": "common_emitter",
+      "source": "bare_vs_contract",
+      "scene_id": "exp_common_emitter_amplifier",
+      "risk_level": "danger",
+      "question": "这个共射放大电路现在危险吗？我该怎么处理？",
+      "expected_points": [
+        "必须先断电",
+        "指出存在短路或同网短接风险",
+        "给出检查电阻和供电节点的步骤"
+      ],
+      "latency_s": 1.4012417793273926,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 电路存在危险，需立即处理。  \n2. 错误码显示R2短路到同一网络，可能引发过热或损坏。  \n3. 先断电，检查R2是否短路、误接电源轨或反馈电阻错连，带电排查禁止。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 5,
+        "overall": 4,
+        "brief_reason": "技术事实准确、简洁且紧扣上下文，但教学引导性不足，直接给出结论而非启发学生思考。",
+        "key_strength": "回答高度精炼，每一条都是必要且准确的操作指令。",
+        "key_weakness": "缺乏教学互动感，未引导学生自己分析危险原因或排查步骤。"
+      }
+    },
+    {
+      "qid": "p0_diff_fault_01",
+      "intent": "diagnostic",
+      "topology": "differential_amplifier",
+      "source": "bare_vs_contract",
+      "scene_id": "exp_differential_amplifier",
+      "risk_level": "warning",
+      "question": "差分放大器两路输出不对称，可能是哪里接错了？",
+      "expected_points": [
+        "指出节点接法不一致",
+        "提到两支路静态工作点或集电极电压",
+        "提到负载失配或尾支路问题"
+      ],
+      "latency_s": 1.1161344051361084,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 检查Q2两侧节点接法是否一致。\n2. 集电极负载电阻不匹配会导致静态工作点偏移。\n3. 优先测量两支路静态工作点电压，对比差异定位异常。",
+      "auto_scores": {
+        "correctness": 4,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实基本正确，但未提及尾支路问题，教学上偏解释而非引导，且未引用上下文或给出安全提醒。",
+        "key_strength": "回答非常简洁，三点直接命中核心检查方向，信息密度高。",
+        "key_weakness": "缺乏教学引导性和安全提醒，且未完全覆盖预期要点中的尾支路问题。"
+      }
+    },
+    {
+      "qid": "p0_uainv_fault_01",
+      "intent": "diagnostic",
+      "topology": "ua741_inverting",
+      "source": "bare_vs_contract",
+      "scene_id": "exp_ua741_inverting_amplifier",
+      "risk_level": "warning",
+      "question": "我搭的 UA741 反相放大器输出不对，怎么排查？",
+      "expected_points": [
+        "先断电",
+        "优先检查 C1 极性",
+        "提到 pin2、pin6 或反馈回路"
+      ],
+      "latency_s": 1.2348511219024658,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 优先检查输入耦合电容C1的极性是否接反，这是常见错误。\n2. 极性反接会导致信号通路异常，输出失真或偏置错误。\n3. 断电后，用万用表确认C1正极接信号源、负极接pin2，并核对供电±15V极性。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 4,
+        "groundedness": 4,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但教学引导性不足，直接给出排查步骤而非启发学生思考。",
+        "key_strength": "准确聚焦于最关键的常见错误（C1极性），并给出具体操作步骤。",
+        "key_weakness": "缺乏启发式引导，直接给出答案，未让学生自己发现排查逻辑。"
+      }
+    },
+    {
+      "qid": "p0_uasum_fault_01",
+      "intent": "diagnostic",
+      "topology": "ua741_summing",
+      "source": "bare_vs_contract",
+      "scene_id": "exp_ua741_summing_amplifier",
+      "risk_level": "warning",
+      "question": "反相加法器好像少加了一路输入，怎么定位？",
+      "expected_points": [
+        "优先检查对应输入电阻是否缺失或开路",
+        "提到阻值与焊点",
+        "指出该路不参与求和的原因"
+      ],
+      "latency_s": 1.0064160823822021,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 检查R2是否缺失或开路。\n2. 缺失或开路的R2会导致该路输入信号无法参与求和。\n3. 核对R2的阻值是否正确，并检查焊点是否可靠连接。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 4,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确，结构清晰简洁，但教学性偏解释而非引导，且未明确引用上下文或给出安全提醒。",
+        "key_strength": "回答精准、步骤明确，直接命中问题核心。",
+        "key_weakness": "缺乏启发式引导，更像操作清单而非教学对话。"
+      }
+    },
+    {
+      "qid": "p0_uaint_fault_01",
+      "intent": "diagnostic",
+      "topology": "ua741_integrator",
+      "source": "bare_vs_contract",
+      "scene_id": "exp_ua741_integrator",
+      "risk_level": "warning",
+      "question": "积分器输出一直往电源轨饱和，不积分，怎么查？",
+      "expected_points": [
+        "指出积分反馈支路接错或开路",
+        "提到供电或极性检查",
+        "提到 R_f/C_f/R_leak 或平衡支路"
+      ],
+      "latency_s": 1.3506848812103271,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 检查积分反馈支路是否接错，尤其是Cf是否开路或极性反接。\n2. 输入回路开路或运放供电异常会导致饱和，需确认信号源和电源连接。\n3. 复核R_f、C_f及同相端平衡电阻，确保参数匹配且无虚焊。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但缺乏引导性和安全提醒，教学性一般。",
+        "key_strength": "回答精准、无冗余，直接命中所有关键检查点。",
+        "key_weakness": "未引用学生上下文，也未给出断电等安全提示，教学互动感不足。"
+      }
+    },
+    {
+      "qid": "p0_rc_04",
+      "intent": "diagnostic",
+      "topology": "rc_first_order",
+      "source": "custom_extension",
+      "scene_id": "exp_first_order_rc",
+      "risk_level": "warning",
+      "question": "RC 低通实验里我测到截止频率明显比理论值高，最先怀疑什么？",
+      "expected_points": [
+        "先核对 R、C 实测值",
+        "提到负载或探头影响",
+        "检查输出测点是否接对"
+      ],
+      "latency_s": 1.179905891418457,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 最先怀疑电阻或电容实际值偏小。\n2. 元件标称值有误差或老化会导致实际RC乘积变小，使截止频率升高。\n3. 用万用表实测R和C值，并与理论值对比确认。",
+      "auto_scores": {
+        "correctness": 4,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 4,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实基本正确，但未提及探头负载等常见影响因素，教学引导偏直接，缺少安全提醒。",
+        "key_strength": "回答简洁聚焦，直接点出最可能的元件偏差原因并给出验证方法。",
+        "key_weakness": "未考虑探头电容、输出测点等常见实验干扰因素，教学上缺乏启发性和安全提示。"
+      }
+    },
+    {
+      "qid": "p0_diff_04",
+      "intent": "mixed",
+      "topology": "differential_amplifier",
+      "source": "custom_extension",
+      "scene_id": "exp_differential_amplifier",
+      "risk_level": "warning",
+      "question": "差分放大器一边集电极电压高、一边低，这说明什么？应该按什么顺序查？",
+      "expected_points": [
+        "判断为尾电流分配或器件失配问题",
+        "先查电阻匹配",
+        "再查三极管与尾支路"
+      ],
+      "latency_s": 1.1847813129425049,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 两侧集电极静态电压不对称，说明尾电流分配失衡。\n2. 优先排查两侧集电极电阻值是否匹配，再检查两个三极管是否装反或失配。\n3. 最后检查尾支路或恒流源是否正常，先测静态电压，再看交流波形。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 4,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确，结构清晰简洁，但教学性偏解释而非引导，且未明确引用上下文或给出安全提醒。",
+        "key_strength": "排查步骤逻辑清晰、顺序合理，直接切中问题核心。",
+        "key_weakness": "缺乏启发式引导，直接给出结论而非引导学生自己思考排查顺序。"
+      }
+    },
+    {
+      "qid": "p0_uasum_03",
+      "intent": "concept_tutor",
+      "topology": "ua741_summing",
+      "source": "custom_extension",
+      "scene_id": "exp_ua741_summing_amplifier",
+      "risk_level": "safe",
+      "question": "反相加法器里不用的输入端为什么不能悬空？标准处理方式是什么？请只答 2 到 3 点。",
+      "expected_points": [
+        "指出悬空会引入噪声或偏置",
+        "说明未用输入应经电阻接地",
+        "提到保持虚地条件或阻抗一致"
+      ],
+      "latency_s": 1.1633937358856201,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 未用输入端悬空会通过输入电阻引入噪声与不确定偏置，破坏求和结果。\n2. 悬空导致虚地节点条件失衡，影响电路精度。\n3. 标准处理方式：通过与其他输入同量级的电阻接地，保持通道阻抗一致。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 4,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但教学性偏解释而非引导，安全提示略欠缺。",
+        "key_strength": "回答精准、无冗余，三点内容直击核心。",
+        "key_weakness": "缺乏启发式引导，直接给出结论，未体现教学互动。"
+      }
+    },
+    {
+      "qid": "p0_uaint_03",
+      "intent": "concept_tutor",
+      "topology": "ua741_integrator",
+      "source": "custom_extension",
+      "scene_id": "exp_ua741_integrator",
+      "risk_level": "safe",
+      "question": "积分器输入正弦波时，输出为什么会有 90 度相移？在什么条件下这个结论会失效？请只答 3 点。",
+      "expected_points": [
+        "指出积分传递函数带来 90 度相移",
+        "提到频率太低或 R_leak 影响会破坏近似",
+        "提到带宽或饱和导致偏离"
+      ],
+      "latency_s": 2.294188976287842,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 输出相位滞后输入90度，这是理想积分器传递函数-1/(jωRC)的固有特性。\n2. 频率太低时，泄漏电阻R_leak影响显著，或运放带宽不足，导致积分近似失效。\n3. 操作建议：确保输入频率适中，并检查输出是否在线性工作区，避免饱和。",
+      "auto_scores": {
+        "correctness": 5,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 4,
+        "overall": 4,
+        "brief_reason": "技术事实完全正确且简洁，但教学引导性不足，直接给出了结论而非启发学生思考。",
+        "key_strength": "回答精准、无冗余，三点内容完全覆盖了核心要点。",
+        "key_weakness": "缺乏教学互动感，没有引导学生自己推导或发现相移原因。"
+      }
+    },
+    {
+      "qid": "p0_uaint_04",
+      "intent": "lab_guidance",
+      "topology": "ua741_integrator",
+      "source": "custom_extension",
+      "scene_id": "exp_ua741_integrator",
+      "risk_level": "warning",
+      "question": "做 UA741 积分器实验时，先量哪几个直流点，才能最快判断它为什么老是漂移？",
+      "expected_points": [
+        "先量供电脚和 pin2/pin3/pin6",
+        "判断虚地是否成立",
+        "把漂移归因到偏置或泄放支路异常"
+      ],
+      "latency_s": 1.2653729915618896,
+      "prompt_instruction": "请只输出答案正文；控制在3点以内作答，每点1到2句话；先给结论，再给原因或操作；不要重复题干和上下文；不要输出引用依据、证据引用、安全提示或额外说明。\n请严格按3行作答：1.结论 2.原因 3.操作建议；总字数不超过120字；不要重复题干；不要展开额外背景。",
+      "trimmed_to_complete_sentence": false,
+      "response": "1. 先测 pin7/pin4 供电是否正常，再测 pin2 是否接近虚地。\n2. 若 pin2 偏离虚地，通常因偏置或泄放电阻异常导致漂移。\n3. 断电后检查反馈电阻与电容连接，并确认泄放电阻值正确。",
+      "auto_scores": {
+        "correctness": 4,
+        "pedagogy": 3,
+        "conciseness": 5,
+        "format": 5,
+        "groundedness": 3,
+        "overall": 4,
+        "brief_reason": "技术事实基本正确，但缺少对pin3和pin6的测量建议，且未引用上下文或给出安全提醒。",
+        "key_strength": "步骤清晰、简洁，直接给出了关键测量点。",
+        "key_weakness": "未提及测量pin3和pin6，且缺少断电操作的安全提示。"
+      }
+    }
+  ]
+}

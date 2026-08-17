@@ -1,0 +1,46 @@
+{
+  "deepseek_path": "datasets\\distill\\teacher_deepseek_v3.jsonl",
+  "qwen_path": "datasets\\distill\\teacher_qwen3_32b.jsonl",
+  "teachers": {
+    "deepseek": {
+      "total": 4990,
+      "ok": 4978,
+      "cited": 3466,
+      "usable": 3466,
+      "downgraded": 1512,
+      "ok_rate_pct": 99.76,
+      "citation_rate_pct": 69.46,
+      "usable_rate_pct": 69.46,
+      "downgraded_rate_pct": 30.3,
+      "avg_latency_ms": 2555.2
+    },
+    "qwen": {
+      "total": 546,
+      "ok": 452,
+      "cited": 310,
+      "usable": 310,
+      "downgraded": 142,
+      "ok_rate_pct": 82.78,
+      "citation_rate_pct": 56.78,
+      "usable_rate_pct": 56.78,
+      "downgraded_rate_pct": 26.01,
+      "avg_latency_ms": 7152.95
+    }
+  },
+  "overlap": {
+    "total": 546,
+    "both_usable": 230,
+    "deepseek_only_usable": 140,
+    "qwen_only_usable": 80,
+    "neither_usable": 96,
+    "both_usable_rate_pct": 42.12,
+    "deepseek_only_rate_pct": 25.64,
+    "qwen_only_rate_pct": 14.65,
+    "neither_rate_pct": 17.58,
+    "deepseek_usable_rate_pct": 67.77,
+    "qwen_usable_rate_pct": 56.78,
+    "pooled_usable_rate_pct": 82.42,
+    "pooled_gain_vs_deepseek_pp": 14.65,
+    "pooled_gain_vs_qwen_pp": 25.64
+  }
+}

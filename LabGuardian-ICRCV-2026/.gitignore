@@ -1,0 +1,10 @@
+# macOS and local editor files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.tmp
+
+# Local build/cache directories
+.typst-cache/
+build/

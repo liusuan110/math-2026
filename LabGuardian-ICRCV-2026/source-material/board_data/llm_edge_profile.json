@@ -1,0 +1,33 @@
+{
+  "model": "student-1.5B-int4 @ iGPU",
+  "load_s": 3.74,
+  "ttft_ms": 63.9,
+  "tpot_ms_per_token": 42.93,
+  "throughput_tok_s": 23.2,
+  "per_answer_128tok_s": 5.52,
+  "energy_per_128tok_answer_J": 56.0,
+  "mem_model_footprint_mb": 350.7,
+  "mem_runtime_rss_mb": 406.7,
+  "mem_peak_vmhwm_mb": 1358.5,
+  "power_idle_pkg_w": {
+    "avg": 4.42,
+    "peak": 4.43,
+    "n": 24
+  },
+  "power_idle_gfx_w": {
+    "avg": 0.0,
+    "peak": 0.0,
+    "n": 24
+  },
+  "power_infer_pkg_w": {
+    "avg": 10.16,
+    "peak": 10.36,
+    "n": 110
+  },
+  "power_infer_gfx_w": {
+    "avg": 3.69,
+    "peak": 3.82,
+    "n": 110
+  },
+  "trace_samples": 160
+}

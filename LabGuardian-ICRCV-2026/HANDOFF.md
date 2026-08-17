@@ -1,0 +1,127 @@
+# LabGuardian — ICRCV 2026 论文交接文档
+
+更新时间：2026-08-17（Asia/Shanghai）
+
+## 1. 当前稿件
+
+- 题目：**LabGuardian: Geometry-Constrained Pin Pose Estimation for Visual Breadboard Reconstruction**
+- 第一作者：**Su'an Liu**
+- 第二作者：Xinran Zhang
+- 第三作者：Jiali Ruan
+- 当前篇幅：6 页，包含图、表和参考文献。
+- 摘要：171 词，低于 200 词限制。
+- 当前定位：以计算机视觉为主，核心贡献为元件条件化的引脚姿态估计、平面单应变换、几何约束 Snap-to-Grid 与歧义保留机制。
+- 次要内容：CPU/iGPU/NPU 部署数据、功耗、SPICE/VF2 和 INT4 解释模块仅作为系统证据，不作为主要学术贡献。
+
+## 2. 目标会议信息
+
+| 项目 | 当前官网信息 |
+|---|---|
+| 会议 | 2026 8th International Conference on Robotics and Computer Vision (ICRCV 2026) |
+| 日期 | 2026 年 11 月 6–8 日 |
+| 地点 | 南京理工大学江阴校区，江苏江阴 |
+| 投稿截止 | 2026 年 9 月 1 日 |
+| 录用通知 | 2026 年 9 月 20 日 |
+| 注册截止 | 2026 年 10 月 5 日 |
+| 语言 | 英语 |
+| 评审 | 单盲评审 |
+| 页数 | 全文 4–10 页；常规注册包含最多 6 页，超页收费 |
+| 投稿限制 | 禁止一稿多投或同时投稿 |
+| 出版声明 | 官网称录用并注册的全文将进入 ICRCV 2026 论文集，计划归档 IEEE Xplore，并提交 EI Compendex、Scopus 等检索 |
+| 联系邮箱 | icrcv_conf@163.com |
+
+官网来源（2026-08-17 核对）：
+
+- https://www.icrcv.org/
+- https://www.icrcv.org/sub.html
+- https://www.icrcv.org/reg.html
+- https://www.icrcv.org/chinese.html
+- 投稿系统：https://www.zmeeting.org/submission/icrcv2026
+
+注意：IEEE Xplore/EI/Scopus 是会议组织方的出版与送检声明，不应在正式检索完成前表述为已经检索。2026 年是否支持线上参会、远程报告或代讲，官网当前没有明确承诺；如有需求，应在注册前邮件确认。
+
+## 3. 当前论文主线
+
+1. 将面包板图像重建定义为细粒度视觉结构恢复问题，而非通用电路诊断。
+2. 将元件端子定位表述为 **Component-Conditioned Top-Down Pose Estimation**。
+3. 使用完整图像推理保留长引脚、邻域网格、遮挡关系与封装上下文。
+4. 使用 **Homography-Based Spatial Mapping** 将透视视角归一化至标准板平面。
+5. 使用 **Geometry-Constrained Snap-to-Grid** 将连续关键点映射到离散孔位，并保留候选排序和拒绝原因。
+6. 电气网表、SPICE 和 VF2 仅消费视觉重建结果，不反向提供视觉证据。
+
+## 4. 已保留的主要量化结果
+
+| 指标 | 当前结果 |
+|---|---:|
+| 元件检测 Precision / Recall | 0.991 / 0.989 |
+| 元件检测 mAP50 / mAP50-95 | 0.991 / 0.786 |
+| 引脚关键点 Precision / Recall | 0.955 / 0.954 |
+| 引脚姿态 mAP50 / mAP50-95 | 0.947 / 0.829 |
+| NPU INT8 平均延迟 | 13.37 ms |
+| NPU INT8 P99 | 15.61 ms |
+| NPU INT8 吞吐率 | 74.7 image/s |
+| NPU INT8 包功耗 / 单次能耗 | 8.53 W / 114.2 mJ |
+| CPU INT8 包功耗 / 单次能耗 | 26.37 W / 813.6 mJ |
+| 确定性视觉到模板链路 | < 100 ms |
+| INT4 存储变化 | 3.1 GB → 941.5 MB |
+| 量化前后规则通过率 | 80.0% → 80.0%（30 题，小样本） |
+
+## 5. 投稿前最高优先级工作
+
+### P0：必须完成
+
+1. **补几何实验。** 当前尚无可发表的 Homography/Snap-to-Grid 消融，也没有完整的 pin-to-hole assignment accuracy。
+2. 至少报告：归一化关键点误差（NKE）、PCK、孔位命中率、歧义拒绝精确率，并按视角与遮挡程度分层。
+3. 对比：无单应变换、仅最近邻吸附、完整几何约束三种设置。
+4. 补充训练/验证/测试的图像数、元件实例数、关键点数和类别分布。
+5. 下载并逐项对照 ICRCV 官方模板。当前稿使用 Typst 的 `@preview/charged-ieee:0.1.4`，版式接近 IEEE，但不能默认等同于会议最终官方模板。
+
+### P1：强烈建议
+
+1. `figures/cadx/` 是项目真实图，应保留；但其中部分嵌入文字仍为中文，投稿前应从原始绘图工程重新导出英文版。
+2. 将 `diag_demo.pdf` 仅作为视觉证据可追溯性案例；避免扩写成电气诊断或网表算法的主要贡献。
+3. 核查图像使用授权、数据隐私、作者姓名拼写、单位英文名和作者顺序。
+4. 通过 IEEE PDF 检查或会议指定检查器确认字体嵌入、页面尺寸和链接。
+5. 做一次英语母语风格终审，重点检查 “top-down” 的定义是否与单阶段 YOLO-Pose 实现表述一致。
+
+## 6. 工作区文件说明
+
+- `main.typ`：当前论文主文件，路径已改为相对当前目录，适合 macOS。
+- `refs.bib`：当前参考文献数据库。
+- `LabGuardian-ICRCV-2026-draft.pdf`：已编译的 6 页稿件。
+- `figures/cadx/`：项目专属端到端、歧义、诊断、网表及功耗图。
+- `figures/yolo_*.png`：YOLO 全幅检测与关键点定性结果。
+- `source-material/final_report_v2.*`：中文长报告及 Typst 源文件。
+- `source-material/LabGuardian_Source_Code.zip`：原项目源码归档。
+- `source-material/board_data/`：现有实验记录与 CSV 数据。
+- `source-material/scripts/`：旧报告图表生成脚本。
+
+## 7. 在 macOS 上继续写作
+
+建议安装 Typst：
+
+```bash
+brew install typst
+```
+
+在本目录执行：
+
+```bash
+typst compile --root . main.typ LabGuardian-ICRCV-2026-draft.pdf
+```
+
+首次编译可能需要联网下载 `@preview/charged-ieee:0.1.4`。所有论文资源均应使用相对路径，避免写入 Windows 盘符路径。
+
+## 8. 推荐投稿流程
+
+1. 完成 P0 实验并冻结作者顺序、题目、摘要和数据表。
+2. 导入或复刻 ICRCV 官方模板，重新检查 6 页边界。
+3. 由指导老师审核论文贡献、实验真实性、作者名单和投稿许可。
+4. 在投稿系统创建稿件并填写作者、单位、关键词、摘要及主题方向。
+5. 上传 PDF，完成重复率、字体、页数和匿名要求检查；本会为单盲，当前官网允许稿件显示作者信息。
+6. 投稿后保存 Paper ID、确认邮件和最终上传 PDF。
+7. 录用后完成版权、注册和报告安排；至少一位作者需要完成预注册。
+
+## 9. 当前风险结论
+
+目前稿件已经具有明确的 ICRCV 视觉叙事和可读的六页结构，但几何变换是标题级贡献，却缺少对应的定量消融。这是当前最大的审稿风险，优先级高于继续扩写硬件功耗、VLM 或 SPICE 网表内容。

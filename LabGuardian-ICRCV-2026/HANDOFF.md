@@ -2,6 +2,26 @@
 
 更新时间：2026-08-17（Asia/Shanghai）
 
+## 0. 稿件形态变更（2026-08-17）
+
+正式稿件已从 Typst 迁移到会议官方 IEEE 模板：
+
+- 主文件：`main.tex`（`\documentclass[conference]{IEEEtran}`），编译产物 `main.pdf`，**6 页，无 overfull box**。
+- 编译：`pdflatex main.tex && pdflatex main.tex`；`IEEEtran.cls` 已复制到根目录，本机 TeX Live basic 不含该类，也不含 `IEEEtran.bst`，因此参考文献直接写在 `thebibliography` 中。
+- 正文已去除全部竞赛元素：不再出现赛事名称、"作品/参赛/评委"、原创性声明、致谢中的赛事方、源码附件清单，硬件表述改为 "an edge platform built around an Intel Core Ultra 5 225U" 而非赛事开发板型号。
+- 论文口吻改写：教学场景不再作为卖点，改为"手工布线硬件的自动检查 / 机器人装配核验"这类中性动机；教学解释小模型降为 "Cost of the Auditable Interface" 一小节的部署开销，明确声明不属于视觉主张。
+- 插图全部改为英文：`figures/en/`（由 `tools/make_figures.py` 生成），原 `figures/cadx/*.pdf` 含中文标注，仅作素材保留。功率图从 `source-material/board_data/yolo_power_*.{csv,json}` 重绘（注意 CSV 的 `t_s` 列比真实时间大 2 倍，脚本按 phase 日志重建时间轴，与原绘图脚本一致）。
+- `main.typ` 保留为历史版本，不再维护。
+
+收尾修改（同日）：
+
+- 三位作者改为同一行（机构名手工断成两行以适配 IEEE 三栏作者块）；"*Corresponding author" 改为标题 `\thanks` 脚注。
+- **插图清晰度修复**：此前 matplotlib 以默认 100 dpi 保存，1849 px 的面板被重采样到约 185 px，这是照片发虚的真实原因。现固定 `RASTER_DPI=800`（源 PDF 栅格化）与 `SAVE_DPI=600`（保存），面板输出 1100×1041 px @600 ppi，已达嵌入原图的原生分辨率（964 px），并加了轻度 UnsharpMask 与对比度补偿。**不要把这两个 dpi 调回默认**，否则清晰度立刻退回。若投稿系统限制体积（当前 `main.pdf` 5.0 MB），把 `SAVE_DPI` 降到 450 即可，仍高于印刷所需。
+- Fig. 3、Fig. 5 的中文残留已按栅格坐标实测位置精确遮盖并改写英文标注；`pdftotext main.pdf` 扫描确认全文 0 个 CJK 字符。
+- 第 V 节改写：把"我们的实验日志缺少逐关键点预测与孔位标签"改为范围声明（几何环节本文定性评估，定量孔位基准需要现有标注不含的逐引脚孔位标签，随后给出固定协议），去掉"camera-ready 前补上"这类承诺。
+
+**投稿前必须补的两处 TODO（已在 `main.tex` 中以注释标出）**：第二、三作者的机构邮箱或 ORCID；数据集训练/验证/测试各划分的图像数、实例数与关键点数。
+
 ## 1. 当前稿件
 
 - 题目：**LabGuardian: Geometry-Constrained Pin Pose Estimation for Visual Breadboard Reconstruction**

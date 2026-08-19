@@ -6,14 +6,19 @@ resolution, cropped, and recomposed with English labels so that the
 manuscript contains no non-English text.  The power figure is redrawn
 directly from the measurement log in source-material/board_data/.
 """
-import csv, json, os, subprocess, sys
+import csv, json, math, os, subprocess, sys
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle, Circle
+from matplotlib.patches import (Circle, FancyArrowPatch, FancyBboxPatch,
+                                Rectangle, Wedge)
 from matplotlib.lines import Line2D
+from matplotlib.path import Path
+from matplotlib.patches import PathPatch
+from matplotlib.transforms import Affine2D
 from PIL import Image, ImageEnhance, ImageFilter
+import matplotlib.patheffects as pe
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CADX = os.path.join(ROOT, "figures", "cadx")
@@ -34,6 +39,7 @@ plt.rcParams.update({
     "axes.linewidth": 0.7,
     "axes.spines.right": False,
     "axes.spines.top": False,
+    "mathtext.fontset": "stix",
     "pdf.fonttype": 42,
     "savefig.dpi": SAVE_DPI,
     "figure.dpi": SAVE_DPI,
@@ -93,8 +99,8 @@ def fig_reconstruction():
         Line2D([], [], marker="o", ls="none", mfc="#FFD93B", mec="#333333", ms=5,
                label="terminal keypoint"),
         Line2D([], [], marker="o", ls="none", mfc="white", mec="#333333", ms=5,
-               label="component node"),
-        Line2D([], [], color="#555555", lw=1.0, label="component-to-pin link"),
+               label="component instance"),
+        Line2D([], [], color="#555555", lw=1.0, label="terminal association"),
     ]
     lax.legend(handles=handles, loc="center left", frameon=False, fontsize=7.2,
                handlelength=1.5, borderpad=0.2, labelspacing=0.75)
@@ -131,16 +137,233 @@ def fig_ambiguity():
 
 
 # ------------------------------------------------------------- figure: netlist
-def fig_netlist():
-    im = raster("netlist_info")
-    a = enhance(crop(im, 0.052, 0.446, 0.078, 0.672))
-    b = crop(im, 0.500, 0.985, 0.092, 0.665)
+# Both panels are generated from one pipeline run stored under
+# source-material/board_run/, so the photograph overlay, the net colouring and
+# the graph cannot drift apart from the reconstruction they illustrate.
+RUN_JSON = os.path.join(ROOT, "source-material", "board_run",
+                        "inverting_amp_pipeline_result.json")
+RUN_IMG = os.path.join(ROOT, "source-material", "board_run",
+                       "inverting_amp_board.jpg")
+CROP = (470, 620, 2230, 1870)      # board region of the 4032x3024 photograph
 
-    fig = plt.figure(figsize=(7.0, 2.55))
-    gs = fig.add_gridspec(1, 2, width_ratios=[1, 1.18], wspace=0.05,
-                          left=0.005, right=0.995, top=0.90, bottom=0.02)
-    panel(fig.add_subplot(gs[0]), a, "(a)", "hole-level assignment")
-    panel(fig.add_subplot(gs[1]), b, "(b)", "component-net graph")
+NET_PALETTE = ["#4E79A7", "#F28E2B", "#59A14F", "#B07AA1", "#B8912F",
+               "#76B7B2", "#E15759", "#9C755F", "#4F6D7A", "#8CB369"]
+TYPE_COL = {"Resistor": "#2E6FA8", "Wire": "#D68A28", "IC": "#7A3E9D"}
+PART = "#A8323C"                                       # components (red family)
+INK, WIRE, BODY = "#2B2B2B", "#B7BDC5", "#FCF7F7"
+WIRE_LW, PIN_LW = 2.0, 1.6
+NET_R = 0.46                       # net node radius
+RES_L, RES_W = 0.78, 0.32          # resistor body along / across an edge
+IC_W, IC_H = 2.2, 1.05             # half-width / half-height of the package
+CORNER_R = 0.38                    # fillet radius at a direction change
+
+# Hand-placed positions keyed to the net ids emitted by the run.  Package
+# neighbours follow pin order, which keeps the drawing planar; only the second
+# link of the supply net runs on the outer face.
+NETS = {                           # net_id: (x, y, label)
+    "NET_009": (-2.3, -2.5, "N9"), "NET_006": (-4.2, -3.2, "N6"),
+    "NET_007": (-2.2, -4.4, "N7"), "NET_004": (0.5, -5.4, "N4"),
+    "NET_012": (2.6, -2.2, "N12"), "NET_005": (4.4, -3.4, "N5"),
+    "NET_010": (1.4, 2.6, "N10"), "NET_008": (3.4, 3.4, "N8"),
+    "NET_003": (3.0, -5.6, "N3"), "NET_002": (5.0, -5.6, "N2"),
+}
+STRAIGHT = [("R1", "NET_006", "NET_009"), ("R2", "NET_009", "NET_007"),
+            ("R3", "NET_008", "NET_010"), ("R4", "NET_012", "NET_005"),
+            ("R5", "NET_002", "NET_003"), ("R6", "NET_003", "NET_004")]
+PIN_STRAIGHT = {2: "NET_009", 3: "NET_004", 4: "NET_012", 6: "NET_010"}
+PIN_ROUTED = {7: ("NET_004", [(-0.5, 2.2), (-5.4, 2.2), (-5.4, -5.4)])}
+PIN_NC = (1, 5, 8)
+MERGE_TAGS = {"NET_004": ("W2, W3, W5", (1.35, 0.62)),
+              "NET_010": ("W1, W4", (-1.25, 0.30))}
+ROLE_OFFSET = {"NET_010": (-1.05, -0.04)}  # keep the tag off the pin-5 stub
+
+
+def _load_run():
+    r = json.load(open(RUN_JSON))
+    nl = r["stages"]["topology"]["netlist_v2"]
+    net_by_node = {nd: n["electrical_net_id"]
+                   for n in nl["nets"] for nd in n["member_node_ids"]}
+    roles = {n["electrical_net_id"]: (n.get("power_role") or "")
+             for n in nl["nets"]}
+    colour = {nid: NET_PALETTE[i % len(NET_PALETTE)]
+              for i, nid in enumerate(sorted(roles))}
+    return r, net_by_node, roles, colour
+
+
+def _mst_edges(pts):
+    """Minimum spanning tree over a net's pins, so links stay local."""
+    if len(pts) < 2:
+        return []
+    used, rest, out = [0], list(range(1, len(pts))), []
+    while rest:
+        best = min(((i, j) for i in used for j in rest),
+                   key=lambda e: math.dist(pts[e[0]], pts[e[1]]))
+        out.append((pts[best[0]], pts[best[1]]))
+        used.append(best[1]); rest.remove(best[1])
+    return out
+
+
+def _panel_board(ax, run, net_by_node, colour):
+    im = Image.open(RUN_IMG).convert("RGB").crop(CROP)
+    im = enhance(im, radius=2.0, percent=70)
+    ax.imshow(im, interpolation="antialiased")
+    ax.set_xticks([]); ax.set_yticks([])
+    for s in ax.spines.values():
+        s.set_visible(True); s.set_linewidth(0.5); s.set_color("#555555")
+    ox, oy = CROP[0], CROP[1]
+
+    pins, per_net, pin_xy = [], {}, {}
+    for c in run["stages"]["mapping"]["components"]:
+        for p in c["pins"]:
+            k = next((o.get("keypoint") for o in p.get("observations", [])
+                      if o.get("keypoint")), None)
+            if not k:
+                continue
+            nid = net_by_node.get(p.get("electrical_node_id") or "")
+            xy = (k[0] - ox, k[1] - oy)
+            pins.append((xy, nid, bool(p.get("is_ambiguous"))))
+            pin_xy[(c["component_id"], p["pin_name"])] = xy
+            if nid:
+                per_net.setdefault(nid, []).append(xy)
+
+    for nid, pts in per_net.items():                   # net membership
+        for a, b in _mst_edges(pts):
+            ax.plot([a[0], b[0]], [a[1], b[1]], color=colour[nid], lw=0.8,
+                    alpha=0.7, zorder=3, solid_capstyle="round")
+
+    halo = [pe.withStroke(linewidth=1.6, foreground="white")]
+    for c in run["stages"]["mapping"]["components"]:
+        x0, y0, x1, y1 = c["bbox"]
+        col = TYPE_COL.get(c["component_type"], "#555555")
+        if c["component_type"] != "Wire":              # wire boxes only add noise
+            ax.add_patch(Rectangle((x0 - ox, y0 - oy), x1 - x0, y1 - y0,
+                                   fc="none", ec=col, lw=0.7, alpha=0.75,
+                                   zorder=4))
+            lx, ly = (x0 + x1) / 2 - ox, y0 - oy - 8
+        else:                                          # label wires on the wire
+            wp = [v for k, v in pin_xy.items() if k[0] == c["component_id"]]
+            lx = sum(q[0] for q in wp) / len(wp)
+            ly = sum(q[1] for q in wp) / len(wp) - 6
+        ax.text(lx, ly, c["component_id"], fontsize=5.6, color=col, zorder=7,
+                ha="center", va="bottom", fontweight="bold", path_effects=halo)
+
+    for xy, nid, amb in pins:
+        ax.add_patch(Circle(xy, 10, fc=colour.get(nid, "#F2F2F2"),
+                            ec="#333333" if nid is None else "white", lw=1.0,
+                            zorder=5))
+        if amb:
+            ax.add_patch(Circle(xy, 19, fc="none", ec="#C62828", lw=1.0,
+                                ls=(0, (2.2, 1.8)), zorder=6))
+    ax.set_title("(a) terminals bound to holes", fontsize=8, pad=3)
+
+
+def _pin_xy(pin):
+    """DIP anchor: pins 1-4 left to right along the bottom edge, 5-8 right to
+    left along the top edge, as on a package straddling the trench."""
+    if pin <= 4:
+        return -1.5 + (pin - 1) * 1.0, -IC_H
+    return 1.5 - (pin - 5) * 1.0, IC_H
+
+
+def _resistor(ax, x, y, ang, label, side=1):
+    body = Rectangle((-RES_L / 2, -RES_W / 2), RES_L, RES_W, fc="white",
+                     ec=PART, lw=1.2, joinstyle="miter", zorder=6)
+    body.set_transform(Affine2D().rotate(ang).translate(x, y) + ax.transData)
+    ax.add_patch(body)
+    nx, ny = -math.sin(ang), math.cos(ang)
+    if (ny < 0) != (side < 0):
+        nx, ny = -nx, -ny
+    ax.text(x + nx * 0.52, y + ny * 0.52, f"${label[0]}_{{{label[1:]}}}$",
+            ha="center", va="center", fontsize=7.0, color=PART, zorder=7)
+
+
+def _link(ax, p0, p1, lw=WIRE_LW):
+    ax.add_patch(FancyArrowPatch(p0, p1, arrowstyle="-", shrinkA=0, shrinkB=0,
+                                 lw=lw, color=WIRE, capstyle="round", zorder=1))
+
+
+def _route(ax, pts, lw=PIN_LW):
+    """Straight runs joined by small fillets: no free-form arcs."""
+    verts, codes = [pts[0]], [Path.MOVETO]
+    for i in range(1, len(pts) - 1):
+        (px, py), (vx, vy), (nx_, ny_) = pts[i - 1], pts[i], pts[i + 1]
+        d1, d2 = math.dist(pts[i - 1], pts[i]), math.dist(pts[i], pts[i + 1])
+        r = min(CORNER_R, 0.45 * d1, 0.45 * d2)
+        verts += [(vx - (vx - px) / d1 * r, vy - (vy - py) / d1 * r),
+                  (vx, vy),
+                  (vx + (nx_ - vx) / d2 * r, vy + (ny_ - vy) / d2 * r)]
+        codes += [Path.LINETO, Path.CURVE3, Path.CURVE3]
+    verts.append(pts[-1]); codes.append(Path.LINETO)
+    ax.add_patch(PathPatch(Path(verts, codes), fc="none", ec=WIRE, lw=lw,
+                           capstyle="round", joinstyle="round", zorder=1))
+
+
+def _panel_graph(ax, roles, colour):
+    ax.set_xlim(-6.1, 5.9); ax.set_ylim(-6.6, 4.1)
+    ax.set_aspect("equal"); ax.axis("off")
+    ax.set_title("(b) component-net graph", fontsize=8, pad=3)
+
+    for label, u, v in STRAIGHT:                       # two-terminal parts
+        (x0, y0, _), (x1, y1, _) = NETS[u], NETS[v]
+        _link(ax, (x0, y0), (x1, y1))
+        _resistor(ax, (x0 + x1) / 2, (y0 + y1) / 2,
+                  math.atan2(y1 - y0, x1 - x0), label)
+
+    for pin, nid in PIN_STRAIGHT.items():              # package fan-out
+        px, py = _pin_xy(pin)
+        side = -1 if pin <= 4 else 1
+        _link(ax, (px, py + side * 0.22), NETS[nid][:2], lw=PIN_LW)
+    for pin, (nid, way) in PIN_ROUTED.items():
+        px, py = _pin_xy(pin)
+        _route(ax, [(px, py + 0.22)] + way + [NETS[nid][:2]])
+
+    ax.add_patch(FancyBboxPatch((-IC_W, -IC_H), 2 * IC_W, 2 * IC_H,
+                                boxstyle="round,pad=0.02,rounding_size=0.10",
+                                fc=BODY, ec=PART, lw=1.4, zorder=3))
+    ax.add_patch(Wedge((-IC_W, 0), 0.26, 270, 90, fc="white", ec=PART, lw=1.2,
+                       zorder=4))
+    ax.text(0.0, 0.22, "IC1", ha="center", va="center", fontsize=8.2,
+            fontweight="bold", color=PART, zorder=5)
+    ax.text(0.0, -0.30, "DIP-8", ha="center", va="center", fontsize=6.4,
+            color="#5A5A5A", zorder=5)
+
+    for pin in range(1, 9):
+        px, py = _pin_xy(pin)
+        side = -1 if pin <= 4 else 1
+        ax.add_patch(Rectangle((px - 0.075, py + (0.0 if side > 0 else -0.22)),
+                               0.15, 0.22, fc=PART, ec="none", zorder=4))
+        ax.text(px, py - side * 0.24, str(pin), ha="center", va="center",
+                fontsize=6.0, color="#5A5A5A", zorder=5)
+        if pin in PIN_NC:
+            ax.plot([px, px], [py + side * 0.22, py + side * 0.72], color=WIRE,
+                    lw=PIN_LW, ls=(0, (1.6, 1.4)), zorder=1)
+            lx = px - 0.46 if pin == 1 else px
+            ax.text(lx, py + side * 0.92, "n.c.", ha="center", va="center",
+                    fontsize=6.2, color="#5A5A5A", zorder=5)
+
+    for nid, (x, y, label) in NETS.items():            # nets
+        ax.add_patch(Circle((x, y), NET_R, fc=colour[nid], ec=INK, lw=1.0,
+                            zorder=4))
+        ax.text(x, y, f"${label[0]}_{{{label[1:]}}}$", ha="center", va="center",
+                fontsize=7.0, color="white", zorder=5)
+        if roles.get(nid):
+            dx, dy = ROLE_OFFSET.get(nid, (0.0, -NET_R - 0.30))
+            ax.text(x + dx, y + dy, roles[nid], ha="center", va="center",
+                    fontsize=6.0, color="#3A4750", zorder=5)
+        if nid in MERGE_TAGS:
+            txt, (dx, dy) = MERGE_TAGS[nid]
+            ax.text(x + dx, y + dy + NET_R, f"merged: {txt}",
+                    ha="center", va="center", fontsize=5.8, style="italic",
+                    color="#6A6A6A", zorder=5)
+
+
+def fig_netlist():
+    run, net_by_node, roles, colour = _load_run()
+    fig = plt.figure(figsize=(7.0, 3.05))
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.41, 1.06], wspace=0.04,
+                          left=0.004, right=0.996, top=0.92, bottom=0.015)
+    _panel_board(fig.add_subplot(gs[0]), run, net_by_node, colour)
+    _panel_graph(fig.add_subplot(gs[1]), roles, colour)
     fig.savefig(os.path.join(OUT, "netlist.pdf"))
     plt.close(fig)
 

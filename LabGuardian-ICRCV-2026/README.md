@@ -22,9 +22,13 @@ pdflatex main.tex && pdflatex main.tex
 python3 tools/make_figures.py
 ```
 
-脚本从 `figures/cadx/*.pdf` 高分辨率栅格化并重排面板、改写英文标注，
-功率图则直接从 `source-material/board_data/yolo_power_timeseries.csv` 与
-`yolo_power_phases.json` 重绘。修改插图请改脚本后重新生成，不要手工编辑 `figures/en/`。
+脚本从 `figures/cadx/*.pdf` 高分辨率栅格化并重排面板、改写英文标注；功率图从
+`source-material/board_data/yolo_power_timeseries.csv` 与 `yolo_power_phases.json` 重绘；
+Fig. 5 两栏都由 `source-material/board_run/inverting_amp_pipeline_result.json`（一次真实的完整链路运行）
+生成：panel (a) 是照片叠加，panel (b) 是该运行 `netlist_v2` 的元件—网络图，两栏共用每网络配色。修改插图请改脚本后重新生成，不要手工编辑 `figures/en/`。
+
+栅格化 `RASTER_DPI=800` 与保存 `SAVE_DPI=600` 不要调低：matplotlib 会把图像重采样到
+`轴尺寸 × savefig dpi`，默认的 100 dpi 会让照片细节几乎全部丢失。
 
 ## 目录约定
 

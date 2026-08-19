@@ -20,7 +20,7 @@ Breadboard Reconstruction
 \textit{Beijing University of Posts}\\
 \textit{and Telecommunications}\\
 Beijing, China\\
-buptliusuan@gmail.com}
+liusuan@bupt.edu.cn}
 \and
 \IEEEauthorblockN{2\textsuperscript{nd} Xinran Zhang}
 \IEEEauthorblockA{\textit{School of Electronic Engineering}\\
@@ -57,8 +57,8 @@ discrete hole under package and board feasibility constraints while retaining
 ranked alternatives for ambiguous terminals. Every downstream relation stays
 linked to its originating instance, keypoint and candidate hole, so the
 reconstruction is auditable rather than asserted. On a disjoint validation split, component
-detection reaches 0.991 mAP50 and 0.786 mAP50-95 and pin pose estimation reaches
-0.947 and 0.829. INT8 execution on an Intel Core Ultra 5 225U neural processing
+detection reaches 0.991 mAP50 and 0.786 mAP50-95, while pin pose estimation
+reaches 0.947 and 0.829. INT8 execution on an Intel Core Ultra 5 225U neural processing
 unit runs at 13.37 ms mean latency, 15.61 ms at the 99th percentile and 74.7
 images per second within 8.53 W package power.
 \end{abstract}
@@ -102,9 +102,8 @@ unsupported structural statements as \emph{topology hallucination}. In a
 verification setting this failure mode is worse than a missed detection, because
 an unsupported claim is indistinguishable from a supported one.
 
-LabGuardian therefore treats reconstruction as a sequence of visual estimation
-and geometric projection steps, each of which produces an inspectable
-intermediate result. A full-frame pose network predicts component instances and
+LabGuardian therefore decomposes reconstruction into visual estimation and
+geometric projection steps, each producing an inspectable intermediate result. A full-frame pose network predicts component instances and
 ordered terminal keypoints; a planar homography maps the board to a canonical
 metric plane; and a geometry-constrained snap-to-grid stage converts rectified
 coordinates into discrete hole hypotheses, keeping ranked alternatives wherever
@@ -160,7 +159,8 @@ constraint responsible for each rejection.
 \subsection{Circuit Understanding and Symbolic Verification}
 
 Work on circuit data has largely addressed schematic-level recognition, printed
-circuit board inspection, or already symbolic netlists~\cite{amsnet}. Simulation
+circuit board inspection, or netlists that are already
+symbolic~\cite{amsnet}. Simulation
 and graph matching operate on a symbolic circuit that is assumed to be
 available~\cite{spice,vf2}, and language-model approaches to electronic design
 consume textual or structural descriptions rather than raw
@@ -187,6 +187,9 @@ F: I \longrightarrow \{(C_i,\, k,\, h,\, z_{ik})\},
 \end{equation}
 where $h$ is the assigned hole and $z_{ik}$ records keypoint confidence,
 rectified projection distance, candidate rank, visibility and an ambiguity flag.
+Throughout, a \emph{pin} is the indexed terminal of a component or package, and a
+\emph{terminal keypoint} is the image location at which that pin meets the
+board.
 The formulation deliberately precedes electrical interpretation: it states what
 the image supports, not whether the circuit is correct. Fig.~\ref{fig:pipeline}
 summarizes the resulting stages.
@@ -335,14 +338,15 @@ three-terminal device, or contradict package-specific pin order. Normalizing the
 snapping distance by $s_g$ in~\eqref{eq:snap} makes $\tau$ independent of output
 resolution.
 
-Rejection does not discard the observation. The mapper records the ranked
-candidate holes, their normalized distances, the violated constraint and a
+Rejection does not discard the observation. The assignment stage records the
+ranked candidate holes, their normalized distances, the violated constraint and a
 confidence flag, so a terminal that projects near the boundary between two holes
 is reported as ambiguous rather than resolved by an arbitrary tie-break
-(Fig.~\ref{fig:ambiguity}). This is a deliberate design decision: dense
-millimeter-scale holes are an intrinsically hard localization target, a residual
-hole-level error cannot be driven to zero by a stronger backbone alone, and a
-sub-pixel residual that is silently rounded becomes a false structural claim.
+(Fig.~\ref{fig:ambiguity}). This is a deliberate design decision. Dense
+millimeter-scale holes are an intrinsically hard localization target, so a
+residual hole-level error cannot be driven to zero by a stronger backbone alone,
+and a sub-pixel residual that is rounded silently becomes a false structural
+claim.
 Where a low-confidence assignment matters, a single operator confirmation
 resolves it and only the geometric and symbolic stages are recomputed; the
 perception result is not discarded.
@@ -360,13 +364,14 @@ perception.}
 
 \subsection{Topology Readout}
 
-Accepted pin-hole relations are grouped into electrical nodes using the known
+Accepted pin-hole relations are grouped into electrical nets using the known
 breadboard layout, in which each five-hole strip is internally connected and the
-power rails span the board. A disjoint-set structure merges the strips joined by
-detected jumper wires, and the result is a component--net graph in which nets are
-nodes and non-wire components are edges. Physical holes remain the only source of
-node identity, so a corrected hole assignment regenerates node labels instead of
-inheriting stale ones.
+supply rails span the board. A disjoint-set structure merges the strips joined by
+detected jumper wires, and the result is a component--net graph: nets are nodes,
+a two-terminal component is an edge between the two nets it joins, and a package
+that spans more than two nets keeps a node of its own with numbered pins.
+Physical holes remain the only source of net identity, so a corrected hole
+assignment regenerates the labels instead of inheriting stale ones.
 
 The graph can be exported as a topology-level netlist and compared against a
 reference by subgraph isomorphism~\cite{vf2}, which yields structured mismatch
@@ -380,8 +385,8 @@ back to the pixels that produced it.
 
 \subsection{Implementation and Data}
 
-Experiments use a private dataset of real top-view breadboard photographs
-covering six textbook analog circuit topologies: a first-order RC network, a
+We train and evaluate on a private dataset of real top-view breadboard
+photographs covering six textbook analog circuit topologies: a first-order RC network, a
 common-emitter amplifier, a differential pair, and inverting, integrating and
 summing amplifiers built around a general-purpose operational amplifier. The
 images were captured under varying viewpoint and illumination and include wire
@@ -400,8 +405,8 @@ quantization used 144 calibration images and reduced the exported model from
 22 MB to 11 MB. All deployment measurements were taken on an edge platform built
 around an Intel Core Ultra 5 225U with 8 GB of memory, which exposes CPU,
 integrated GPU and neural processing unit execution paths through a common
-runtime~\cite{intel225u,openvino}. Between 60 and 1153 serial inferences were
-collected per configuration, and package power was sampled from the running
+runtime~\cite{intel225u,openvino}. Between 60 and 1153 sequential inferences
+were collected per configuration, and package power was sampled from the running
 average power limit interface at 0.25 s intervals.
 
 \subsection{Detection and Pin Pose Accuracy}
@@ -487,8 +492,8 @@ loaded, CPU-core and integrated-GPU power remain at the idle baseline.}
 
 Fig.~\ref{fig:reconstruction} shows a complete reconstruction. Boxes and classes
 are recovered on a cluttered board, and the pin-level panel makes explicit which
-terminal belongs to which instance and which hole each terminal occupies. Two
-failure sources are visible in this representation and are worth separating.
+terminal belongs to which instance and which hole each terminal occupies. The
+representation also separates two distinct failure sources.
 Component boxes can be correct while terminal endpoints are partially hidden by
 jumper wires, and full-frame inference is what preserves the visible lead
 direction and neighboring lattice needed to place such endpoints. Independently,
@@ -499,18 +504,25 @@ geometric condition, not a perception error, and the pipeline reports it as such
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.96\textwidth]{figures/en/netlist.pdf}
-\caption{Topology readout for the board of Fig.~\ref{fig:reconstruction}: 11
-components, 28 terminals and 10 electrical nodes. (a) Terminals bound to holes,
-with one color per electrical node and jumper wires merged into their nodes.
-(b) The resulting component--net graph, in which nets are nodes and non-wire
-components are edges. Node identity comes from physical holes, so a corrected
-assignment regenerates the graph.}
+\caption{Topology readout on a second board, produced by one run of the full
+pipeline. (a) Every detected terminal is bound to a hole and colored by the net
+it joins; thin links connect the terminals of one net, and dashed red rings mark
+the six terminals the mapper itself flagged as ambiguous. (b) The resulting
+component--net graph, drawn from the exported netlist with the same net colors:
+nets are nodes, a two-terminal component is an edge between the two nets it
+joins, and the DIP-8 package keeps a node of its own with numbered pins because
+it spans more than two nets. Twelve components and 30 terminals resolve into ten
+nets; the five jumper wires contribute no edges but merge strips, and the nets
+they created are tagged with the wires responsible. Pins 1, 5 and 8 of the
+package reach single-terminal nodes and are reported as unconnected.}
 \label{fig:netlist}
 \end{figure*}
 
-Fig.~\ref{fig:netlist} shows the structure obtained from the same board after
-grouping: 11 components and 28 terminals resolve into 10 electrical nodes, with
-power and ground rails distinguishable from signal nodes. The example is included
+Fig.~\ref{fig:netlist} shows the structure obtained on a second board, an
+inverting amplifier, in a single run of the complete pipeline: twelve components
+and 30 terminals resolve into ten nets, with supply and ground roles separated
+from signal nets and six terminals flagged as ambiguous rather than silently
+resolved. The example is included
 as evidence that the visual output is complete enough to be consumed
 symbolically, not as a claim about diagnostic accuracy. On this platform the
 deterministic path from a rectified pose result to a topology comparison

@@ -146,14 +146,14 @@ RUN_IMG = os.path.join(ROOT, "source-material", "board_run",
                        "inverting_amp_board.jpg")
 CROP = (470, 620, 2230, 1870)      # board region of the 4032x3024 photograph
 
-NET_PALETTE = ["#4E79A7", "#F28E2B", "#59A14F", "#B07AA1", "#B8912F",
-               "#76B7B2", "#E15759", "#9C755F", "#4F6D7A", "#8CB369"]
-TYPE_COL = {"Resistor": "#2E6FA8", "Wire": "#D68A28", "IC": "#7A3E9D"}
-PART = "#A8323C"                                       # components (red family)
-INK, WIRE, BODY = "#2B2B2B", "#B7BDC5", "#FCF7F7"
-WIRE_LW, PIN_LW = 2.0, 1.6
-NET_R = 0.46                       # net node radius
-RES_L, RES_W = 0.78, 0.32          # resistor body along / across an edge
+NET_PALETTE = ["#3B6FB6", "#C47A1C", "#3E8E72", "#8A6FA8", "#A77B24",
+               "#4E8F98", "#B85450", "#7B6B62", "#526A78", "#6E8B5B"]
+TYPE_COL = {"Resistor": "#263238", "Wire": "#263238", "IC": "#263238"}
+PART = "#263238"
+INK, WIRE, BODY = "#202428", "#7B8288", "#F7F8F8"
+WIRE_LW, PIN_LW = 1.35, 1.05
+NET_R = 0.39                       # net node radius
+RES_L, RES_W = 0.70, 0.27          # resistor body along / across an edge
 IC_W, IC_H = 2.2, 1.05             # half-width / half-height of the package
 CORNER_R = 0.38                    # fillet radius at a direction change
 
@@ -179,7 +179,7 @@ ROLE_OFFSET = {"NET_010": (-1.05, -0.04)}  # keep the tag off the pin-5 stub
 
 
 def _load_run():
-    r = json.load(open(RUN_JSON))
+    r = json.load(open(RUN_JSON, encoding="utf-8"))
     nl = r["stages"]["topology"]["netlist_v2"]
     net_by_node = {nd: n["electrical_net_id"]
                    for n in nl["nets"] for nd in n["member_node_ids"]}
@@ -206,6 +206,7 @@ def _mst_edges(pts):
 def _panel_board(ax, run, net_by_node, colour):
     im = Image.open(RUN_IMG).convert("RGB").crop(CROP)
     im = enhance(im, radius=2.0, percent=70)
+    im = ImageEnhance.Color(im).enhance(0.72)
     ax.imshow(im, interpolation="antialiased")
     ax.set_xticks([]); ax.set_yticks([])
     for s in ax.spines.values():
@@ -234,27 +235,26 @@ def _panel_board(ax, run, net_by_node, colour):
     halo = [pe.withStroke(linewidth=1.6, foreground="white")]
     for c in run["stages"]["mapping"]["components"]:
         x0, y0, x1, y1 = c["bbox"]
-        col = TYPE_COL.get(c["component_type"], "#555555")
+        col = TYPE_COL.get(c["component_type"], "#263238")
         if c["component_type"] != "Wire":              # wire boxes only add noise
             ax.add_patch(Rectangle((x0 - ox, y0 - oy), x1 - x0, y1 - y0,
                                    fc="none", ec=col, lw=0.7, alpha=0.75,
                                    zorder=4))
             lx, ly = (x0 + x1) / 2 - ox, y0 - oy - 8
-        else:                                          # label wires on the wire
-            wp = [v for k, v in pin_xy.items() if k[0] == c["component_id"]]
-            lx = sum(q[0] for q in wp) / len(wp)
-            ly = sum(q[1] for q in wp) / len(wp) - 6
-        ax.text(lx, ly, c["component_id"], fontsize=5.6, color=col, zorder=7,
+        else:
+            continue                                   # omit wire IDs in print
+        ax.text(lx, ly, c["component_id"], fontsize=5.2, color=col, zorder=7,
                 ha="center", va="bottom", fontweight="bold", path_effects=halo)
 
     for xy, nid, amb in pins:
-        ax.add_patch(Circle(xy, 10, fc=colour.get(nid, "#F2F2F2"),
-                            ec="#333333" if nid is None else "white", lw=1.0,
+        ax.add_patch(Circle(xy, 7.0, fc=colour.get(nid, "#F2F2F2"),
+                            ec="#333333" if nid is None else "white", lw=0.8,
                             zorder=5))
         if amb:
-            ax.add_patch(Circle(xy, 19, fc="none", ec="#C62828", lw=1.0,
+            ax.add_patch(Circle(xy, 14, fc="none", ec="#B3261E", lw=0.9,
                                 ls=(0, (2.2, 1.8)), zorder=6))
-    ax.set_title("(a) terminals bound to holes", fontsize=8, pad=3)
+    ax.set_title("(a) Image-space pin-to-hole assignments", fontsize=8,
+                 fontweight="bold", loc="left", pad=4)
 
 
 def _pin_xy(pin):
@@ -267,14 +267,14 @@ def _pin_xy(pin):
 
 def _resistor(ax, x, y, ang, label, side=1):
     body = Rectangle((-RES_L / 2, -RES_W / 2), RES_L, RES_W, fc="white",
-                     ec=PART, lw=1.2, joinstyle="miter", zorder=6)
+                     ec=PART, lw=0.95, joinstyle="miter", zorder=6)
     body.set_transform(Affine2D().rotate(ang).translate(x, y) + ax.transData)
     ax.add_patch(body)
     nx, ny = -math.sin(ang), math.cos(ang)
     if (ny < 0) != (side < 0):
         nx, ny = -nx, -ny
     ax.text(x + nx * 0.52, y + ny * 0.52, f"${label[0]}_{{{label[1:]}}}$",
-            ha="center", va="center", fontsize=7.0, color=PART, zorder=7)
+            ha="center", va="center", fontsize=6.7, color=PART, zorder=7)
 
 
 def _link(ax, p0, p1, lw=WIRE_LW):
@@ -301,7 +301,8 @@ def _route(ax, pts, lw=PIN_LW):
 def _panel_graph(ax, roles, colour):
     ax.set_xlim(-6.1, 5.9); ax.set_ylim(-6.6, 4.1)
     ax.set_aspect("equal"); ax.axis("off")
-    ax.set_title("(b) component-net graph", fontsize=8, pad=3)
+    ax.set_title("(b) Derived component-net graph", fontsize=8,
+                 fontweight="bold", loc="left", pad=4)
 
     for label, u, v in STRAIGHT:                       # two-terminal parts
         (x0, y0, _), (x1, y1, _) = NETS[u], NETS[v]
@@ -318,9 +319,9 @@ def _panel_graph(ax, roles, colour):
         _route(ax, [(px, py + 0.22)] + way + [NETS[nid][:2]])
 
     ax.add_patch(FancyBboxPatch((-IC_W, -IC_H), 2 * IC_W, 2 * IC_H,
-                                boxstyle="round,pad=0.02,rounding_size=0.10",
-                                fc=BODY, ec=PART, lw=1.4, zorder=3))
-    ax.add_patch(Wedge((-IC_W, 0), 0.26, 270, 90, fc="white", ec=PART, lw=1.2,
+                                boxstyle="round,pad=0.02,rounding_size=0.08",
+                                fc=BODY, ec=PART, lw=1.1, zorder=3))
+    ax.add_patch(Wedge((-IC_W, 0), 0.26, 270, 90, fc="white", ec=PART, lw=1.0,
                        zorder=4))
     ax.text(0.0, 0.22, "IC1", ha="center", va="center", fontsize=8.2,
             fontweight="bold", color=PART, zorder=5)
@@ -342,26 +343,26 @@ def _panel_graph(ax, roles, colour):
                     fontsize=6.2, color="#5A5A5A", zorder=5)
 
     for nid, (x, y, label) in NETS.items():            # nets
-        ax.add_patch(Circle((x, y), NET_R, fc=colour[nid], ec=INK, lw=1.0,
+        ax.add_patch(Circle((x, y), NET_R, fc="white", ec=colour[nid], lw=1.55,
                             zorder=4))
         ax.text(x, y, f"${label[0]}_{{{label[1:]}}}$", ha="center", va="center",
-                fontsize=7.0, color="white", zorder=5)
+                fontsize=6.7, color=INK, zorder=5)
         if roles.get(nid):
             dx, dy = ROLE_OFFSET.get(nid, (0.0, -NET_R - 0.30))
             ax.text(x + dx, y + dy, roles[nid], ha="center", va="center",
                     fontsize=6.0, color="#3A4750", zorder=5)
         if nid in MERGE_TAGS:
             txt, (dx, dy) = MERGE_TAGS[nid]
-            ax.text(x + dx, y + dy + NET_R, f"merged: {txt}",
-                    ha="center", va="center", fontsize=5.8, style="italic",
+            ax.text(x + dx, y + dy + NET_R, f"wire merge: {txt}",
+                    ha="center", va="center", fontsize=5.6, style="italic",
                     color="#6A6A6A", zorder=5)
 
 
 def fig_netlist():
     run, net_by_node, roles, colour = _load_run()
-    fig = plt.figure(figsize=(7.0, 3.05))
-    gs = fig.add_gridspec(1, 2, width_ratios=[1.41, 1.06], wspace=0.04,
-                          left=0.004, right=0.996, top=0.92, bottom=0.015)
+    fig = plt.figure(figsize=(7.0, 2.76))
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.46, 1.00], wspace=0.055,
+                          left=0.006, right=0.994, top=0.905, bottom=0.025)
     _panel_board(fig.add_subplot(gs[0]), run, net_by_node, colour)
     _panel_graph(fig.add_subplot(gs[1]), roles, colour)
     fig.savefig(os.path.join(OUT, "netlist.pdf"))

@@ -42,25 +42,24 @@ Beijing, China\\
 \maketitle
 
 \begin{abstract}
-Recovering the wiring of a breadboard circuit from a single photograph is a
-fine-grained visual structure problem: holes are separated by a 2.54 mm pitch,
-component terminals are thin and frequently occluded, and a displacement of one
-grid cell changes the inferred electrical connection. Component detectors stop
-at bounding boxes and cannot say which hole a lead enters, whereas end-to-end
-multimodal models may describe a plausible topology that the image does not
-support. We present LabGuardian, a vision pipeline that formulates terminal
-localization as component-conditioned pose estimation. A full-frame
-keypoint model predicts component instances together with ordered terminal
-keypoints, a planar homography rectifies the board to a canonical metric plane,
-and a geometry-constrained snap-to-grid stage maps each rectified terminal to a
-discrete hole under package and board feasibility constraints while retaining
-ranked alternatives for ambiguous terminals. Every downstream relation stays
-linked to its originating instance, keypoint and candidate hole, so the
-reconstruction is auditable rather than asserted. On a disjoint validation split, component
-detection reaches 0.991 mAP50 and 0.786 mAP50-95, while pin pose estimation
-reaches 0.947 and 0.829. INT8 execution on an Intel Core Ultra 5 225U neural processing
-unit runs at 13.37 ms mean latency, 15.61 ms at the 99th percentile and 74.7
-images per second within 8.53 W package power.
+Recovering breadboard wiring from a single photograph requires terminal-level
+localization: holes are separated by a 2.54 mm pitch, leads are thin and often
+occluded, and a one-cell error changes the inferred circuit. Conventional
+component detectors terminate at bounding boxes, whereas unconstrained
+image-to-text models can generate connections unsupported by the pixels. We
+present LabGuardian, a geometry-aware visual reconstruction pipeline that casts
+terminal localization as component-conditioned pose estimation. A full-frame
+network jointly predicts component instances and ordered terminal keypoints; a
+planar homography then rectifies the board, and a package-aware snap-to-grid
+algorithm maps terminals to discrete holes while retaining ranked alternatives
+for ambiguous observations. The resulting pin--hole graph preserves links to
+the originating box, keypoint, rectified coordinate, and candidate holes. On a
+disjoint validation split, component detection achieves 0.991 mAP50 and 0.786
+mAP50--95, while pin pose estimation achieves 0.947 and 0.829, respectively.
+INT8 inference on the neural processing unit of an Intel Core Ultra 5 225U
+requires 13.37 ms on average and 15.61 ms at the 99th percentile, delivers 74.7
+images/s, and operates at 8.53 W package power. These results demonstrate
+accurate pin-level perception with interactive edge deployment.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -97,10 +96,10 @@ models, in turn, have no explicit mechanism to enforce the planar lattice, the
 separation across the central trench, the span of an axial device, or the pin
 order of a dual in-line package. Multimodal language models provide flexible
 visual semantics~\cite{llava}, but a free-form description cannot guarantee that
-a claimed connection corresponds to observed pixels; we refer to such
-unsupported structural statements as \emph{topology hallucination}. In a
-verification setting this failure mode is worse than a missed detection, because
-an unsupported claim is indistinguishable from a supported one.
+a claimed connection corresponds to observed pixels. We therefore treat
+unsupported topology generation as a distinct failure mode: in a verification
+setting, an unsupported claim is more difficult to audit than a missed
+detection because it carries no deterministic pixel-to-hole correspondence.
 
 LabGuardian therefore decomposes reconstruction into visual estimation and
 geometric projection steps, each producing an inspectable intermediate result. A full-frame pose network predicts component instances and
@@ -132,44 +131,31 @@ at 74.7 images per second within 8.53 W on an integrated neural processing unit.
 
 \subsection{Keypoint and Pose Estimation}
 
-Pose estimation maps an image to structured landmarks instead of a category or a
-box. High-resolution architectures such as HRNet improve spatial precision by
-maintaining multi-scale feature streams throughout the
-network~\cite{hrnet}, while single-stage formulations such as YOLO-Pose regress
-boxes and keypoints jointly and retain instance-level grouping in one forward
-pass~\cite{yolopose,yolo}. We adopt this heatmap-free family but reinterpret the
-pose: the instance is a rigid electronic component and the landmarks are its
-electrical terminals. Unlike human joints, these landmarks are small, often
-collinear, and constrained both by package geometry and by the regular lattice
-that receives them, which makes the surrounding context at least as informative
-as the appearance of the instance itself.
+Pose estimation predicts structured landmarks rather than only a category or
+box. HRNet preserves high-resolution features~\cite{hrnet}, whereas YOLO-Pose
+regresses boxes and keypoints jointly with instance grouping in one
+pass~\cite{yolopose,yolo}. We reinterpret this heatmap-free formulation for rigid
+components whose terminal landmarks are small, often collinear, and constrained
+by both package geometry and the receiving lattice.
 
 \subsection{Planar Rectification and Metric Grids}
 
-Projective rectification of a plane from four correspondences is a standard tool
-for normalizing viewpoint~\cite{hartley,zhangcalib}. A breadboard is a
-favorable case, since its working surface is approximately planar and carries a
-repeated metric grid that provides landmarks. Rectification alone, however, does
-not decide between two adjacent holes when a terminal projects near their
-common boundary. Our contribution at this stage is not the homography itself but
-its coupling to a discrete assignment layer that encodes board topology, package
-type, terminal span, collinearity and trench separation, and that reports the
-constraint responsible for each rejection.
+A planar homography estimated from four correspondences normalizes
+viewpoint~\cite{hartley}. Breadboards provide an approximately planar metric
+lattice, but rectification alone cannot resolve terminals near a hole boundary.
+We therefore couple it to discrete assignment constraints for package type,
+terminal span, collinearity, and trench separation, while retaining the reason
+for each rejected candidate.
 
 \subsection{Circuit Understanding and Symbolic Verification}
 
-Work on circuit data has largely addressed schematic-level recognition, printed
-circuit board inspection, or netlists that are already
-symbolic~\cite{amsnet}. Simulation
-and graph matching operate on a symbolic circuit that is assumed to be
-available~\cite{spice,vf2}, and language-model approaches to electronic design
-consume textual or structural descriptions rather than raw
-photographs~\cite{llm4eda}. Conversely, generic multimodal models summarize
-visual content without providing a deterministic pixel-to-hole correspondence.
-The interface between these regimes, namely the recovery of terminals and their
-canonical board locations from a photograph, is the gap addressed here. Symbolic
-comparison is retained in our system only as a downstream consumer of the visual
-reconstruction and is not claimed as a contribution.
+Circuit datasets largely address schematic recognition, board inspection, or
+already symbolic netlists~\cite{amsnet}; graph matching likewise assumes that a
+graph is available~\cite{vf2}. Generic multimodal models can summarize images but
+do not provide deterministic pixel-to-hole correspondence. We address this
+missing interface by recovering terminals and canonical board locations from a
+photograph. Symbolic comparison remains only a downstream consumer of the visual
+result.
 
 \section{Method}
 
@@ -259,29 +245,26 @@ pixels each and direct keypoint regression is unstable, so pin positions are
 derived from rigid package geometry once the package and its orientation have
 been detected.
 
-Component and pose hypotheses are produced by two heads and must be associated
-before a netlist can be built; a terminal claimed by a neighboring device
-propagates into a wrong electrical relation. For component $i$ and pose
-hypothesis $j$ we compute
+The pose output jointly contains a component box and its ordered keypoints.
+Category-gated association is nevertheless required when these records are
+matched to annotations or fused with auxiliary component observations: a
+terminal assigned to a neighboring device propagates into an incorrect
+electrical relation. For component record $i$ and pose record $j$, the
+implementation computes
 \begin{equation}
-\begin{split}
-S_{ij} = {} & w_1\,\mathrm{IoU}(b_i,b_j)
-  + w_2 \exp\!\left(-\frac{\lVert \boldsymbol{\mu}_i-\boldsymbol{\mu}_j
-    \rVert_2^2}{2\sigma_i^2}\right)\\
-  & + w_3\,\rho_{ij} + w_4\,\gamma_{ij} + w_5\,c_j,
-\end{split}
+S_{ij}=1.8\,\mathrm{IoU}(b_i,b_j)+0.45\,\pi_{ij}
+       +0.90\,\rho_{ij}+0.65\,\gamma_{ij}+0.10\,c_j,
 \label{eq:association}
 \end{equation}
-where $\boldsymbol{\mu}$ denotes a box center, $\rho_{ij}$ is the fraction of
-keypoints falling inside a dilated component box, $\gamma_{ij}$ measures the
-consistency between keypoint span and component extent, and $c_j$ is the
-detection confidence. Pairs with incompatible classes are removed, the remaining
-pairs are sorted by $S_{ij}$ and assigned greedily one to one, so a terminal
-cannot be owned twice. If the best score of a pose hypothesis falls below an
-acceptance threshold, the hypothesis is left unmatched and flagged rather than
-attached to the closest device. Abstention is preferred here because an
-unmatched terminal is visible to an operator, whereas a wrong owner silently
-corrupts the netlist.
+where $b$ is a bounding box, $c_j$ is detection confidence, and
+$\pi_{ij}=\max(0,1-\lVert\boldsymbol{\mu}_i-\boldsymbol{\mu}_j\rVert_2/
+(1.5d_i))$ is center proximity normalized by the diagonal $d_i$ of $b_i$.
+$\rho_{ij}$ measures keypoint containment in a box dilated by 22\% (with a
+12-pixel minimum padding), and $\gamma_{ij}$ measures agreement between the
+keypoint span and component extent. Incompatible classes are removed; pairs with
+$S_{ij}>0.05$ are greedily assigned one to one in descending score order. This
+explicit rule makes instance ownership reproducible and prevents a terminal
+from being claimed twice.
 
 \begin{figure*}[!t]
 \centering
@@ -293,6 +276,8 @@ a component node and to the hole it occupies. Panel (c) is the interface consume
 by topology readout; it adds no visual evidence of its own.}
 \label{fig:reconstruction}
 \end{figure*}
+
+
 
 \subsection{Projective Rectification}
 
@@ -318,8 +303,8 @@ equally reliable evidence.
 
 \subsection{Geometry-Constrained Snap-to-Grid}
 
-Given the rectified coordinate and the canonical hole set, the candidate
-assignment and its acceptance rule are
+Given the rectified coordinate and the canonical hole set, the nearest candidate
+and its normalized distance are
 \begin{align}
 h^{*} &= \arg\min_{h\in\mathcal{H}}
    \lVert \mathbf{q}_{1:2}-\mathbf{c}_h \rVert_2,
@@ -330,8 +315,9 @@ h^{*} &= \arg\min_{h\in\mathcal{H}}
 \label{eq:accept}
 \end{align}
 where $d_{h^{*}}$ is the rectified snapping distance, $s_g$ the physical grid
-pitch, $\tau$ a normalized threshold, $t_p$ the terminal or package type, and
-$\phi$ a feasibility predicate. The predicate rejects assignments that leave the
+pitch, $\tau$ a normalized ambiguity threshold, $t_p$ the terminal or package
+type, and $\phi$ a feasibility predicate. The implementation retains the five
+nearest holes before applying $\phi$. The predicate rejects assignments that leave the
 board region, cross the central trench where the two halves are electrically
 separate, violate the span of an axial device, break the collinearity of a
 three-terminal device, or contradict package-specific pin order. Normalizing the
@@ -353,7 +339,7 @@ perception result is not discarded.
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.98\columnwidth]{figures/en/ambiguity.pdf}
+\includegraphics[width=0.90\columnwidth]{figures/en/ambiguity.pdf}
 \caption{Hole-level ambiguity. (a) A terminal that projects between adjacent
 holes is retained as several ranked candidates with their scores instead of being
 forced onto the nearest one. (b) After confirmation the terminal is bound to a
@@ -364,22 +350,15 @@ perception.}
 
 \subsection{Topology Readout}
 
-Accepted pin-hole relations are grouped into electrical nets using the known
-breadboard layout, in which each five-hole strip is internally connected and the
-supply rails span the board. A disjoint-set structure merges the strips joined by
-detected jumper wires, and the result is a component--net graph: nets are nodes,
-a two-terminal component is an edge between the two nets it joins, and a package
-that spans more than two nets keeps a node of its own with numbered pins.
-Physical holes remain the only source of net identity, so a corrected hole
-assignment regenerates the labels instead of inheriting stale ones.
-
-The graph can be exported as a topology-level netlist and compared against a
-reference by subgraph isomorphism~\cite{vf2}, which yields structured mismatch
-codes. These operations add no visual evidence and are not evaluated as part of
-our claims; their role is to test whether the reconstructed structure is usable
-downstream. Because each mismatch retains pointers to the originating instance,
-keypoint, rectified coordinate and candidate hole, a conclusion can be audited
-back to the pixels that produced it.
+Accepted pin--hole relations are grouped by the known breadboard connectivity.
+A disjoint-set structure merges strips joined by jumper wires and produces a
+component--net graph in which nets are nodes and two-terminal components are
+edges; multi-pin packages retain numbered component nodes. Because physical
+holes remain the source of net identity, correcting a hole regenerates rather
+than inherits net labels. The graph can be compared with a reference through
+subgraph isomorphism~\cite{vf2}. This readout adds no visual evidence and is not
+evaluated as a separate contribution; it only verifies that every reported
+relation remains traceable to its instance, keypoint, and candidate hole.
 
 \section{Experiments}
 
@@ -392,11 +371,8 @@ summing amplifiers built around a general-purpose operational amplifier. The
 images were captured under varying viewpoint and illumination and include wire
 overlap and partial occlusion, so no synthetic augmentation of the scene layout
 was required. Annotations combine component boxes with up to three ordered
-terminal keypoints per instance and per-keypoint visibility. Training,
-validation and test splits are disjoint, and the test split is excluded from
-optimization and model selection.
-% TODO(author): insert per-split image, instance and keypoint counts from the
-% training manifest before submission.
+terminal keypoints per instance and per-keypoint visibility. Training and validation splits are disjoint, and all metrics reported below are
+computed on the validation split excluded from optimization.
 
 The pose model is YOLOv8s-pose~\cite{yolo}, trained for 100 epochs at 960 px
 input with batch size 8, standard color, translation and scale augmentation, and
@@ -405,16 +381,15 @@ quantization used 144 calibration images and reduced the exported model from
 22 MB to 11 MB. All deployment measurements were taken on an edge platform built
 around an Intel Core Ultra 5 225U with 8 GB of memory, which exposes CPU,
 integrated GPU and neural processing unit execution paths through a common
-runtime~\cite{intel225u,openvino}. Between 60 and 1153 sequential inferences
+runtime~\cite{intel225u}. Between 60 and 1153 sequential inferences
 were collected per configuration, and package power was sampled from the running
 average power limit interface at 0.25 s intervals.
 
 \subsection{Detection and Pin Pose Accuracy}
 
-Table~\ref{tab:accuracy} reports validation accuracy after 100 epochs. The
-keypoint head keeps precision and recall above 0.95 despite the small spatial
-support of a terminal, which indicates that terminals of the annotated classes
-are reliably found and attributed to the correct instance. The gap between pin
+Table~\ref{tab:accuracy} reports the Ultralytics validation outputs after 100
+epochs. The keypoint head keeps precision and recall above 0.95 despite the small
+spatial support of a terminal. The gap between pin
 mAP50 and mAP50-95 is the more informative number for our purpose: coarse
 keypoint detection is largely solved, while strict localization is not, and it is
 precisely the strict regime that determines whether a terminal falls on the
@@ -436,7 +411,17 @@ Pin keypoints   & 0.955 & 0.954 & 0.947 & 0.829 \\
 \end{tabular}
 \end{table}
 
-\subsection{Heterogeneous Edge Inference}
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/en/netlist.pdf}
+\caption{Topology readout on a second board. (a) Terminals are bound to holes
+and colored by electrical net; dashed rings denote ambiguous assignments.
+(b) The exported component--net graph uses the same colors, providing a direct
+visual correspondence between image evidence and symbolic structure.}
+\label{fig:netlist}
+\end{figure*}
+
+\subsection{Edge Inference Performance}
 
 Table~\ref{tab:devices} lists latency and throughput for the six
 device--precision configurations. INT8 execution on the neural processing unit
@@ -466,27 +451,13 @@ NPU  & FP16 & 1.01 & 16.55 & 16.64 & 17.67 & 60.4 \\
 \end{tabular}
 \end{table}
 
-Fig.~\ref{fig:power} shows the package power trace of the three INT8
-configurations measured in one session. Two observations follow. First, the
-neural processing unit sustains the workload at 8.53 W package power, roughly
-4.1 W above the 4.4 W idle baseline. This corresponds to 114.2 mJ per inference,
-or 18.1 images per second per watt of incremental power, whereas the CPU
-configuration draws 26.4 W at 34.5 images per second and therefore spends
-roughly seven times more energy on the same inference. Second, during neural
-processing unit execution the CPU-core and integrated-GPU power curves stay near
-their idle level, so the units are genuinely free for other work. This is what
-makes the division of labor in Fig.~\ref{fig:pipeline} practical on one 8 GB
-platform: perception is resident on the neural processing unit while graph
-construction, rectification bookkeeping and verification run on the CPU.
-
-\begin{figure}[!t]
-\centering
-\includegraphics[width=0.98\columnwidth]{figures/en/power.pdf}
-\caption{Package power during three INT8 inference phases on the same platform.
-Peak package power is annotated per phase. While the neural processing unit is
-loaded, CPU-core and integrated-GPU power remain at the idle baseline.}
-\label{fig:power}
-\end{figure}
+Package-power measurements collected in the same session show that NPU INT8
+execution reaches 8.53 W, approximately 4.1 W above the 4.4 W idle baseline,
+which corresponds to 114.2 mJ per inference. By comparison, CPU INT8 reaches
+26.4 W at 34.5 images/s and consumes approximately seven times more energy per
+inference. During NPU execution, the CPU-core and integrated-GPU traces remain
+near their idle levels; these units therefore remain available for
+rectification, graph construction, and visualization.
 
 \subsection{Qualitative Analysis}
 
@@ -501,22 +472,6 @@ a terminal can be localized accurately and still fall near a boundary between
 two holes after rectification, as in Fig.~\ref{fig:ambiguity}; this is a
 geometric condition, not a perception error, and the pipeline reports it as such.
 
-\begin{figure*}[!t]
-\centering
-\includegraphics[width=0.96\textwidth]{figures/en/netlist.pdf}
-\caption{Topology readout on a second board, produced by one run of the full
-pipeline. (a) Every detected terminal is bound to a hole and colored by the net
-it joins; thin links connect the terminals of one net, and dashed red rings mark
-the six terminals the mapper itself flagged as ambiguous. (b) The resulting
-component--net graph, drawn from the exported netlist with the same net colors:
-nets are nodes, a two-terminal component is an edge between the two nets it
-joins, and the DIP-8 package keeps a node of its own with numbered pins because
-it spans more than two nets. Twelve components and 30 terminals resolve into ten
-nets; the five jumper wires contribute no edges but merge strips, and the nets
-they created are tagged with the wires responsible. Pins 1, 5 and 8 of the
-package reach single-terminal nodes and are reported as unconnected.}
-\label{fig:netlist}
-\end{figure*}
 
 Fig.~\ref{fig:netlist} shows the structure obtained on a second board, an
 inverting amplifier, in a single run of the complete pipeline: twelve components
@@ -528,44 +483,28 @@ symbolically, not as a claim about diagnostic accuracy. On this platform the
 deterministic path from a rectified pose result to a topology comparison
 completes in under 100 ms, so the visual stage dominates the end-to-end cost.
 
-\subsection{Cost of the Auditable Interface}
-
-Keeping perception, geometry and interpretation separate has an engineering
-cost, which we report for completeness. An optional on-device explanation module,
-used to verbalize structured findings under the fixed evidence produced by the
-symbolic stage, occupies 941.5 MB after INT4 weight compression, down from
-3.1 GB, and peaks at 1.36 GB resident memory with 63.9 ms to the first token and
-23.2 tokens per second on the integrated GPU~\cite{qwen25,lora,openvino-int4}.
-It therefore coexists with the vision model inside the 8 GB budget. Because this
-module only rephrases findings it is given and cannot alter the reconstruction,
-it is outside the scope of the visual claims evaluated above.
 
 \section{Discussion and Limitations}
 
-The results above quantify the perception stage and the cost of deploying it:
-terminals of the annotated classes are localized and attributed accurately, and
-the visual stage runs at interactive rates within an embedded power budget. The
-geometric stage is evaluated qualitatively here, and a quantitative hole-level
-benchmark remains open. Reporting pin-to-hole assignment accuracy, or an ablation
-that separates projective rectification from unconstrained nearest-neighbor
-snapping, requires per-terminal hole labels that the present annotation does not
-carry, and we prefer to state the protocol rather than approximate it from pose
-average precision: normalized keypoint error and PCK for the continuous stage,
-hole-assignment accuracy after rectification and snapping for the discrete
-stage, ambiguity-rejection precision over the terminals rejected by $\phi$, each
-stratified by viewpoint obliquity and occlusion level. Collecting these labels
-for a held-out subset is the next step, and it is what would isolate the
-contribution of the geometric layer from that of the pose model.
+The reported metrics establish pin-pose accuracy and deployment cost, while the
+case studies verify that the geometric output can be consumed by topology
+readout. They do not yet isolate the contribution of rectification and constrained
+snapping. The current annotation contains image-space keypoints but no
+per-terminal ground-truth hole identifier; consequently, pose average precision
+cannot be interpreted as hole-assignment accuracy. A complete geometric
+evaluation requires a held-out hole-labeled subset and should report normalized
+keypoint error and PCK before snapping, exact hole-assignment accuracy after
+snapping, and precision--coverage for ambiguity rejection. An ablation comparing
+image-space nearest-neighbor assignment, rectification alone, and the full
+feasibility-constrained mapper would then separate the effects of the three
+stages.
 
-Two further limitations bound the present results. The dataset is private and its
-keypoints denote rigid terminals rather than articulated joints, so results are
-not directly comparable with public pose benchmarks; releasing the annotations
-and the board geometry would improve reproducibility more than any additional
-architectural change. And the symbolic stage can detect that a reconstruction is
-structurally inconsistent with a reference, but it cannot certify that an
-individual keypoint or hole assignment was correct. Visual and structural
-metrics must therefore continue to be reported separately, which is also why the
-system exposes ambiguity to an operator instead of resolving it internally.
+The private dataset uses rigid-terminal rather than articulated-joint keypoints,
+so it is not directly comparable with public pose benchmarks; releasing its
+annotations and board geometry is important for reproducibility. Moreover,
+symbolic inconsistency cannot certify the correctness of an individual
+keypoint. Visual and structural metrics must therefore remain separate, and
+ambiguous assignments must remain visible.
 
 \section{Conclusion}
 
@@ -576,12 +515,10 @@ that cropping destroys; a planar homography maps arbitrary viewpoints to a
 canonical board; and a feasibility-constrained snap-to-grid stage converts
 rectified coordinates into discrete hole hypotheses while keeping residual
 ambiguity visible. The reconstruction is auditable because every downstream
-relation remains bound to the image evidence that produced it. Validation
-accuracy and cross-device measurements show that the approach is spatially
+relation remains bound to the image evidence that produced it. Validation accuracy and cross-device measurements show that the approach is
 accurate at the pose level and suitable for real-time execution on an integrated
-neural processing unit. The immediate next step is the controlled geometric
-ablation and the pin-to-hole benchmark described above, which are required to
-quantify the geometric stage independently of the pose model.
+neural processing unit. A hole-labeled benchmark and controlled geometric
+ablation remain necessary to quantify the discrete mapping stage independently.
 
 \begin{thebibliography}{00}
 \bibitem{llava} H. Liu, C. Li, Q. Wu, and Y. J. Lee, ``Visual instruction
@@ -598,33 +535,15 @@ Workshops}, 2022, pp. 2637--2646.
 2023. [Online]. Available: https://docs.ultralytics.com
 \bibitem{hartley} R. Hartley and A. Zisserman, \emph{Multiple View Geometry in
 Computer Vision}, 2nd ed. Cambridge, U.K.: Cambridge Univ. Press, 2003.
-\bibitem{zhangcalib} Z. Zhang, ``A flexible new technique for camera
-calibration,'' \emph{IEEE Trans. Pattern Anal. Mach. Intell.}, vol. 22, no. 11,
-pp. 1330--1334, 2000.
-\bibitem{amsnet} Y. Shi, Z. Tao, Y. Gao, T. Zhou, C. Chang, Y. Wang, B. Chen,
-G. Zhang, S. Liu, Z. Yu, T.-J. Lin, and L. He, ``AMSnet 2.0: a large AMS database
+\bibitem{amsnet} Y. Shi, Z. Tao, Y. Gao, L. Huang, H. Wang, Z. Yu, T.-J. Lin,
+and L. He, ``AMSnet 2.0: a large AMS database
 with AI segmentation for net detection,'' arXiv:2505.09155, 2025.
-\bibitem{spice} L. W. Nagel, ``SPICE2: a computer program to simulate
-semiconductor circuits,'' Ph.D. dissertation, Univ. California, Berkeley, CA,
-USA, 1975.
 \bibitem{vf2} L. P. Cordella, P. Foggia, C. Sansone, and M. Vento, ``A
 (sub)graph isomorphism algorithm for matching large graphs,'' \emph{IEEE Trans.
 Pattern Anal. Mach. Intell.}, vol. 26, no. 10, pp. 1367--1372, 2004.
-\bibitem{llm4eda} R. Zhong, X. Du, S. Kai, Z. Tang, S. Xu, H.-L. Zhen, J. Hao,
-Q. Xu, M. Yuan, and J. Yan, ``LLM4EDA: emerging progress in large language models
-for electronic design automation,'' arXiv:2401.12224, 2024.
 \bibitem{intel225u} Intel Corporation, ``Intel Core Ultra 5 processor 225U
 specifications,'' 2025. [Online]. Available:
 https://www.intel.com/content/www/us/en/products/sku/241861
-\bibitem{openvino} Intel Corporation, ``OpenVINO toolkit documentation,'' 2024.
-[Online]. Available: https://docs.openvino.ai
-\bibitem{qwen25} Qwen Team, ``Qwen2.5 technical report,'' arXiv:2412.15115,
-2024.
-\bibitem{lora} E. J. Hu, Y. Shen, P. Wallis, Z. Allen-Zhu, Y. Li, S. Wang,
-L. Wang, and W. Chen, ``LoRA: low-rank adaptation of large language models,'' in
-\emph{Proc. Int. Conf. Learning Representations}, 2022.
-\bibitem{openvino-int4} Intel Corporation, ``4-bit weight quantization,''
-OpenVINO documentation, 2024. [Online]. Available: https://docs.openvino.ai
 \end{thebibliography}
 
 \end{document}

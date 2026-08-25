@@ -1,0 +1,112 @@
+{
+  "run_id": "paper_failure_audit_20260825",
+  "started_at": "2026-08-25T13:54:50.712311+00:00",
+  "endpoint": "http://127.0.0.1:8000/api/v1/pipeline/run",
+  "health": {
+    "status": "ok"
+  },
+  "version": {
+    "service": "labguardian-server",
+    "code_version": "0.1.0",
+    "model_version": "dev",
+    "kb_version": "none",
+    "rule_version": "dev",
+    "llm_model": "",
+    "agent_llm_provider": "template",
+    "agent_llm_model": "template",
+    "api_prefix": "/api/v1",
+    "timestamp": 1787666090.7268941
+  },
+  "request_defaults": {
+    "conf": 0.25,
+    "iou": 0.5,
+    "imgsz": 960
+  },
+  "weights": {
+    "component": {
+      "path": "train_demo/merged_det_v2/weights/best.pt",
+      "size_bytes": 22531242,
+      "sha256": "c6da8b6669d23bb23e9dcc5df3e039c8f8190d1be299d291e073c9523126a8a9"
+    },
+    "pin": {
+      "path": "train_demo/new_component_pins/yolov8_component_pose/weights/best.pt",
+      "size_bytes": 6460760,
+      "sha256": "2b06f0d8f8d84b533757d758718307e98ab283274589579ae2962e9afb629205"
+    }
+  },
+  "cases": [
+    {
+      "case_id": "board_1_summing",
+      "tag": "dense_opamp",
+      "image_path": "outputs/demo_real/in/board_1.jpg",
+      "image_sha256": "e0d6b35a34f1ba4c0b5863246391a39dca10cf6dc3324ed34f61697ad5195f49",
+      "reference_id": "ua741_inverting_summing_amp_v1",
+      "raw_result": null
+    },
+    {
+      "case_id": "board_2_inverting",
+      "tag": "sparse_opamp",
+      "image_path": "outputs/demo_real/in/board_2.jpg",
+      "image_sha256": "f39b073cf1b319a46a48913d3d6c7cc76ed23b442c7a76e6c07c109346fb2af5",
+      "reference_id": "ua741_inverting_amp_gain10_v1",
+      "raw_result": null
+    },
+    {
+      "case_id": "board_3_diff_pair",
+      "tag": "dense_transistor",
+      "image_path": "outputs/demo_real/in/board_3.jpg",
+      "image_sha256": "09e84fe4ec9d87f593ad9380c56ae638c07afe9bfd08cea42b18da9b15fff80e",
+      "reference_id": "diff_pair_current_source_ref_split_potentiometer",
+      "raw_result": null
+    },
+    {
+      "case_id": "err_amp_portrait",
+      "tag": "rotation_90",
+      "image_path": "outputs/demo_real/in/err_amp_1.jpg",
+      "image_sha256": "9bf7d1c8cfe5ac60e9d21f7256e4971f948a3447d92152b6b4b76d04c4abb920",
+      "reference_id": "ua741_inverting_amp_gain10_v1",
+      "raw_result": null
+    },
+    {
+      "case_id": "err_amp_cw",
+      "tag": "rotation_180_a",
+      "image_path": "outputs/demo_real/in/err_amp_CW.jpg",
+      "image_sha256": "fc78b2145b98a5410debd8976036fd58c76fb4816ab4c4905b5a63562916df68",
+      "reference_id": "ua741_inverting_amp_gain10_v1",
+      "raw_result": null
+    },
+    {
+      "case_id": "err_amp_ccw",
+      "tag": "rotation_180_b",
+      "image_path": "outputs/demo_real/in/err_amp_CCW.jpg",
+      "image_sha256": "2e6cd51313278e238cda798b5d67bbd66bebe3df73c2b5bd05fde6c7683db3e4",
+      "reference_id": "ua741_inverting_amp_gain10_v1",
+      "raw_result": null
+    },
+    {
+      "case_id": "err_amp2_portrait",
+      "tag": "rotation_90_variant",
+      "image_path": "outputs/demo_real/in/err_amp2.jpg",
+      "image_sha256": "c02ca7e5db70d82bbb5d26880808ad2cdb9a3d046dfe4ed670ca26c4260128fc",
+      "reference_id": "ua741_inverting_amp_gain10_v1",
+      "raw_result": null
+    },
+    {
+      "case_id": "err_amp2_ccw",
+      "tag": "rotation_180_variant",
+      "image_path": "outputs/demo_real/in/err_amp2_CCW.jpg",
+      "image_sha256": "2aa755a9a0eafbe9ff88f9c563b3f686cf0352da56a9afdd96a68f484dd39ef3",
+      "reference_id": "ua741_inverting_amp_gain10_v1",
+      "raw_result": null
+    },
+    {
+      "case_id": "err_amp3_landscape",
+      "tag": "low_ic_confidence",
+      "image_path": "outputs/demo_real/in/err_amp3.jpg",
+      "image_sha256": "86f3345809ee7ea56d045fb87f8460dfb4e88fef4bb8201944d1795085532586",
+      "reference_id": "ua741_inverting_amp_gain10_v1",
+      "raw_result": null
+    }
+  ],
+  "finished_at": "2026-08-25T13:55:02.337704+00:00"
+}

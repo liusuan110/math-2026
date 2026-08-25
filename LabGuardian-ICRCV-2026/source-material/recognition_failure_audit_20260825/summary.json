@@ -1,0 +1,3668 @@
+[
+  {
+    "case_id": "board_1_summing",
+    "tag": "dense_opamp",
+    "expected_counts": {
+      "IC": 1,
+      "Resistor": 6,
+      "Wire": 4
+    },
+    "detected_counts": {
+      "IC": 1,
+      "Resistor": 6,
+      "Wire": 4
+    },
+    "missing_counts": {},
+    "extra_counts": {},
+    "detection_exact": true,
+    "detections": [
+      {
+        "id": "W1",
+        "type": "Wire",
+        "confidence": 0.9143,
+        "orientation": 90.0
+      },
+      {
+        "id": "W2",
+        "type": "Wire",
+        "confidence": 0.9058,
+        "orientation": 90.0
+      },
+      {
+        "id": "W3",
+        "type": "Wire",
+        "confidence": 0.8821,
+        "orientation": 0.0
+      },
+      {
+        "id": "W4",
+        "type": "Wire",
+        "confidence": 0.872,
+        "orientation": 0.0
+      },
+      {
+        "id": "R1",
+        "type": "Resistor",
+        "confidence": 0.8329,
+        "orientation": 90.0
+      },
+      {
+        "id": "R2",
+        "type": "Resistor",
+        "confidence": 0.8238,
+        "orientation": 90.0
+      },
+      {
+        "id": "R3",
+        "type": "Resistor",
+        "confidence": 0.8196,
+        "orientation": 0.0
+      },
+      {
+        "id": "R4",
+        "type": "Resistor",
+        "confidence": 0.8121,
+        "orientation": 90.0
+      },
+      {
+        "id": "R5",
+        "type": "Resistor",
+        "confidence": 0.8119,
+        "orientation": 0.0
+      },
+      {
+        "id": "R6",
+        "type": "Resistor",
+        "confidence": 0.7406,
+        "orientation": 0.0
+      },
+      {
+        "id": "IC1",
+        "type": "IC",
+        "confidence": 0.9185,
+        "orientation": 0.0
+      }
+    ],
+    "pin_count": 28,
+    "pin_sources": {
+      "ic_ef_bridge_geometry": 8,
+      "model": 20
+    },
+    "ambiguous_pin_count": 8,
+    "ambiguous_pin_rate": 0.2857,
+    "unmapped_pin_count": 0,
+    "ambiguity_reasons": {
+      "close_vote_margin": 1,
+      "low_snap_confidence": 7,
+      "multiple_candidate_holes": 1
+    },
+    "calibration": {
+      "mode": "detected_hole_map",
+      "grid_ready": true
+    },
+    "component_count_api": 11,
+    "net_count": 10,
+    "is_correct": false,
+    "risk_level": "warning",
+    "similarity": 0.776,
+    "progress": 1.0,
+    "error_codes": [
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "POWER_NODE_MISMATCH",
+      "INPUT_NODE_MISMATCH",
+      "INPUT_NODE_MISMATCH",
+      "OUTPUT_NODE_MISMATCH"
+    ],
+    "stage_duration_ms": {
+      "detect": 817.1,
+      "pin_detect": 929.27,
+      "mapping": 9.4,
+      "topology": 1.72,
+      "validate": 1.09,
+      "semantic_analysis": 0.15
+    },
+    "total_duration_ms": 4112.66,
+    "runtime_metadata": {
+      "code_version": "0.1.0",
+      "model_version": "dev",
+      "kb_version": "none",
+      "rule_version": "dev",
+      "model_root": "/Users/liusuan/Desktop/LabGuardian-Server/models",
+      "component_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/merged_det_v2/weights/best.pt",
+      "pin_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/new_component_pins/yolov8_component_pose/weights/best.pt",
+      "yolo_device": "cpu",
+      "pin_model_device": "cpu",
+      "conf": 0.25,
+      "iou": 0.5,
+      "imgsz": 960,
+      "board_rows": 63,
+      "board_cols_per_side": 5,
+      "reference_ic_subtypes_applied": [
+        {
+          "component_id": "IC1",
+          "part_subtype": "UA741",
+          "source": "reference_circuit",
+          "matched_by": "single_reference_ic"
+        }
+      ],
+      "net_normalization": {
+        "logical_nets": [
+          {
+            "source_id": "NET_000",
+            "canonical_name": "NET_000",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_000"
+            ],
+            "pins": [
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "C21",
+                "electrical_node_id": "ROW_21_L"
+              },
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "G25",
+                "electrical_node_id": "ROW_25_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin6",
+                "hole_id": "E21",
+                "electrical_node_id": "ROW_21_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_21_L",
+              "ROW_25_R"
+            ],
+            "member_hole_ids": [
+              "C21",
+              "E21",
+              "G25"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_001",
+            "canonical_name": "NET_001",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_001"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "F15",
+                "electrical_node_id": "ROW_15_R"
+              },
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "I15",
+                "electrical_node_id": "ROW_15_R"
+              },
+              {
+                "component_id": "R6",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "G15",
+                "electrical_node_id": "ROW_15_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_15_R"
+            ],
+            "member_hole_ids": [
+              "F15",
+              "G15",
+              "I15"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_002",
+            "canonical_name": "NET_002",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_002"
+            ],
+            "pins": [
+              {
+                "component_id": "R4",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "I21",
+                "electrical_node_id": "ROW_21_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin3",
+                "hole_id": "F21",
+                "electrical_node_id": "ROW_21_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_21_R"
+            ],
+            "member_hole_ids": [
+              "F21",
+              "I21"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_003",
+            "canonical_name": "VCC",
+            "role": "power",
+            "role_label": "VCC",
+            "aliases": [
+              "VCC",
+              "NET_003"
+            ],
+            "pins": [
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "LN20",
+                "electrical_node_id": "TRACK_LN_SEG1"
+              },
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "D19",
+                "electrical_node_id": "ROW_19_L"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin8",
+                "hole_id": "E19",
+                "electrical_node_id": "ROW_19_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_19_L",
+              "TRACK_LN_SEG1"
+            ],
+            "member_hole_ids": [
+              "D19",
+              "E19",
+              "LN20"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_005",
+            "canonical_name": "NET_005",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_005"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "I16",
+                "electrical_node_id": "ROW_16_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_16_R"
+            ],
+            "member_hole_ids": [
+              "I16"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_006",
+            "canonical_name": "NET_006",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_006"
+            ],
+            "pins": [
+              {
+                "component_id": "R6",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "G19",
+                "electrical_node_id": "ROW_19_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin1",
+                "hole_id": "F19",
+                "electrical_node_id": "ROW_19_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_19_R"
+            ],
+            "member_hole_ids": [
+              "F19",
+              "G19"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_007",
+            "canonical_name": "NET_007",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_007"
+            ],
+            "pins": [
+              {
+                "component_id": "R5",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "H24",
+                "electrical_node_id": "ROW_24_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_24_R"
+            ],
+            "member_hole_ids": [
+              "H24"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_008",
+            "canonical_name": "NET_008",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_008"
+            ],
+            "pins": [
+              {
+                "component_id": "W4",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "B15",
+                "electrical_node_id": "ROW_15_L"
+              },
+              {
+                "component_id": "W4",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "A20",
+                "electrical_node_id": "ROW_20_L"
+              },
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "C15",
+                "electrical_node_id": "ROW_15_L"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin7",
+                "hole_id": "E20",
+                "electrical_node_id": "ROW_20_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_15_L",
+              "ROW_20_L"
+            ],
+            "member_hole_ids": [
+              "A20",
+              "B15",
+              "C15",
+              "E20"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_009",
+            "canonical_name": "NET_009",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_009"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "I20",
+                "electrical_node_id": "ROW_20_R"
+              },
+              {
+                "component_id": "R5",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "H20",
+                "electrical_node_id": "ROW_20_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin2",
+                "hole_id": "F20",
+                "electrical_node_id": "ROW_20_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_20_R"
+            ],
+            "member_hole_ids": [
+              "F20",
+              "H20",
+              "I20"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_010",
+            "canonical_name": "GND",
+            "role": "ground",
+            "role_label": "GND",
+            "aliases": [
+              "GND",
+              "NET_010"
+            ],
+            "pins": [
+              {
+                "component_id": "W3",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "J23",
+                "electrical_node_id": "ROW_23_R"
+              },
+              {
+                "component_id": "W3",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "RP26",
+                "electrical_node_id": "TRACK_RP_SEG1"
+              },
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "RP11",
+                "electrical_node_id": "TRACK_RP_SEG1"
+              },
+              {
+                "component_id": "R4",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "RP16",
+                "electrical_node_id": "TRACK_RP_SEG1"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_23_R",
+              "TRACK_RP_SEG1"
+            ],
+            "member_hole_ids": [
+              "J23",
+              "RP11",
+              "RP16",
+              "RP26"
+            ],
+            "source": "netlist_v2"
+          }
+        ],
+        "warnings": [],
+        "applied_aliases": [],
+        "applied_merges": [],
+        "inferred_aliases": []
+      },
+      "reference": {
+        "source": "reference_id",
+        "reference_id": "ua741_inverting_summing_amp_v1",
+        "format": "logical_reference_v1",
+        "name": "uA741 反相加法器逻辑参考电路"
+      }
+    },
+    "detector_class_count": 35,
+    "pin_detector_class_count": 32,
+    "topology_component_count": 11
+  },
+  {
+    "case_id": "board_2_inverting",
+    "tag": "sparse_opamp",
+    "expected_counts": {
+      "IC": 1,
+      "Resistor": 3,
+      "Wire": 3
+    },
+    "detected_counts": {
+      "IC": 1,
+      "Resistor": 3,
+      "Wire": 3
+    },
+    "missing_counts": {},
+    "extra_counts": {},
+    "detection_exact": true,
+    "detections": [
+      {
+        "id": "W1",
+        "type": "Wire",
+        "confidence": 0.9252,
+        "orientation": 90.0
+      },
+      {
+        "id": "W2",
+        "type": "Wire",
+        "confidence": 0.9094,
+        "orientation": 90.0
+      },
+      {
+        "id": "R1",
+        "type": "Resistor",
+        "confidence": 0.8639,
+        "orientation": 0.0
+      },
+      {
+        "id": "R2",
+        "type": "Resistor",
+        "confidence": 0.8432,
+        "orientation": 90.0
+      },
+      {
+        "id": "R3",
+        "type": "Resistor",
+        "confidence": 0.788,
+        "orientation": 0.0
+      },
+      {
+        "id": "W3",
+        "type": "Wire",
+        "confidence": 0.7843,
+        "orientation": 0.0
+      },
+      {
+        "id": "IC1",
+        "type": "IC",
+        "confidence": 0.9508,
+        "orientation": 0.0
+      }
+    ],
+    "pin_count": 20,
+    "pin_sources": {
+      "ic_ef_bridge_geometry": 8,
+      "model": 12
+    },
+    "ambiguous_pin_count": 8,
+    "ambiguous_pin_rate": 0.4,
+    "unmapped_pin_count": 0,
+    "ambiguity_reasons": {
+      "close_vote_margin": 1,
+      "low_snap_confidence": 7,
+      "multiple_candidate_holes": 1
+    },
+    "calibration": {
+      "mode": "detected_hole_map",
+      "grid_ready": true
+    },
+    "component_count_api": 7,
+    "net_count": 8,
+    "is_correct": false,
+    "risk_level": "warning",
+    "similarity": 0.799,
+    "progress": 1.0,
+    "error_codes": [
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "INPUT_NODE_MISMATCH",
+      "OUTPUT_NODE_MISMATCH"
+    ],
+    "stage_duration_ms": {
+      "detect": 107.3,
+      "pin_detect": 834.63,
+      "mapping": 8.22,
+      "topology": 1.43,
+      "validate": 0.54,
+      "semantic_analysis": 0.07
+    },
+    "total_duration_ms": 958.1,
+    "runtime_metadata": {
+      "code_version": "0.1.0",
+      "model_version": "dev",
+      "kb_version": "none",
+      "rule_version": "dev",
+      "model_root": "/Users/liusuan/Desktop/LabGuardian-Server/models",
+      "component_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/merged_det_v2/weights/best.pt",
+      "pin_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/new_component_pins/yolov8_component_pose/weights/best.pt",
+      "yolo_device": "cpu",
+      "pin_model_device": "cpu",
+      "conf": 0.25,
+      "iou": 0.5,
+      "imgsz": 960,
+      "board_rows": 63,
+      "board_cols_per_side": 5,
+      "reference_ic_subtypes_applied": [
+        {
+          "component_id": "IC1",
+          "part_subtype": "UA741",
+          "source": "reference_circuit",
+          "matched_by": "single_reference_ic"
+        }
+      ],
+      "net_normalization": {
+        "logical_nets": [
+          {
+            "source_id": "NET_000",
+            "canonical_name": "NET_000",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_000"
+            ],
+            "pins": [
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "C21",
+                "electrical_node_id": "ROW_21_L"
+              },
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "G25",
+                "electrical_node_id": "ROW_25_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin6",
+                "hole_id": "E21",
+                "electrical_node_id": "ROW_21_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_21_L",
+              "ROW_25_R"
+            ],
+            "member_hole_ids": [
+              "C21",
+              "E21",
+              "G25"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_001",
+            "canonical_name": "VEE",
+            "role": "power",
+            "role_label": "VEE",
+            "aliases": [
+              "VEE",
+              "NET_001"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "RN16",
+                "electrical_node_id": "TRACK_RN_SEG1"
+              }
+            ],
+            "member_node_ids": [
+              "TRACK_RN_SEG1"
+            ],
+            "member_hole_ids": [
+              "RN16"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_003",
+            "canonical_name": "NET_003",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_003"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "J21",
+                "electrical_node_id": "ROW_21_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin3",
+                "hole_id": "F21",
+                "electrical_node_id": "ROW_21_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_21_R"
+            ],
+            "member_hole_ids": [
+              "F21",
+              "J21"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_004",
+            "canonical_name": "VCC",
+            "role": "power",
+            "role_label": "VCC",
+            "aliases": [
+              "VCC",
+              "NET_004"
+            ],
+            "pins": [
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "LN20",
+                "electrical_node_id": "TRACK_LN_SEG1"
+              },
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "D19",
+                "electrical_node_id": "ROW_19_L"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin8",
+                "hole_id": "E19",
+                "electrical_node_id": "ROW_19_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_19_L",
+              "TRACK_LN_SEG1"
+            ],
+            "member_hole_ids": [
+              "D19",
+              "E19",
+              "LN20"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_005",
+            "canonical_name": "NET_005",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_005"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "I16",
+                "electrical_node_id": "ROW_16_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_16_R"
+            ],
+            "member_hole_ids": [
+              "I16"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_007",
+            "canonical_name": "NET_007",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_007"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "H24",
+                "electrical_node_id": "ROW_24_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_24_R"
+            ],
+            "member_hole_ids": [
+              "H24"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_009",
+            "canonical_name": "NET_009",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_009"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "H20",
+                "electrical_node_id": "ROW_20_R"
+              },
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "I20",
+                "electrical_node_id": "ROW_20_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin2",
+                "hole_id": "F20",
+                "electrical_node_id": "ROW_20_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_20_R"
+            ],
+            "member_hole_ids": [
+              "F20",
+              "H20",
+              "I20"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_010",
+            "canonical_name": "GND",
+            "role": "ground",
+            "role_label": "GND",
+            "aliases": [
+              "GND",
+              "NET_010"
+            ],
+            "pins": [
+              {
+                "component_id": "W3",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "J22",
+                "electrical_node_id": "ROW_22_R"
+              },
+              {
+                "component_id": "W3",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "RP26",
+                "electrical_node_id": "TRACK_RP_SEG1"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin4",
+                "hole_id": "F22",
+                "electrical_node_id": "ROW_22_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_22_R",
+              "TRACK_RP_SEG1"
+            ],
+            "member_hole_ids": [
+              "F22",
+              "J22",
+              "RP26"
+            ],
+            "source": "netlist_v2"
+          }
+        ],
+        "warnings": [],
+        "applied_aliases": [],
+        "applied_merges": [],
+        "inferred_aliases": []
+      },
+      "reference": {
+        "source": "reference_id",
+        "reference_id": "ua741_inverting_amp_gain10_v1",
+        "format": "logical_reference_v1",
+        "name": "uA741 反相放大器（增益 10）逻辑参考电路"
+      }
+    },
+    "detector_class_count": 35,
+    "pin_detector_class_count": 32,
+    "topology_component_count": 7
+  },
+  {
+    "case_id": "board_3_diff_pair",
+    "tag": "dense_transistor",
+    "expected_counts": {
+      "Transistor": 3,
+      "Resistor": 7,
+      "Wire": 3
+    },
+    "detected_counts": {
+      "Resistor": 7,
+      "Transistor": 3,
+      "Wire": 3
+    },
+    "missing_counts": {},
+    "extra_counts": {},
+    "detection_exact": true,
+    "detections": [
+      {
+        "id": "W1",
+        "type": "Wire",
+        "confidence": 0.9255,
+        "orientation": 0.0
+      },
+      {
+        "id": "Q1",
+        "type": "Transistor",
+        "confidence": 0.9042,
+        "orientation": 0.0
+      },
+      {
+        "id": "Q2",
+        "type": "Transistor",
+        "confidence": 0.8959,
+        "orientation": 0.0
+      },
+      {
+        "id": "Q3",
+        "type": "Transistor",
+        "confidence": 0.8876,
+        "orientation": 90.0
+      },
+      {
+        "id": "R1",
+        "type": "Resistor",
+        "confidence": 0.8597,
+        "orientation": 0.0
+      },
+      {
+        "id": "R2",
+        "type": "Resistor",
+        "confidence": 0.8565,
+        "orientation": 0.0
+      },
+      {
+        "id": "R3",
+        "type": "Resistor",
+        "confidence": 0.8419,
+        "orientation": 0.0
+      },
+      {
+        "id": "R4",
+        "type": "Resistor",
+        "confidence": 0.837,
+        "orientation": 90.0
+      },
+      {
+        "id": "R5",
+        "type": "Resistor",
+        "confidence": 0.8175,
+        "orientation": 90.0
+      },
+      {
+        "id": "R6",
+        "type": "Resistor",
+        "confidence": 0.811,
+        "orientation": 0.0
+      },
+      {
+        "id": "R7",
+        "type": "Resistor",
+        "confidence": 0.779,
+        "orientation": 90.0
+      },
+      {
+        "id": "W2",
+        "type": "Wire",
+        "confidence": 0.7205,
+        "orientation": 0.0
+      },
+      {
+        "id": "W3",
+        "type": "Wire",
+        "confidence": 0.69,
+        "orientation": 0.0
+      }
+    ],
+    "pin_count": 28,
+    "pin_sources": {
+      "model": 28
+    },
+    "ambiguous_pin_count": 7,
+    "ambiguous_pin_rate": 0.25,
+    "unmapped_pin_count": 0,
+    "ambiguity_reasons": {
+      "close_vote_margin": 2,
+      "low_snap_confidence": 5,
+      "multiple_candidate_holes": 2
+    },
+    "calibration": {
+      "mode": "detected_hole_map",
+      "grid_ready": true
+    },
+    "component_count_api": 13,
+    "net_count": 12,
+    "is_correct": false,
+    "risk_level": "warning",
+    "similarity": 0.884,
+    "progress": 1.0,
+    "error_codes": [
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "PIN_ROLE_MISMATCH",
+      "PIN_ROLE_MISMATCH",
+      "PIN_ROLE_MISMATCH",
+      "PIN_ROLE_MISMATCH",
+      "PIN_ROLE_MISMATCH",
+      "PIN_ROLE_MISMATCH",
+      "PIN_ROLE_MISMATCH",
+      "PIN_ROLE_MISMATCH",
+      "PIN_ROLE_MISMATCH",
+      "INPUT_NODE_MISMATCH",
+      "INPUT_NODE_MISMATCH",
+      "OUTPUT_NODE_MISMATCH",
+      "OUTPUT_NODE_MISMATCH"
+    ],
+    "stage_duration_ms": {
+      "detect": 81.34,
+      "pin_detect": 47.21,
+      "mapping": 768.3,
+      "topology": 1.58,
+      "validate": 1.02,
+      "semantic_analysis": 0.1
+    },
+    "total_duration_ms": 904.87,
+    "runtime_metadata": {
+      "code_version": "0.1.0",
+      "model_version": "dev",
+      "kb_version": "none",
+      "rule_version": "dev",
+      "model_root": "/Users/liusuan/Desktop/LabGuardian-Server/models",
+      "component_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/merged_det_v2/weights/best.pt",
+      "pin_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/new_component_pins/yolov8_component_pose/weights/best.pt",
+      "yolo_device": "cpu",
+      "pin_model_device": "cpu",
+      "conf": 0.25,
+      "iou": 0.5,
+      "imgsz": 960,
+      "board_rows": 63,
+      "board_cols_per_side": 5,
+      "net_normalization": {
+        "logical_nets": [
+          {
+            "source_id": "NET_000",
+            "canonical_name": "NET_000",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_000"
+            ],
+            "pins": [
+              {
+                "component_id": "Q3",
+                "component_type": "Transistor",
+                "pin_name": "pin2",
+                "hole_id": "F25",
+                "electrical_node_id": "ROW_25_R"
+              },
+              {
+                "component_id": "R5",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "I25",
+                "electrical_node_id": "ROW_25_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_25_R"
+            ],
+            "member_hole_ids": [
+              "F25",
+              "I25"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_001",
+            "canonical_name": "NET_001",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_001"
+            ],
+            "pins": [
+              {
+                "component_id": "Q3",
+                "component_type": "Transistor",
+                "pin_name": "pin1",
+                "hole_id": "F22",
+                "electrical_node_id": "ROW_22_R"
+              },
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "I11",
+                "electrical_node_id": "ROW_11_R"
+              },
+              {
+                "component_id": "R4",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "J30",
+                "electrical_node_id": "ROW_30_R"
+              },
+              {
+                "component_id": "R6",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "G11",
+                "electrical_node_id": "ROW_11_R"
+              },
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "J11",
+                "electrical_node_id": "ROW_11_R"
+              },
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "J22",
+                "electrical_node_id": "ROW_22_R"
+              },
+              {
+                "component_id": "W3",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "H22",
+                "electrical_node_id": "ROW_22_R"
+              },
+              {
+                "component_id": "W3",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "H30",
+                "electrical_node_id": "ROW_30_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_11_R",
+              "ROW_22_R",
+              "ROW_30_R"
+            ],
+            "member_hole_ids": [
+              "F22",
+              "G11",
+              "H22",
+              "H30",
+              "I11",
+              "J11",
+              "J22",
+              "J30"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_002",
+            "canonical_name": "NET_002",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_002"
+            ],
+            "pins": [
+              {
+                "component_id": "Q3",
+                "component_type": "Transistor",
+                "pin_name": "pin3",
+                "hole_id": "F27",
+                "electrical_node_id": "ROW_27_R"
+              },
+              {
+                "component_id": "R7",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "I27",
+                "electrical_node_id": "ROW_27_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_27_R"
+            ],
+            "member_hole_ids": [
+              "F27",
+              "I27"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_003",
+            "canonical_name": "VEE",
+            "role": "power",
+            "role_label": "VEE",
+            "aliases": [
+              "VEE",
+              "NET_003"
+            ],
+            "pins": [
+              {
+                "component_id": "R4",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "RN24",
+                "electrical_node_id": "TRACK_RN_SEG1"
+              }
+            ],
+            "member_node_ids": [
+              "TRACK_RN_SEG1"
+            ],
+            "member_hole_ids": [
+              "RN24"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_004",
+            "canonical_name": "NET_004",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_004"
+            ],
+            "pins": [
+              {
+                "component_id": "R6",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "G15",
+                "electrical_node_id": "ROW_15_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_15_R"
+            ],
+            "member_hole_ids": [
+              "G15"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_005",
+            "canonical_name": "NET_005",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_005"
+            ],
+            "pins": [
+              {
+                "component_id": "Q1",
+                "component_type": "Transistor",
+                "pin_name": "pin2",
+                "hole_id": "F16",
+                "electrical_node_id": "ROW_16_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_16_R"
+            ],
+            "member_hole_ids": [
+              "F16"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_006",
+            "canonical_name": "GND",
+            "role": "ground",
+            "role_label": "GND",
+            "aliases": [
+              "GND",
+              "NET_006"
+            ],
+            "pins": [
+              {
+                "component_id": "R5",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "RP20",
+                "electrical_node_id": "TRACK_RP_SEG1"
+              },
+              {
+                "component_id": "R7",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "RP21",
+                "electrical_node_id": "TRACK_RP_SEG1"
+              }
+            ],
+            "member_node_ids": [
+              "TRACK_RP_SEG1"
+            ],
+            "member_hole_ids": [
+              "RP20",
+              "RP21"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_007",
+            "canonical_name": "VCC",
+            "role": "power",
+            "role_label": "VCC",
+            "aliases": [
+              "VCC",
+              "NET_007"
+            ],
+            "pins": [
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "LP5",
+                "electrical_node_id": "TRACK_LP_SEG1"
+              },
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "B12",
+                "electrical_node_id": "ROW_12_L"
+              },
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "D12",
+                "electrical_node_id": "ROW_12_L"
+              },
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "B12",
+                "electrical_node_id": "ROW_12_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_12_L",
+              "TRACK_LP_SEG1"
+            ],
+            "member_hole_ids": [
+              "B12",
+              "D12",
+              "LP5"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_008",
+            "canonical_name": "NET_008",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_008"
+            ],
+            "pins": [
+              {
+                "component_id": "Q2",
+                "component_type": "Transistor",
+                "pin_name": "pin3",
+                "hole_id": "H7",
+                "electrical_node_id": "ROW_7_R"
+              },
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "I7",
+                "electrical_node_id": "ROW_7_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_7_R"
+            ],
+            "member_hole_ids": [
+              "H7",
+              "I7"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_009",
+            "canonical_name": "NET_009",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_009"
+            ],
+            "pins": [
+              {
+                "component_id": "Q2",
+                "component_type": "Transistor",
+                "pin_name": "pin1",
+                "hole_id": "E8",
+                "electrical_node_id": "ROW_8_L"
+              },
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "D8",
+                "electrical_node_id": "ROW_8_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_8_L"
+            ],
+            "member_hole_ids": [
+              "D8",
+              "E8"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_010",
+            "canonical_name": "NET_010",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_010"
+            ],
+            "pins": [
+              {
+                "component_id": "Q1",
+                "component_type": "Transistor",
+                "pin_name": "pin1",
+                "hole_id": "E16",
+                "electrical_node_id": "ROW_16_L"
+              },
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "B16",
+                "electrical_node_id": "ROW_16_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_16_L"
+            ],
+            "member_hole_ids": [
+              "B16",
+              "E16"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_011",
+            "canonical_name": "NET_011",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_011"
+            ],
+            "pins": [
+              {
+                "component_id": "Q2",
+                "component_type": "Transistor",
+                "pin_name": "pin2",
+                "hole_id": "F8",
+                "electrical_node_id": "ROW_8_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_8_R"
+            ],
+            "member_hole_ids": [
+              "F8"
+            ],
+            "source": "netlist_v2"
+          }
+        ],
+        "warnings": [],
+        "applied_aliases": [],
+        "applied_merges": [],
+        "inferred_aliases": []
+      },
+      "reference": {
+        "source": "reference_id",
+        "reference_id": "diff_pair_current_source_ref_split_potentiometer",
+        "format": "logical_reference_v1",
+        "name": "差分放大器 + VT3 恒流源参考电路"
+      }
+    },
+    "detector_class_count": 35,
+    "pin_detector_class_count": 32,
+    "topology_component_count": 13
+  },
+  {
+    "case_id": "err_amp2_ccw",
+    "tag": "rotation_180_variant",
+    "expected_counts": {
+      "IC": 1,
+      "Resistor": 3,
+      "Wire": 3
+    },
+    "detected_counts": {
+      "Resistor": 3,
+      "Wire": 2
+    },
+    "missing_counts": {
+      "IC": 1,
+      "Wire": 1
+    },
+    "extra_counts": {},
+    "detection_exact": false,
+    "detections": [
+      {
+        "id": "W1",
+        "type": "Wire",
+        "confidence": 0.9328,
+        "orientation": 90.0
+      },
+      {
+        "id": "W2",
+        "type": "Wire",
+        "confidence": 0.8512,
+        "orientation": 90.0
+      },
+      {
+        "id": "R1",
+        "type": "Resistor",
+        "confidence": 0.8202,
+        "orientation": 0.0
+      },
+      {
+        "id": "R2",
+        "type": "Resistor",
+        "confidence": 0.752,
+        "orientation": 0.0
+      },
+      {
+        "id": "R3",
+        "type": "Resistor",
+        "confidence": 0.6013,
+        "orientation": 90.0
+      }
+    ],
+    "pin_count": 10,
+    "pin_sources": {
+      "model": 10
+    },
+    "ambiguous_pin_count": 4,
+    "ambiguous_pin_rate": 0.4,
+    "unmapped_pin_count": 0,
+    "ambiguity_reasons": {
+      "low_snap_confidence": 4
+    },
+    "calibration": {
+      "mode": "detected_hole_map",
+      "grid_ready": true
+    },
+    "component_count_api": 5,
+    "net_count": 7,
+    "is_correct": false,
+    "risk_level": "warning",
+    "similarity": 0.724,
+    "progress": 0.75,
+    "error_codes": [
+      "COMPONENT_MISSING",
+      "WRONG_CONNECTION",
+      "INPUT_NODE_MISMATCH",
+      "OUTPUT_NODE_MISMATCH"
+    ],
+    "stage_duration_ms": {
+      "detect": 106.37,
+      "pin_detect": 52.82,
+      "mapping": 756.36,
+      "topology": 1.16,
+      "validate": 0.67,
+      "semantic_analysis": 0.05
+    },
+    "total_duration_ms": 924.17,
+    "runtime_metadata": {
+      "code_version": "0.1.0",
+      "model_version": "dev",
+      "kb_version": "none",
+      "rule_version": "dev",
+      "model_root": "/Users/liusuan/Desktop/LabGuardian-Server/models",
+      "component_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/merged_det_v2/weights/best.pt",
+      "pin_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/new_component_pins/yolov8_component_pose/weights/best.pt",
+      "yolo_device": "cpu",
+      "pin_model_device": "cpu",
+      "conf": 0.25,
+      "iou": 0.5,
+      "imgsz": 960,
+      "board_rows": 63,
+      "board_cols_per_side": 5,
+      "net_normalization": {
+        "logical_nets": [
+          {
+            "source_id": "NET_000",
+            "canonical_name": "VCC",
+            "role": "power",
+            "role_label": "VCC",
+            "aliases": [
+              "VCC",
+              "NET_000"
+            ],
+            "pins": [
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "LP33",
+                "electrical_node_id": "TRACK_LP_SEG2"
+              },
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "D41",
+                "electrical_node_id": "ROW_41_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_41_L",
+              "TRACK_LP_SEG2"
+            ],
+            "member_hole_ids": [
+              "D41",
+              "LP33"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_001",
+            "canonical_name": "NET_001",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_001"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "G37",
+                "electrical_node_id": "ROW_37_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_37_R"
+            ],
+            "member_hole_ids": [
+              "G37"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_002",
+            "canonical_name": "NET_002",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_002"
+            ],
+            "pins": [
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "B43",
+                "electrical_node_id": "ROW_43_L"
+              },
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "F46",
+                "electrical_node_id": "ROW_46_R"
+              },
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "H46",
+                "electrical_node_id": "ROW_46_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_43_L",
+              "ROW_46_R"
+            ],
+            "member_hole_ids": [
+              "B43",
+              "F46",
+              "H46"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_003",
+            "canonical_name": "NET_003",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_003"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "G41",
+                "electrical_node_id": "ROW_41_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_41_R"
+            ],
+            "member_hole_ids": [
+              "G41"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_004",
+            "canonical_name": "NET_004",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_004"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "I43",
+                "electrical_node_id": "ROW_43_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_43_R"
+            ],
+            "member_hole_ids": [
+              "I43"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_005",
+            "canonical_name": "NET_005",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_005"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "H42",
+                "electrical_node_id": "ROW_42_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_42_R"
+            ],
+            "member_hole_ids": [
+              "H42"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_006",
+            "canonical_name": "GND",
+            "role": "ground",
+            "role_label": "GND",
+            "aliases": [
+              "GND",
+              "NET_006"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "RP35",
+                "electrical_node_id": "TRACK_RP_SEG2"
+              }
+            ],
+            "member_node_ids": [
+              "TRACK_RP_SEG2"
+            ],
+            "member_hole_ids": [
+              "RP35"
+            ],
+            "source": "netlist_v2"
+          }
+        ],
+        "warnings": [],
+        "applied_aliases": [],
+        "applied_merges": [],
+        "inferred_aliases": []
+      },
+      "reference": {
+        "source": "reference_id",
+        "reference_id": "ua741_inverting_amp_gain10_v1",
+        "format": "logical_reference_v1",
+        "name": "uA741 反相放大器（增益 10）逻辑参考电路"
+      }
+    },
+    "detector_class_count": 35,
+    "pin_detector_class_count": 32,
+    "topology_component_count": 5
+  },
+  {
+    "case_id": "err_amp2_portrait",
+    "tag": "rotation_90_variant",
+    "expected_counts": {
+      "IC": 1,
+      "Resistor": 3,
+      "Wire": 3
+    },
+    "detected_counts": {
+      "IC": 1,
+      "Potentiometer": 1,
+      "Resistor": 2,
+      "Wire": 2
+    },
+    "missing_counts": {
+      "Resistor": 1,
+      "Wire": 1
+    },
+    "extra_counts": {
+      "Potentiometer": 1
+    },
+    "detection_exact": false,
+    "detections": [
+      {
+        "id": "W1",
+        "type": "Wire",
+        "confidence": 0.8797,
+        "orientation": 0.0
+      },
+      {
+        "id": "W2",
+        "type": "Wire",
+        "confidence": 0.8011,
+        "orientation": 0.0
+      },
+      {
+        "id": "R1",
+        "type": "Resistor",
+        "confidence": 0.7183,
+        "orientation": 90.0
+      },
+      {
+        "id": "R2",
+        "type": "Resistor",
+        "confidence": 0.6559,
+        "orientation": 90.0
+      },
+      {
+        "id": "POT1",
+        "type": "Potentiometer",
+        "confidence": 0.3011,
+        "orientation": 0.0
+      },
+      {
+        "id": "IC1",
+        "type": "IC",
+        "confidence": 0.9165,
+        "orientation": 90.0
+      }
+    ],
+    "pin_count": 19,
+    "pin_sources": {
+      "ic_ef_bridge_geometry": 8,
+      "model": 8,
+      "potentiometer_board_logic": 3
+    },
+    "ambiguous_pin_count": 8,
+    "ambiguous_pin_rate": 0.4211,
+    "unmapped_pin_count": 0,
+    "ambiguity_reasons": {
+      "close_vote_margin": 4,
+      "low_snap_confidence": 4,
+      "multiple_candidate_holes": 4
+    },
+    "calibration": {
+      "mode": "detected_hole_map",
+      "grid_ready": true
+    },
+    "component_count_api": 6,
+    "net_count": 8,
+    "is_correct": false,
+    "risk_level": "warning",
+    "similarity": 0.61,
+    "progress": 0.75,
+    "error_codes": [
+      "COMPONENT_MISSING",
+      "COMPONENT_MISSING",
+      "COMPONENT_EXTRA",
+      "COMPONENT_EXTRA",
+      "WRONG_CONNECTION",
+      "INPUT_NODE_MISMATCH"
+    ],
+    "stage_duration_ms": {
+      "detect": 106.35,
+      "pin_detect": 820.7,
+      "mapping": 7.6,
+      "topology": 1.42,
+      "validate": 0.47,
+      "semantic_analysis": 0.06
+    },
+    "total_duration_ms": 941.46,
+    "runtime_metadata": {
+      "code_version": "0.1.0",
+      "model_version": "dev",
+      "kb_version": "none",
+      "rule_version": "dev",
+      "model_root": "/Users/liusuan/Desktop/LabGuardian-Server/models",
+      "component_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/merged_det_v2/weights/best.pt",
+      "pin_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/new_component_pins/yolov8_component_pose/weights/best.pt",
+      "yolo_device": "cpu",
+      "pin_model_device": "cpu",
+      "conf": 0.25,
+      "iou": 0.5,
+      "imgsz": 960,
+      "board_rows": 63,
+      "board_cols_per_side": 5,
+      "reference_ic_subtypes_applied": [
+        {
+          "component_id": "IC1",
+          "part_subtype": "UA741",
+          "source": "reference_circuit",
+          "matched_by": "single_reference_ic"
+        }
+      ],
+      "net_normalization": {
+        "logical_nets": [
+          {
+            "source_id": "NET_000",
+            "canonical_name": "NET_000",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_000"
+            ],
+            "pins": [
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "J35",
+                "electrical_node_id": "ROW_35_R"
+              },
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "I45",
+                "electrical_node_id": "ROW_45_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_35_R",
+              "ROW_45_R"
+            ],
+            "member_hole_ids": [
+              "I45",
+              "J35"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_001",
+            "canonical_name": "NET_001",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_001"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "G25",
+                "electrical_node_id": "ROW_25_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_25_R"
+            ],
+            "member_hole_ids": [
+              "G25"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_002",
+            "canonical_name": "NET_002",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_002"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "H26",
+                "electrical_node_id": "ROW_26_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_26_R"
+            ],
+            "member_hole_ids": [
+              "H26"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_003",
+            "canonical_name": "NET_003",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_003"
+            ],
+            "pins": [
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "F51",
+                "electrical_node_id": "ROW_51_R"
+              },
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "H51",
+                "electrical_node_id": "ROW_51_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_51_R"
+            ],
+            "member_hole_ids": [
+              "F51",
+              "H51"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_004",
+            "canonical_name": "NET_004",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_004"
+            ],
+            "pins": [
+              {
+                "component_id": "POT1",
+                "component_type": "Potentiometer",
+                "pin_name": "terminal_a",
+                "hole_id": "I12",
+                "electrical_node_id": "ROW_12_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_12_R"
+            ],
+            "member_hole_ids": [
+              "I12"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_005",
+            "canonical_name": "NET_005",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_005"
+            ],
+            "pins": [
+              {
+                "component_id": "POT1",
+                "component_type": "Potentiometer",
+                "pin_name": "wiper",
+                "hole_id": "I13",
+                "electrical_node_id": "ROW_13_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_13_R"
+            ],
+            "member_hole_ids": [
+              "I13"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_007",
+            "canonical_name": "NET_007",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_007"
+            ],
+            "pins": [
+              {
+                "component_id": "POT1",
+                "component_type": "Potentiometer",
+                "pin_name": "terminal_b",
+                "hole_id": "I14",
+                "electrical_node_id": "ROW_14_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_14_R"
+            ],
+            "member_hole_ids": [
+              "I14"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_008",
+            "canonical_name": "NET_008",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_008"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "H23",
+                "electrical_node_id": "ROW_23_R"
+              },
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "J23",
+                "electrical_node_id": "ROW_23_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_23_R"
+            ],
+            "member_hole_ids": [
+              "H23",
+              "J23"
+            ],
+            "source": "netlist_v2"
+          }
+        ],
+        "warnings": [],
+        "applied_aliases": [],
+        "applied_merges": [],
+        "inferred_aliases": []
+      },
+      "reference": {
+        "source": "reference_id",
+        "reference_id": "ua741_inverting_amp_gain10_v1",
+        "format": "logical_reference_v1",
+        "name": "uA741 反相放大器（增益 10）逻辑参考电路"
+      }
+    },
+    "detector_class_count": 35,
+    "pin_detector_class_count": 32,
+    "topology_component_count": 6
+  },
+  {
+    "case_id": "err_amp3_landscape",
+    "tag": "landscape_variant",
+    "expected_counts": {
+      "IC": 1,
+      "Resistor": 3,
+      "Wire": 3
+    },
+    "detected_counts": {
+      "IC": 1,
+      "Resistor": 3,
+      "Wire": 2
+    },
+    "missing_counts": {
+      "Wire": 1
+    },
+    "extra_counts": {},
+    "detection_exact": false,
+    "detections": [
+      {
+        "id": "W1",
+        "type": "Wire",
+        "confidence": 0.9342,
+        "orientation": 90.0
+      },
+      {
+        "id": "W2",
+        "type": "Wire",
+        "confidence": 0.8472,
+        "orientation": 90.0
+      },
+      {
+        "id": "R1",
+        "type": "Resistor",
+        "confidence": 0.8325,
+        "orientation": 0.0
+      },
+      {
+        "id": "R2",
+        "type": "Resistor",
+        "confidence": 0.7629,
+        "orientation": 0.0
+      },
+      {
+        "id": "R3",
+        "type": "Resistor",
+        "confidence": 0.6047,
+        "orientation": 90.0
+      },
+      {
+        "id": "IC1",
+        "type": "IC",
+        "confidence": 0.2945,
+        "orientation": 0.0
+      }
+    ],
+    "pin_count": 18,
+    "pin_sources": {
+      "ic_ef_bridge_geometry": 8,
+      "model": 10
+    },
+    "ambiguous_pin_count": 5,
+    "ambiguous_pin_rate": 0.2778,
+    "unmapped_pin_count": 0,
+    "ambiguity_reasons": {
+      "low_snap_confidence": 5
+    },
+    "calibration": {
+      "mode": "detected_hole_map",
+      "grid_ready": true
+    },
+    "component_count_api": 6,
+    "net_count": 7,
+    "is_correct": false,
+    "risk_level": "warning",
+    "similarity": 0.855,
+    "progress": 1.0,
+    "error_codes": [
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "POWER_NODE_MISMATCH",
+      "INPUT_NODE_MISMATCH",
+      "OUTPUT_NODE_MISMATCH"
+    ],
+    "stage_duration_ms": {
+      "detect": 105.83,
+      "pin_detect": 807.26,
+      "mapping": 7.03,
+      "topology": 1.29,
+      "validate": 0.65,
+      "semantic_analysis": 0.06
+    },
+    "total_duration_ms": 926.89,
+    "runtime_metadata": {
+      "code_version": "0.1.0",
+      "model_version": "dev",
+      "kb_version": "none",
+      "rule_version": "dev",
+      "model_root": "/Users/liusuan/Desktop/LabGuardian-Server/models",
+      "component_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/merged_det_v2/weights/best.pt",
+      "pin_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/new_component_pins/yolov8_component_pose/weights/best.pt",
+      "yolo_device": "cpu",
+      "pin_model_device": "cpu",
+      "conf": 0.25,
+      "iou": 0.5,
+      "imgsz": 960,
+      "board_rows": 63,
+      "board_cols_per_side": 5,
+      "reference_ic_subtypes_applied": [
+        {
+          "component_id": "IC1",
+          "part_subtype": "UA741",
+          "source": "reference_circuit",
+          "matched_by": "single_reference_ic"
+        }
+      ],
+      "net_normalization": {
+        "logical_nets": [
+          {
+            "source_id": "NET_003",
+            "canonical_name": "VCC",
+            "role": "power",
+            "role_label": "VCC",
+            "aliases": [
+              "VCC",
+              "NET_003"
+            ],
+            "pins": [
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "LP34",
+                "electrical_node_id": "TRACK_LP_SEG2"
+              },
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "C43",
+                "electrical_node_id": "ROW_43_L"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin7",
+                "hole_id": "E43",
+                "electrical_node_id": "ROW_43_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_43_L",
+              "TRACK_LP_SEG2"
+            ],
+            "member_hole_ids": [
+              "C43",
+              "E43",
+              "LP34"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_004",
+            "canonical_name": "NET_004",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_004"
+            ],
+            "pins": [
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "B44",
+                "electrical_node_id": "ROW_44_L"
+              },
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "F47",
+                "electrical_node_id": "ROW_47_R"
+              },
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "H47",
+                "electrical_node_id": "ROW_47_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin6",
+                "hole_id": "E44",
+                "electrical_node_id": "ROW_44_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_44_L",
+              "ROW_47_R"
+            ],
+            "member_hole_ids": [
+              "B44",
+              "E44",
+              "F47",
+              "H47"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_005",
+            "canonical_name": "NET_005",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_005"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "H43",
+                "electrical_node_id": "ROW_43_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin2",
+                "hole_id": "F43",
+                "electrical_node_id": "ROW_43_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_43_R"
+            ],
+            "member_hole_ids": [
+              "F43",
+              "H43"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_006",
+            "canonical_name": "NET_006",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_006"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "G42",
+                "electrical_node_id": "ROW_42_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin1",
+                "hole_id": "F42",
+                "electrical_node_id": "ROW_42_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_42_R"
+            ],
+            "member_hole_ids": [
+              "F42",
+              "G42"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_007",
+            "canonical_name": "NET_007",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_007"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "G38",
+                "electrical_node_id": "ROW_38_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_38_R"
+            ],
+            "member_hole_ids": [
+              "G38"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_008",
+            "canonical_name": "GND",
+            "role": "ground",
+            "role_label": "GND",
+            "aliases": [
+              "GND",
+              "NET_008"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "RP36",
+                "electrical_node_id": "TRACK_RP_SEG2"
+              }
+            ],
+            "member_node_ids": [
+              "TRACK_RP_SEG2"
+            ],
+            "member_hole_ids": [
+              "RP36"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_009",
+            "canonical_name": "NET_009",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_009"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "I44",
+                "electrical_node_id": "ROW_44_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin3",
+                "hole_id": "F44",
+                "electrical_node_id": "ROW_44_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_44_R"
+            ],
+            "member_hole_ids": [
+              "F44",
+              "I44"
+            ],
+            "source": "netlist_v2"
+          }
+        ],
+        "warnings": [],
+        "applied_aliases": [],
+        "applied_merges": [],
+        "inferred_aliases": []
+      },
+      "reference": {
+        "source": "reference_id",
+        "reference_id": "ua741_inverting_amp_gain10_v1",
+        "format": "logical_reference_v1",
+        "name": "uA741 反相放大器（增益 10）逻辑参考电路"
+      }
+    },
+    "detector_class_count": 35,
+    "pin_detector_class_count": 32,
+    "topology_component_count": 6
+  },
+  {
+    "case_id": "err_amp_ccw",
+    "tag": "rotation_180_b",
+    "expected_counts": {
+      "IC": 1,
+      "Resistor": 3,
+      "Wire": 3
+    },
+    "detected_counts": {
+      "IC": 1,
+      "Resistor": 3,
+      "Wire": 2
+    },
+    "missing_counts": {
+      "Wire": 1
+    },
+    "extra_counts": {},
+    "detection_exact": false,
+    "detections": [
+      {
+        "id": "W1",
+        "type": "Wire",
+        "confidence": 0.914,
+        "orientation": 90.0
+      },
+      {
+        "id": "W2",
+        "type": "Wire",
+        "confidence": 0.8447,
+        "orientation": 90.0
+      },
+      {
+        "id": "R1",
+        "type": "Resistor",
+        "confidence": 0.8233,
+        "orientation": 0.0
+      },
+      {
+        "id": "R2",
+        "type": "Resistor",
+        "confidence": 0.7395,
+        "orientation": 0.0
+      },
+      {
+        "id": "R3",
+        "type": "Resistor",
+        "confidence": 0.7256,
+        "orientation": 90.0
+      },
+      {
+        "id": "IC1",
+        "type": "IC",
+        "confidence": 0.4858,
+        "orientation": 0.0
+      }
+    ],
+    "pin_count": 18,
+    "pin_sources": {
+      "ic_ef_bridge_geometry": 8,
+      "model": 10
+    },
+    "ambiguous_pin_count": 2,
+    "ambiguous_pin_rate": 0.1111,
+    "unmapped_pin_count": 0,
+    "ambiguity_reasons": {
+      "close_vote_margin": 1,
+      "low_snap_confidence": 2,
+      "multiple_candidate_holes": 1
+    },
+    "calibration": {
+      "mode": "detected_hole_map",
+      "grid_ready": true
+    },
+    "component_count_api": 6,
+    "net_count": 7,
+    "is_correct": false,
+    "risk_level": "warning",
+    "similarity": 0.855,
+    "progress": 1.0,
+    "error_codes": [
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "INPUT_NODE_MISMATCH",
+      "OUTPUT_NODE_MISMATCH"
+    ],
+    "stage_duration_ms": {
+      "detect": 79.79,
+      "pin_detect": 809.13,
+      "mapping": 8.78,
+      "topology": 1.41,
+      "validate": 0.65,
+      "semantic_analysis": 0.06
+    },
+    "total_duration_ms": 906.42,
+    "runtime_metadata": {
+      "code_version": "0.1.0",
+      "model_version": "dev",
+      "kb_version": "none",
+      "rule_version": "dev",
+      "model_root": "/Users/liusuan/Desktop/LabGuardian-Server/models",
+      "component_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/merged_det_v2/weights/best.pt",
+      "pin_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/new_component_pins/yolov8_component_pose/weights/best.pt",
+      "yolo_device": "cpu",
+      "pin_model_device": "cpu",
+      "conf": 0.25,
+      "iou": 0.5,
+      "imgsz": 960,
+      "board_rows": 63,
+      "board_cols_per_side": 5,
+      "reference_ic_subtypes_applied": [
+        {
+          "component_id": "IC1",
+          "part_subtype": "UA741",
+          "source": "reference_circuit",
+          "matched_by": "single_reference_ic"
+        }
+      ],
+      "net_normalization": {
+        "logical_nets": [
+          {
+            "source_id": "NET_001",
+            "canonical_name": "VCC",
+            "role": "power",
+            "role_label": "VCC",
+            "aliases": [
+              "VCC",
+              "NET_001"
+            ],
+            "pins": [
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "LP33",
+                "electrical_node_id": "TRACK_LP_SEG2"
+              },
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "D42",
+                "electrical_node_id": "ROW_42_L"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin7",
+                "hole_id": "E42",
+                "electrical_node_id": "ROW_42_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_42_L",
+              "TRACK_LP_SEG2"
+            ],
+            "member_hole_ids": [
+              "D42",
+              "E42",
+              "LP33"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_002",
+            "canonical_name": "NET_002",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_002"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "G37",
+                "electrical_node_id": "ROW_37_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_37_R"
+            ],
+            "member_hole_ids": [
+              "G37"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_003",
+            "canonical_name": "NET_003",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_003"
+            ],
+            "pins": [
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "B43",
+                "electrical_node_id": "ROW_43_L"
+              },
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "G46",
+                "electrical_node_id": "ROW_46_R"
+              },
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "H46",
+                "electrical_node_id": "ROW_46_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin6",
+                "hole_id": "E43",
+                "electrical_node_id": "ROW_43_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_43_L",
+              "ROW_46_R"
+            ],
+            "member_hole_ids": [
+              "B43",
+              "E43",
+              "G46",
+              "H46"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_005",
+            "canonical_name": "NET_005",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_005"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "G41",
+                "electrical_node_id": "ROW_41_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin1",
+                "hole_id": "F41",
+                "electrical_node_id": "ROW_41_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_41_R"
+            ],
+            "member_hole_ids": [
+              "F41",
+              "G41"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_006",
+            "canonical_name": "NET_006",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_006"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "I43",
+                "electrical_node_id": "ROW_43_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin3",
+                "hole_id": "F43",
+                "electrical_node_id": "ROW_43_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_43_R"
+            ],
+            "member_hole_ids": [
+              "F43",
+              "I43"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_007",
+            "canonical_name": "NET_007",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_007"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "H42",
+                "electrical_node_id": "ROW_42_R"
+              },
+              {
+                "component_id": "IC1",
+                "component_type": "IC",
+                "pin_name": "pin2",
+                "hole_id": "F42",
+                "electrical_node_id": "ROW_42_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_42_R"
+            ],
+            "member_hole_ids": [
+              "F42",
+              "H42"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_008",
+            "canonical_name": "GND",
+            "role": "ground",
+            "role_label": "GND",
+            "aliases": [
+              "GND",
+              "NET_008"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "RP35",
+                "electrical_node_id": "TRACK_RP_SEG2"
+              }
+            ],
+            "member_node_ids": [
+              "TRACK_RP_SEG2"
+            ],
+            "member_hole_ids": [
+              "RP35"
+            ],
+            "source": "netlist_v2"
+          }
+        ],
+        "warnings": [],
+        "applied_aliases": [],
+        "applied_merges": [],
+        "inferred_aliases": []
+      },
+      "reference": {
+        "source": "reference_id",
+        "reference_id": "ua741_inverting_amp_gain10_v1",
+        "format": "logical_reference_v1",
+        "name": "uA741 反相放大器（增益 10）逻辑参考电路"
+      }
+    },
+    "detector_class_count": 35,
+    "pin_detector_class_count": 32,
+    "topology_component_count": 6
+  },
+  {
+    "case_id": "err_amp_cw",
+    "tag": "rotation_180_a",
+    "expected_counts": {
+      "IC": 1,
+      "Resistor": 3,
+      "Wire": 3
+    },
+    "detected_counts": {
+      "Resistor": 3,
+      "Wire": 2
+    },
+    "missing_counts": {
+      "IC": 1,
+      "Wire": 1
+    },
+    "extra_counts": {},
+    "detection_exact": false,
+    "detections": [
+      {
+        "id": "W1",
+        "type": "Wire",
+        "confidence": 0.8851,
+        "orientation": 90.0
+      },
+      {
+        "id": "W2",
+        "type": "Wire",
+        "confidence": 0.8222,
+        "orientation": 90.0
+      },
+      {
+        "id": "R1",
+        "type": "Resistor",
+        "confidence": 0.8218,
+        "orientation": 0.0
+      },
+      {
+        "id": "R2",
+        "type": "Resistor",
+        "confidence": 0.7748,
+        "orientation": 0.0
+      },
+      {
+        "id": "R3",
+        "type": "Resistor",
+        "confidence": 0.4816,
+        "orientation": 90.0
+      }
+    ],
+    "pin_count": 10,
+    "pin_sources": {
+      "model": 10
+    },
+    "ambiguous_pin_count": 6,
+    "ambiguous_pin_rate": 0.6,
+    "unmapped_pin_count": 0,
+    "ambiguity_reasons": {
+      "close_vote_margin": 1,
+      "low_snap_confidence": 5,
+      "multiple_candidate_holes": 1
+    },
+    "calibration": {
+      "mode": "detected_hole_map",
+      "grid_ready": true
+    },
+    "component_count_api": 5,
+    "net_count": 8,
+    "is_correct": false,
+    "risk_level": "warning",
+    "similarity": 0.658,
+    "progress": 0.75,
+    "error_codes": [
+      "COMPONENT_MISSING",
+      "WRONG_CONNECTION",
+      "WRONG_CONNECTION",
+      "INPUT_NODE_MISMATCH",
+      "OUTPUT_NODE_MISMATCH"
+    ],
+    "stage_duration_ms": {
+      "detect": 83.14,
+      "pin_detect": 43.61,
+      "mapping": 787.7,
+      "topology": 1.15,
+      "validate": 0.84,
+      "semantic_analysis": 0.06
+    },
+    "total_duration_ms": 922.88,
+    "runtime_metadata": {
+      "code_version": "0.1.0",
+      "model_version": "dev",
+      "kb_version": "none",
+      "rule_version": "dev",
+      "model_root": "/Users/liusuan/Desktop/LabGuardian-Server/models",
+      "component_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/merged_det_v2/weights/best.pt",
+      "pin_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/new_component_pins/yolov8_component_pose/weights/best.pt",
+      "yolo_device": "cpu",
+      "pin_model_device": "cpu",
+      "conf": 0.25,
+      "iou": 0.5,
+      "imgsz": 960,
+      "board_rows": 63,
+      "board_cols_per_side": 5,
+      "net_normalization": {
+        "logical_nets": [
+          {
+            "source_id": "NET_000",
+            "canonical_name": "VEE",
+            "role": "power",
+            "role_label": "VEE",
+            "aliases": [
+              "VEE",
+              "NET_000"
+            ],
+            "pins": [
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "G22",
+                "electrical_node_id": "ROW_22_R"
+              },
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "RN18",
+                "electrical_node_id": "TRACK_RN_SEG1"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_22_R",
+              "TRACK_RN_SEG1"
+            ],
+            "member_hole_ids": [
+              "G22",
+              "RN18"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_001",
+            "canonical_name": "NET_001",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_001"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "C22",
+                "electrical_node_id": "ROW_22_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_22_L"
+            ],
+            "member_hole_ids": [
+              "C22"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_002",
+            "canonical_name": "NET_002",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_002"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "C18",
+                "electrical_node_id": "ROW_18_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_18_L"
+            ],
+            "member_hole_ids": [
+              "C18"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_003",
+            "canonical_name": "NET_003",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_003"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "B21",
+                "electrical_node_id": "ROW_21_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_21_L"
+            ],
+            "member_hole_ids": [
+              "B21"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_004",
+            "canonical_name": "VCC",
+            "role": "power",
+            "role_label": "VCC",
+            "aliases": [
+              "VCC",
+              "NET_004"
+            ],
+            "pins": [
+              {
+                "component_id": "R3",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "LN15",
+                "electrical_node_id": "TRACK_LN_SEG1"
+              }
+            ],
+            "member_node_ids": [
+              "TRACK_LN_SEG1"
+            ],
+            "member_hole_ids": [
+              "LN15"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_005",
+            "canonical_name": "NET_005",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_005"
+            ],
+            "pins": [
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "E19",
+                "electrical_node_id": "ROW_19_L"
+              },
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "H18",
+                "electrical_node_id": "ROW_18_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_18_R",
+              "ROW_19_L"
+            ],
+            "member_hole_ids": [
+              "E19",
+              "H18"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_006",
+            "canonical_name": "NET_006",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_006"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "D27",
+                "electrical_node_id": "ROW_27_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_27_L"
+            ],
+            "member_hole_ids": [
+              "D27"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_007",
+            "canonical_name": "NET_007",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_007"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "D24",
+                "electrical_node_id": "ROW_24_L"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_24_L"
+            ],
+            "member_hole_ids": [
+              "D24"
+            ],
+            "source": "netlist_v2"
+          }
+        ],
+        "warnings": [],
+        "applied_aliases": [],
+        "applied_merges": [],
+        "inferred_aliases": []
+      },
+      "reference": {
+        "source": "reference_id",
+        "reference_id": "ua741_inverting_amp_gain10_v1",
+        "format": "logical_reference_v1",
+        "name": "uA741 反相放大器（增益 10）逻辑参考电路"
+      }
+    },
+    "detector_class_count": 35,
+    "pin_detector_class_count": 32,
+    "topology_component_count": 5
+  },
+  {
+    "case_id": "err_amp_portrait",
+    "tag": "rotation_90",
+    "expected_counts": {
+      "IC": 1,
+      "Resistor": 3,
+      "Wire": 3
+    },
+    "detected_counts": {
+      "IC": 1,
+      "Resistor": 2,
+      "Wire": 2
+    },
+    "missing_counts": {
+      "Resistor": 1,
+      "Wire": 1
+    },
+    "extra_counts": {},
+    "detection_exact": false,
+    "detections": [
+      {
+        "id": "W1",
+        "type": "Wire",
+        "confidence": 0.8866,
+        "orientation": 0.0
+      },
+      {
+        "id": "W2",
+        "type": "Wire",
+        "confidence": 0.8039,
+        "orientation": 0.0
+      },
+      {
+        "id": "R1",
+        "type": "Resistor",
+        "confidence": 0.777,
+        "orientation": 90.0
+      },
+      {
+        "id": "R2",
+        "type": "Resistor",
+        "confidence": 0.6087,
+        "orientation": 90.0
+      },
+      {
+        "id": "IC1",
+        "type": "IC",
+        "confidence": 0.7958,
+        "orientation": 90.0
+      }
+    ],
+    "pin_count": 15,
+    "pin_sources": {
+      "ic_ef_bridge_geometry": 7,
+      "model": 8
+    },
+    "ambiguous_pin_count": 3,
+    "ambiguous_pin_rate": 0.2,
+    "unmapped_pin_count": 0,
+    "ambiguity_reasons": {
+      "low_snap_confidence": 3
+    },
+    "calibration": {
+      "mode": "detected_hole_map",
+      "grid_ready": true
+    },
+    "component_count_api": 5,
+    "net_count": 5,
+    "is_correct": false,
+    "risk_level": "warning",
+    "similarity": 0.664,
+    "progress": 0.75,
+    "error_codes": [
+      "COMPONENT_MISSING",
+      "COMPONENT_MISSING",
+      "COMPONENT_EXTRA",
+      "WRONG_CONNECTION",
+      "INPUT_NODE_MISMATCH",
+      "OUTPUT_NODE_MISMATCH",
+      "EXTRA_CONNECTION"
+    ],
+    "stage_duration_ms": {
+      "detect": 80.45,
+      "pin_detect": 816.28,
+      "mapping": 7.82,
+      "topology": 1.26,
+      "validate": 0.5,
+      "semantic_analysis": 0.05
+    },
+    "total_duration_ms": 911.72,
+    "runtime_metadata": {
+      "code_version": "0.1.0",
+      "model_version": "dev",
+      "kb_version": "none",
+      "rule_version": "dev",
+      "model_root": "/Users/liusuan/Desktop/LabGuardian-Server/models",
+      "component_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/merged_det_v2/weights/best.pt",
+      "pin_model_path": "/Users/liusuan/Desktop/LabGuardian-Server/train_demo/new_component_pins/yolov8_component_pose/weights/best.pt",
+      "yolo_device": "cpu",
+      "pin_model_device": "cpu",
+      "conf": 0.25,
+      "iou": 0.5,
+      "imgsz": 960,
+      "board_rows": 63,
+      "board_cols_per_side": 5,
+      "reference_ic_subtypes_applied": [
+        {
+          "component_id": "IC1",
+          "part_subtype": "UA741",
+          "source": "reference_circuit",
+          "matched_by": "single_reference_ic"
+        }
+      ],
+      "net_normalization": {
+        "logical_nets": [
+          {
+            "source_id": "NET_000",
+            "canonical_name": "NET_000",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_000"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "H25",
+                "electrical_node_id": "ROW_25_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_25_R"
+            ],
+            "member_hole_ids": [
+              "H25"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_001",
+            "canonical_name": "NET_001",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_001"
+            ],
+            "pins": [
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "H40",
+                "electrical_node_id": "ROW_40_R"
+              },
+              {
+                "component_id": "W2",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "H57",
+                "electrical_node_id": "ROW_57_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_40_R",
+              "ROW_57_R"
+            ],
+            "member_hole_ids": [
+              "H40",
+              "H57"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_002",
+            "canonical_name": "NET_002",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_002"
+            ],
+            "pins": [
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "H21",
+                "electrical_node_id": "ROW_21_R"
+              },
+              {
+                "component_id": "R1",
+                "component_type": "Resistor",
+                "pin_name": "pin2",
+                "hole_id": "J21",
+                "electrical_node_id": "ROW_21_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_21_R"
+            ],
+            "member_hole_ids": [
+              "H21",
+              "J21"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_004",
+            "canonical_name": "NET_004",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_004"
+            ],
+            "pins": [
+              {
+                "component_id": "R2",
+                "component_type": "Resistor",
+                "pin_name": "pin1",
+                "hole_id": "G24",
+                "electrical_node_id": "ROW_24_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_24_R"
+            ],
+            "member_hole_ids": [
+              "G24"
+            ],
+            "source": "netlist_v2"
+          },
+          {
+            "source_id": "NET_005",
+            "canonical_name": "NET_005",
+            "role": "signal",
+            "role_label": "",
+            "aliases": [
+              "NET_005"
+            ],
+            "pins": [
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin1",
+                "hole_id": "J36",
+                "electrical_node_id": "ROW_36_R"
+              },
+              {
+                "component_id": "W1",
+                "component_type": "Wire",
+                "pin_name": "pin2",
+                "hole_id": "H43",
+                "electrical_node_id": "ROW_43_R"
+              }
+            ],
+            "member_node_ids": [
+              "ROW_36_R",
+              "ROW_43_R"
+            ],
+            "member_hole_ids": [
+              "H43",
+              "J36"
+            ],
+            "source": "netlist_v2"
+          }
+        ],
+        "warnings": [],
+        "applied_aliases": [],
+        "applied_merges": [],
+        "inferred_aliases": []
+      },
+      "reference": {
+        "source": "reference_id",
+        "reference_id": "ua741_inverting_amp_gain10_v1",
+        "format": "logical_reference_v1",
+        "name": "uA741 反相放大器（增益 10）逻辑参考电路"
+      }
+    },
+    "detector_class_count": 35,
+    "pin_detector_class_count": 32,
+    "topology_component_count": 5
+  }
+]

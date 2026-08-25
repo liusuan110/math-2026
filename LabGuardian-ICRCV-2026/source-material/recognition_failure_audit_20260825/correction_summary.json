@@ -1,0 +1,37 @@
+{
+  "case_id": "board_1_summing",
+  "experiment": "three_port_annotations_then_recompute_s3_s4",
+  "reference_id": "ua741_inverting_summing_amp_v1",
+  "annotations": [
+    {
+      "role": "input",
+      "label": "UI1",
+      "electrical_net_id": "NET_006"
+    },
+    {
+      "role": "input",
+      "label": "UI2",
+      "electrical_net_id": "NET_005"
+    },
+    {
+      "role": "output",
+      "label": "UO1",
+      "electrical_net_id": "NET_007"
+    }
+  ],
+  "before": {
+    "similarity": 0.776,
+    "progress": 1.0,
+    "comparison_item_count": 11,
+    "risk_level": "warning"
+  },
+  "after": {
+    "similarity": 0.844,
+    "progress": 1.0,
+    "comparison_item_count": 10,
+    "risk_level": "warning",
+    "input_output_role_mismatches_removed": true,
+    "structural_and_power_errors_remain": true
+  },
+  "claim_boundary": "Mechanism demonstration only; not a statistical correction benchmark and not evidence that three annotations repair the complete circuit."
+}

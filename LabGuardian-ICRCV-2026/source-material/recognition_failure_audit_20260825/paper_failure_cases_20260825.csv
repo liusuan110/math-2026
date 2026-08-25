@@ -1,0 +1,10 @@
+case_id,scene_tag,expected_components,detected_components,component_count_exact,ambiguous_pins,total_pins,ambiguous_pin_rate,similarity,progress,error_count,total_duration_ms,main_observation
+board_1_summing,dense_opamp,"IC=1;Resistor=6;Wire=4","IC=1;Resistor=6;Wire=4",true,8,28,0.2857,0.776,1.00,11,4112.66,"S1 count exact; S2 ambiguity and S4 wiring/port errors remain"
+board_2_inverting,sparse_opamp,"IC=1;Resistor=3;Wire=3","IC=1;Resistor=3;Wire=3",true,8,20,0.4000,0.799,1.00,8,958.10,"S1 count exact; 40 percent of pins ambiguous"
+board_3_diff_pair,dense_transistor,"Transistor=3;Resistor=7;Wire=3","Transistor=3;Resistor=7;Wire=3",true,7,28,0.2500,0.884,1.00,19,904.87,"S1 count exact; topology comparison still reports many mismatches"
+err_amp2_ccw,rotation_180_variant,"IC=1;Resistor=3;Wire=3","Resistor=3;Wire=2",false,4,10,0.4000,0.724,0.75,4,924.17,"IC and one wire missed"
+err_amp2_portrait,rotation_90_variant,"IC=1;Resistor=3;Wire=3","IC=1;Potentiometer=1;Resistor=2;Wire=2",false,8,19,0.4211,0.610,0.75,6,941.46,"One resistor confused with potentiometer at confidence 0.30; one wire missed"
+err_amp3_landscape,landscape_variant,"IC=1;Resistor=3;Wire=3","IC=1;Resistor=3;Wire=2",false,5,18,0.2778,0.855,1.00,7,926.89,"One short wire missed; IC confidence 0.29"
+err_amp_ccw,rotation_180_b,"IC=1;Resistor=3;Wire=3","IC=1;Resistor=3;Wire=2",false,2,18,0.1111,0.855,1.00,4,906.42,"One wire missed"
+err_amp_cw,rotation_180_a,"IC=1;Resistor=3;Wire=3","Resistor=3;Wire=2",false,6,10,0.6000,0.658,0.75,5,922.88,"IC and one wire missed; highest ambiguity rate"
+err_amp_portrait,rotation_90,"IC=1;Resistor=3;Wire=3","IC=1;Resistor=2;Wire=2",false,3,15,0.2000,0.664,0.75,7,911.72,"One resistor and one wire missed"

@@ -12,7 +12,8 @@ This directory is a self-contained evidence package for the real-image recogniti
 - `paper_failure_cases_20260825.csv`: compact table for analysis and plotting.
 - `paper_recognition_failure_storyline_20260825.md`: extended Chinese interpretation and paper-story notes.
 - `ICRCV_INTEGRATION_NOTE.md`: instructions for using these cases without changing the current ICRCV paper's visual-reconstruction scope.
-- `figures/recognition_failure_triptych.png`: representative standard, missed-object and class-confusion cases.
+- `figures/recognition_failure_triptych.{png,pdf}`: cropped, paper-ready standard, missed-object and class-confusion cases.
+- `render_failure_triptych.py`: deterministic renderer for the triptych; solid boxes come from the saved S1 responses and dashed red boxes are visually audited missed-object callouts.
 
 ## Reproduction identity
 

@@ -1,0 +1,40 @@
+支撑材料/
+|-- AI 工具使用详情.pdf
+|-- README.md
+|-- requirements-lock.txt
+|-- run_pipeline.py
+|-- src/filter_monitoring/
+|   |-- __init__.py
+|   |-- config.py
+|   |-- io.py
+|   |-- preprocess.py
+|   |-- q1_analysis.py
+|   |-- q2_lifetime.py
+|   |-- q3_optimization.py
+|   `-- q4_sensitivity.py
+`-- data/results/
+    |-- q1_data_quality.csv
+    |-- q1_device_metrics.csv
+    |-- q1_event_effects_detail.csv
+    |-- q1_key_findings.json
+    |-- q1_maintenance_effects.csv
+    |-- q1_model_diagnostics.csv
+    |-- q2_forecast_bands.csv
+    |-- q2_key_findings.json
+    |-- q2_leave_one_asset_validation.csv
+    |-- q2_lifetime_sensitivity.csv
+    |-- q2_lifetime_summary.csv
+    |-- q2_model_backtest.csv
+    |-- q2_structural_sensitivity.csv
+    |-- q3_current_vs_optimal.csv
+    |-- q3_key_findings.json
+    |-- q3_optimal_policy_by_asset.csv
+    |-- q3_policy_evaluation.csv
+    |-- q3_recommended_calendar.csv
+    |-- q3_robustness.csv
+    |-- q4_key_findings.json
+    |-- q4_one_factor_sensitivity.csv
+    |-- q4_price_grid.csv
+    |-- q4_robust_policy.csv
+    |-- q4_split_maintenance_grid.csv
+    `-- q4_switch_intervals.csv

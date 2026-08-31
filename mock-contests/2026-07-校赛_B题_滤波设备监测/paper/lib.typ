@@ -320,14 +320,30 @@
 
 #let appendix(title, body) = {
   appendix-num.step()
-  table(
-    fill: (_, row) => if row == 0 or row == 1 {luma(200)} else {none},
-    rows: 3,
-    columns: 1fr,
-    text[*附录 #context appendix-num.display()：*],
-    text[*#title*],
-    body
-  )
+  heading(numbering: none, level: 1)[附录 #context appendix-num.display()：#title]
+  body
+}
+
+#let code-listing(path, caption) = {
+  let lines = read(path).split("\n")
+  align(left)[#text(size: 10pt, weight: "bold")[#caption]]
+  v(4pt)
+  block(
+    width: 100%,
+    stroke: 0.6pt,
+    inset: (x: 5pt, y: 4pt),
+  )[
+    #set text(font: code-font, size: 7.5pt)
+    #grid(
+      columns: (2.5em, 1fr),
+      column-gutter: 0.7em,
+      row-gutter: 1.2pt,
+      ..lines.enumerate().map(pair => (
+        align(right)[#text(fill: luma(110))[#(pair.at(0) + 1)]],
+        raw(pair.at(1), lang: "python"),
+      )).flatten(),
+    )
+  ]
 }
 
 // 定理环境

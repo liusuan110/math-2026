@@ -1,0 +1,4 @@
+interface:
+  display_name: "CUMCM 获奖论文写作"
+  short_description: "基于获奖论文语料分析、起草、重写与审校数学建模竞赛论文"
+  default_prompt: "Use $cumcm-award-writing to review my CUMCM paper for evidence, clarity, and AI-like prose."

@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{cumcmthesis}
-              [2026/08/26 v2.9 Standard LaTeX Template for CUMCM]
+              [2017/09/16 v2.6 Standard LaTeX Template for CUMCM]
 %% Inital Code
 \newif\if@mcm@bwprint\@mcm@bwprintfalse
 \newif\if@mcm@preface\@mcm@prefacetrue
@@ -154,9 +154,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % 设置字体
 \setmainfont{Times New Roman}
 %\setmonofont{Courier New}
-\setsansfont{Arial} 
-\newcommand*{\kai}{\kaishu} 
-\newcommand*{\song}{\songti}
+\setsansfont{Arial}
+\setCJKfamilyfont{kai}[AutoFakeBold]{simkai.ttf}
+\newcommand*{\kai}{\CJKfamily{kai}}
+\setCJKfamilyfont{song}[AutoFakeBold]{SimSun}
+\newcommand*{\song}{\CJKfamily{song}}
 
 \renewcommand\normalsize{%
 	\@setfontsize\normalsize{12.05}{14.45}%
@@ -321,8 +323,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % 生成封面, 使用\maketitle
 \renewcommand{\maketitle}{\par
-  \thispagestyle{plain}%
-  \setcounter{page}{1}%
 	\begingroup
       \newpage
       \global\@topnum\z@   % Prevents figures from going at top of page.
@@ -493,14 +493,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Define new environment and command
-%% 摘要两个字设置为 3 号 (2026 更新).
+%% 摘要两个字设置为 4 号.
 %% 定义摘要环境
 \renewenvironment{abstract}{%
 \if@twocolumn
 		\section*{\abstractname}%
 	\else
 	 \begin{center}%
-	{\zihao{3}\bfseries \abstractname\vspace{-.5em}\vspace{\z@}}%
+	{\zihao{4}\bfseries \abstractname\vspace{-.5em}\vspace{\z@}}%
 	 \end{center}%
  	 \quotation
 	\fi}
@@ -594,7 +594,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand*{\mcm@cap@figurename}{图}
 \newcommand*{\mcm@cap@tablename}{表}
 \newcommand*{\mcm@cap@appendixname}{附录}
-\newcommand*{\mcm@cap@abstractname}{摘\quad 要}
+\newcommand*{\mcm@cap@abstractname}{摘要}
  %%%  中文关键字
 \newcommand*{\mcm@cap@keywordsname}{关键字}
 

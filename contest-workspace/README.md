@@ -2,6 +2,13 @@
 
 这里是正式比赛当天优先使用的主工作区。根目录的 `code/`、`templates/`、`MathModel-Figure-Toolkit/`、`past-problems/` 和 `refs/` 主要作为工具库、模板库和参考资料；正式赛题的输入、代码、结果、论文和提交材料都尽量收拢到本目录。
 
+当前 `paper/` 已初始化为 2026 年最新版 `CUMCMThesis` 模板。论文入口为 `paper/example.tex`，使用 XeLaTeX 编译：
+
+```powershell
+cd paper
+latexmk -xelatex example.tex
+```
+
 ## 目录结构
 
 ```text
@@ -24,10 +31,16 @@ contest-workspace/
 5. 论文最终采用的图片统一放进 `figures/final/`。
 6. 论文源文件放进 `paper/`，最终提交文件放进 `submission/`。
 
+## Git 版本管理
+
+1. 原始数据放入 `data/raw/` 后先提交一次，后续不直接覆盖。
+2. 每完成一问的“代码、结果、正文”闭环提交一次，避免把数小时工作压在一个提交中。
+3. LaTeX 辅助文件由 `.gitignore` 排除；论文 PDF 只在阶段性检查和最终提交时更新。
+4. 提交前先确认 `git status`，避免遗漏新图片、代码或支撑材料。
+
 ## 和根目录的关系
 
 - 需要模型模板时，从根目录 `code/` 复制到这里再改。
 - 需要论文模板时，从根目录 `templates/` 复制到 `paper/`。
 - 需要绘图模板时，从根目录 `MathModel-Figure-Toolkit/` 复制或调用。
 - 需要查往年题和优秀工程时，到根目录 `past-problems/` 和 `refs/`。
-
